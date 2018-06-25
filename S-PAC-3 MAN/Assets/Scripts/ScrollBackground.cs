@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ScrollBackground : MonoBehaviour {
 	
-	public float scrollDebuff;		/* Parallax Scrolling */
+	[SerializeField] private float scrollDebuff;		/* Parallax Scrolling */
 	private MeshRenderer mr;
 	void Start(){
 		
