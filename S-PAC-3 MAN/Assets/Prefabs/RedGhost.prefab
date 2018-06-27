@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  rotationSpeed: 1
+  rotationSpeed: 1.5
   movementSpeed: 12
 --- !u!212 &212091522456978652
 SpriteRenderer:
