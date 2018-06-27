@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114480591880102144}
   - component: {fileID: 58112633868068308}
   - component: {fileID: 50929794138801644}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sprite
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 4271497863812516}
   - component: {fileID: 212091522456978652}
   - component: {fileID: 114714609119976022}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RedGhost
   m_TagString: Enemy
   m_Icon: {fileID: 0}

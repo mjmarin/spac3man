@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour {
 
-	[SerializeField] private GameObject gameOver;
 	private Animator anim;
 	private bool dead;
 	void Start(){
 		anim = GetComponent<Animator>();
 		anim.SetBool("isDead",false);
-		
-		gameOver.SetActive(false);
 	}
 	void OnTriggerEnter2D(Collider2D other){
 		
@@ -21,8 +18,6 @@ public class PlayerCollision : MonoBehaviour {
 			if(other.CompareTag("Enemy")) {
 				GetComponent<PlayerController>().isDead = true;
 				anim.SetBool("isDead",true);
-
-				gameOver.SetActive(true);
 			}
 		}
 	}
