@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class EnemyIA : MonoBehaviour {
 
-	[SerializeField] private GameObject player;
 	[SerializeField] private float rotationSpeed;
 	[SerializeField] private float movementSpeed;
+	private GameObject player;
 	
-	// Update is called once per frame
+	void Start(){
+		player = GameObject.Find("Pacman");
+	}
 	void Update () {
 		if(player!=null){
 			Vector3 dir=player.transform.position-transform.position;

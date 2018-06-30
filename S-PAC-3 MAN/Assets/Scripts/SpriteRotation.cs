@@ -9,11 +9,10 @@ public class SpriteRotation : MonoBehaviour {
 	void Start () {
 		transform.position = parent.transform.position;
 		transform.rotation = parent.transform.rotation;
-		initialRotation = transform.rotation;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		transform.rotation = initialRotation;
+		transform.rotation = Quaternion.identity;
 	}
 }
