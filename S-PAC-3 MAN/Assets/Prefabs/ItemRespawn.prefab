@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4279680498396334}
-  - component: {fileID: 114326503049688062}
+  - component: {fileID: 114790573727336422}
   - component: {fileID: 114788328186425600}
   m_Layer: 0
   m_Name: ItemRespawn
@@ -35,26 +35,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1353569361726664}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114326503049688062
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1353569361726664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d8ab6787eb21624e8ce4c989286f45c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnable: {fileID: 1108926663138200, guid: ed1fa23a83a7ed544aabd73b2555d722, type: 2}
-  spawnCooldown: 30
-  delay: -10
 --- !u!114 &114788328186425600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -66,4 +52,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26519ee80b54d56428014b296def3e6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 80
+  speed: 120
+--- !u!114 &114790573727336422
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1353569361726664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4870813deea0ac14e921bbbf9d2003b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnable: {fileID: 1108926663138200, guid: ed1fa23a83a7ed544aabd73b2555d722, type: 2}
+  indicator: {fileID: 1221505863632758, guid: 2919a23949febb040a554c98224a89c4, type: 2}
+  spawnCooldown: 5
+  InitDelay: -5
+  maxItem: 3

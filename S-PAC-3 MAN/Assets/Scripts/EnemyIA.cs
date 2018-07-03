@@ -7,7 +7,7 @@ public class EnemyIA : MonoBehaviour {
 	[SerializeField] private float rotationSpeed;
 	[SerializeField] private float movementSpeed;
 	private GameObject player;
-	
+
 	void Start(){
 		player = GameObject.Find("Pacman");
 	}

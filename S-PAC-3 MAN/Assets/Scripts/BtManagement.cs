@@ -13,7 +13,7 @@ public class BtManagement : MonoBehaviour {
 	}
 	
 	void Update(){
-		if(player.GetComponent<PlayerController>().isDead == true){
+		if(player.GetComponent<PlayerController>().GetDeath()){
 			gameOver.SetActive(true);
 			restartBt.SetActive(true);
 		}

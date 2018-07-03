@@ -11,14 +11,9 @@ public class PlayerCollision : MonoBehaviour {
 		anim.SetBool("isDead",false);
 	}
 	void OnTriggerEnter2D(Collider2D other){
-		
-		if(other.CompareTag("Item")) {
-			Destroy(other.gameObject);
-		}else{
-			if(other.CompareTag("Enemy")) {
-				GetComponent<PlayerController>().isDead = true;
-				anim.SetBool("isDead",true);
-			}
+		if(other.CompareTag("Enemy")) {
+			GetComponent<PlayerController>().SetDeath(true);
+			anim.SetBool("isDead",true);
 		}
 	}
 }
