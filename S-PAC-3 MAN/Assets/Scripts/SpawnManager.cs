@@ -7,13 +7,13 @@ public class SpawnManager : MonoBehaviour {
 	[SerializeField] protected GameObject spawnable;
 	[SerializeField] protected GameObject indicator;
 	[SerializeField] protected float spawnCooldown;
-	[SerializeField] protected float InitDelay;
+	[SerializeField] protected float initDelay;
 	protected float timer;
 	protected GameObject player;
 
 	public void Start(){
 		Random.InitState((int)System.DateTime.Now.Ticks); 
-		timer = spawnCooldown + InitDelay;
+		timer = spawnCooldown + initDelay;
 		player = GameObject.Find("Pacman");
 	}
 	public void ReloadTimer(){

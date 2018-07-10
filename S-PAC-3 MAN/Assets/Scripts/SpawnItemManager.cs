@@ -5,9 +5,9 @@ using UnityEngine;
 public class SpawnItemManager : SpawnManager {
 
 	[SerializeField] private int maxItem;
-	private int ItemCount;
+	private int itemCount;
 	void Update () {
-		if(GetItemCount() < maxItem && player.GetComponent<PlayerController>().GetDeath() == false ){
+		if(GetItemCount() < maxItem && player.GetComponent<PlayerController>().GetDeath() == false){
 			timer -= Time.deltaTime;
 			if(timer < 0){
 				ReloadTimer();	
@@ -20,13 +20,13 @@ public class SpawnItemManager : SpawnManager {
 
 	public void IncreaseItemCount(bool create){
 		if(create){
-			ItemCount++;
+			itemCount++;
 		}else{
-			ItemCount--;
+			itemCount--;
 		}
 	}
 
 	public int GetItemCount(){
-		return ItemCount;
+		return itemCount;
 	}
 }

@@ -67,5 +67,5 @@ MonoBehaviour:
   spawnable: {fileID: 1108926663138200, guid: ed1fa23a83a7ed544aabd73b2555d722, type: 2}
   indicator: {fileID: 1221505863632758, guid: 2919a23949febb040a554c98224a89c4, type: 2}
   spawnCooldown: 5
-  InitDelay: -5
+  initDelay: -5
   maxItem: 3

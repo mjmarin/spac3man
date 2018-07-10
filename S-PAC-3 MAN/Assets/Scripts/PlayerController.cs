@@ -6,12 +6,13 @@ public class PlayerController : MonoBehaviour {
 
 	[SerializeField] private float movementSpeed;
 	[SerializeField] private float rotationSpeed;
-	private bool Death;
-	private float ScreenWidth;
+	[SerializeField] private GameObject pauseBt;
+	private bool death;
+	private float screenWidth;
 
 	void Start(){
-		ScreenWidth = Screen.width;
-		Death = false;
+		screenWidth = Screen.width;
+		death = false;
 	}
 
 	void Update () {
@@ -21,7 +22,7 @@ public class PlayerController : MonoBehaviour {
 			int direction = 0;
 			if(GetDeath() == false){		// Quiero que al morir siga hacia delante pero ya no se pueda controlar
 				if (Input.touchCount > 0){
-					if (Input.GetTouch (0).position.x > ScreenWidth / 2) {					//Move Right
+					if (Input.GetTouch (0).position.x > screenWidth / 2) {					//Move Right
 						direction = -1;
 					}else{																	//Move Left
 						direction = 1;
@@ -34,9 +35,9 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public bool GetDeath(){
-		return Death;
+		return death;
 	}
 	public void SetDeath(bool boolean){
-		Death = boolean;
+		death = boolean;
 	}
 }

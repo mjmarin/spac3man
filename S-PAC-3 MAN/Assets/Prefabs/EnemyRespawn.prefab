@@ -55,9 +55,7 @@ MonoBehaviour:
   spawnable: {fileID: 1904840571600870, guid: a7d8b2fe4f06742459aeb5c17eed06e3, type: 2}
   indicator: {fileID: 1362971309334570, guid: 38f082cc42f5769418411f93307c848b, type: 2}
   spawnCooldown: 15
-  InitDelay: 0
-  timer: 0
-  player: {fileID: 0}
+  initDelay: -15
 --- !u!114 &114982707184551362
 MonoBehaviour:
   m_ObjectHideFlags: 1
