@@ -6,13 +6,17 @@ public class PlayerController : MonoBehaviour {
 
 	[SerializeField] private float movementSpeed;
 	[SerializeField] private float rotationSpeed;
-	[SerializeField] private GameObject pauseBt;
+	private Animator anim;
 	private bool death;
 	private float screenWidth;
+	private int pickUps;
 
 	void Start(){
+		anim = GetComponent<Animator>();
 		screenWidth = Screen.width;
 		death = false;
+		anim.SetBool("isDead",false);
+		pickUps = 0;
 	}
 
 	void Update () {
@@ -34,10 +38,24 @@ public class PlayerController : MonoBehaviour {
 		transform.position += transform.up * Time.deltaTime * movementSpeed;
 	}
 
+	void OnTriggerEnter2D(Collider2D other){
+		if(other.CompareTag("Enemy")) {
+			GetComponent<PlayerController>().SetDeath(true);
+			anim.SetBool("isDead",true);
+		}else{
+			if(GetDeath() == false)
+				pickUps++;
+		}
+	}
+
+	public int GetPickUps(){
+		return pickUps;
+	}
+
 	public bool GetDeath(){
 		return death;
 	}
-	public void SetDeath(bool boolean){
+	private void SetDeath(bool boolean){
 		death = boolean;
 	}
 }
