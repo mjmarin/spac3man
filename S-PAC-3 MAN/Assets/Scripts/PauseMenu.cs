@@ -5,12 +5,19 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour {
 
+	[SerializeField] private GameObject player;
+	private PauseController scriptPause;
+	void Start(){
+		scriptPause = this.gameObject.GetComponent<PauseController>();
+	}
 	public void Reload(){
-		SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 
 	public void Menu(){
-		SceneManager.LoadSceneAsync(0);
+		if(!player.GetComponent<PlayerController>().GetDeath())
+			scriptPause.ChangeState();
+		SceneManager.LoadScene(0);
 	}
 
 	public void Quit(){
