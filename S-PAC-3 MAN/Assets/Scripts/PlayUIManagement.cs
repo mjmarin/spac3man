@@ -7,9 +7,7 @@ public class PlayUIManagement : MonoBehaviour {
 	[SerializeField] private GameObject gameOverText;
 	[SerializeField] private GameObject pauseText;
 	[SerializeField] private GameObject pauseBt;
-	[SerializeField] private GameObject restartBt;
-	[SerializeField] private GameObject menuBt;
-	[SerializeField] private GameObject quitBt;
+	[SerializeField] private GameObject pauseMenu;
 	[SerializeField] private GameObject player;
 	[SerializeField] private Text counterText;
 	[SerializeField] private Text timerText;
@@ -21,7 +19,7 @@ public class PlayUIManagement : MonoBehaviour {
 	void Start () {
 		gameOverText.SetActive(false);
 		pauseText.SetActive(false);
-		ActiveBts(false);
+		pauseMenu.SetActive(false);
 
 		playerScript = player.GetComponent<PlayerController>();
 		pauseScript = this.gameObject.GetComponent<PauseController>();
@@ -38,13 +36,13 @@ public class PlayUIManagement : MonoBehaviour {
 		if(playerScript.GetDeath()){
 			pauseBt.SetActive(false);
 			gameOverText.SetActive(true);
-			ActiveBts(true);
+			pauseMenu.SetActive(true);
 		}else if(pauseScript.GetPaused()){
 			pauseText.SetActive(true);
-			ActiveBts(true);
+			pauseMenu.SetActive(true);
 		}else{
 			pauseText.SetActive(false);
-			ActiveBts(false);
+			pauseMenu.SetActive(false);
 		}
 	}
 
@@ -56,10 +54,5 @@ public class PlayUIManagement : MonoBehaviour {
 
 			timerText.text = string.Format("{0:D2}:{1:D2}", timerMinutes, timerSeconds % 60);
 		}
-	}
-	void ActiveBts(bool boolean){
-		restartBt.SetActive(boolean);
-		menuBt.SetActive(boolean);
-		quitBt.SetActive(boolean);
 	}
 }

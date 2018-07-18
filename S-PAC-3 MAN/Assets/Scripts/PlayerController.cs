@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
 	private bool death;
 	private float screenWidth;
 	private int pickUps;
+	private PauseController scriptPause;
 
 	void Start(){
 		anim = GetComponent<Animator>();
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour {
 		death = false;
 		anim.SetBool("isDead",false);
 		pickUps = 0;
+		scriptPause = GameObject.Find("Canvas").GetComponent<PauseController>();
 	}
 
 	void Update () {
@@ -24,7 +26,7 @@ public class PlayerController : MonoBehaviour {
 			transform.Rotate(new Vector3(0,0,-Input.GetAxis("Horizontal") * rotationSpeed));		//Para probar en PC
 		#else
 			int direction = 0;
-			if(GetDeath() == false){		// Quiero que al morir siga hacia delante pero ya no se pueda controlar
+			if(GetDeath() == false && scriptPause.GetPaused() == false ){		// Quiero que al morir siga hacia delante pero ya no se pueda controlar
 				if (Input.touchCount > 0){
 					if (Input.GetTouch (0).position.x > screenWidth / 2) {					//Move Right
 						direction = -1;

@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuUIManagement : MonoBehaviour {
+
+	/* Variables movimiento flechas */
 	[SerializeField] private GameObject speedSelector;
 	[SerializeField] private GameObject modeSelector;
 	[SerializeField] private float range;
@@ -14,7 +17,20 @@ public class MenuUIManagement : MonoBehaviour {
 	private int senseMS;
 	private int selectionSS;
 	private int selectionMS;
+
+	/* Configuración del juego */
 	private Configuration scriptConfiguration;
+
+	/* FPS */
+	private CalculateFPS scriptFPS;
+	private Text FPSText;
+
+	/* Objectos de las distintas fases del menú principal */
+	[SerializeField] private GameObject FPSCounter;
+	[SerializeField] private GameObject pacman;
+	[SerializeField] private GameObject mainMenu;
+	[SerializeField] private GameObject optionsMenu;
+	[SerializeField] private GameObject creditsDisplay;
 
 	void Start(){
 		senseMS = 1;
@@ -26,10 +42,18 @@ public class MenuUIManagement : MonoBehaviour {
 		selectionSS = 1;
 
 		scriptConfiguration = Camera.main.GetComponent<Configuration>();
+
+		optionsMenu.SetActive(false);
+		creditsDisplay.SetActive(false);
+		FPSCounter.SetActive(false);
+
+		FPSText = FPSCounter.GetComponent<Text>();
+		scriptFPS = GetComponent<CalculateFPS>();
 	}
 	
 	void Update () {
 		MoveSelectors();
+		DisplayFPS();
 	}
 
 	private void MoveSelectors(){
@@ -46,6 +70,15 @@ public class MenuUIManagement : MonoBehaviour {
 		}else{
 			return sense;
 		}
+	}
+
+	/* Display fps */
+	public void SetFPS(bool boolean){
+		FPSCounter.SetActive(boolean);
+	}
+
+	private void DisplayFPS(){
+		FPSText.text = "FPS: " + scriptFPS.GetFPS().ToString();
 	}
 
 	/* Click de ready! */
@@ -108,4 +141,40 @@ public class MenuUIManagement : MonoBehaviour {
 			scriptConfiguration.SetModeSelected(selectionMS);
 		}
 	}
+
+	/* Click de ajustes */
+	public void OptionsBt(){
+		mainMenu.SetActive(false);
+		pacman.SetActive(false);
+		optionsMenu.SetActive(true);
+	}
+
+	public void ExitOptionsBt(){
+		mainMenu.SetActive(true);
+		pacman.SetActive(true);
+		optionsMenu.SetActive(false);
+
+		/* Guardar opciones para jugador */
+
+	}
+
+	public void CreditsBt(){
+		optionsMenu.SetActive(false);
+		creditsDisplay.SetActive(true);
+	}
+
+	public void BackCreditsBt(){
+		creditsDisplay.SetActive(false);
+		optionsMenu.SetActive(true);
+	}
+
+	/* Click de misiones */
+
+	/* Click de instrucciones */
+
+	/* Click de ajustes */
+
+	/* Click de GooglePlay */
+
+	/* Click de records */
 }

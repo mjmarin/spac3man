@@ -17,8 +17,9 @@ public class Configuration : MonoBehaviour {
 		skinSelected = 1;
 		musicOn = true;
 		soundOn = true;
-		FPSOn = true;
+		FPSOn = false;
 	}	
+
 	public void SetSpeedSelected(int option){
 		speedSelected = option;
 	}
