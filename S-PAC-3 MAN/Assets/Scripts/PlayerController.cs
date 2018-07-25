@@ -44,6 +44,8 @@ public class PlayerController : MonoBehaviour {
 		if(other.CompareTag("Enemy")) {
 			GetComponent<PlayerController>().SetDeath(true);
 			anim.SetBool("isDead",true);
+			int money = PlayerPrefs.GetInt("money");
+			PlayerPrefs.SetInt("money", pickUps + money);
 		}else{
 			if(GetDeath() == false)
 				pickUps++;

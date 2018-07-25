@@ -18,9 +18,6 @@ public class MenuUIManagement : MonoBehaviour {
 	private int selectionSS;
 	private int selectionMS;
 
-	/* Configuración del juego */
-	private Configuration scriptConfiguration;
-
 	/* FPS */
 	private CalculateFPS scriptFPS;
 	private Text FPSText;
@@ -30,7 +27,18 @@ public class MenuUIManagement : MonoBehaviour {
 	[SerializeField] private GameObject pacman;
 	[SerializeField] private GameObject mainMenu;
 	[SerializeField] private GameObject optionsMenu;
+	[SerializeField] private Toggle checkMusic;
+	[SerializeField] private Toggle checkSound;
+	[SerializeField] private Toggle checkFPS;
 	[SerializeField] private GameObject creditsDisplay;
+	[SerializeField] private GameObject instructionsDisplay1;
+	[SerializeField] private GameObject instructionsDisplay2;
+	[SerializeField] private GameObject instructionsDisplay3;
+
+	private void Awake(){
+		FPSText = FPSCounter.GetComponent<Text>();
+		scriptFPS = GetComponent<CalculateFPS>();
+	}
 
 	void Start(){
 		senseMS = 1;
@@ -41,14 +49,34 @@ public class MenuUIManagement : MonoBehaviour {
 		selectionMS = 1;
 		selectionSS = 1;
 
-		scriptConfiguration = Camera.main.GetComponent<Configuration>();
-
 		optionsMenu.SetActive(false);
 		creditsDisplay.SetActive(false);
-		FPSCounter.SetActive(false);
+		instructionsDisplay1.SetActive(false);
+		instructionsDisplay2.SetActive(false);
+		
+		if(PlayerPrefs.GetInt("FPSOn", 0) == 1){
+			FPSCounter.SetActive(true);
+		}else{
+			FPSCounter.SetActive(false);
+		}
 
-		FPSText = FPSCounter.GetComponent<Text>();
-		scriptFPS = GetComponent<CalculateFPS>();
+		if(PlayerPrefs.GetInt("musicOn", 1) == 1){
+			checkMusic.isOn = true;
+		}else{
+			checkMusic.isOn = false;
+		}
+
+		if(PlayerPrefs.GetInt("soundOn", 1) == 1){
+			checkSound.isOn = true;
+		}else{
+			checkSound.isOn = false;
+		}
+
+		if(PlayerPrefs.GetInt("FPSOn", 1) == 1){
+			checkFPS.isOn = true;
+		}else{
+			checkFPS.isOn = false;
+		}
 	}
 	
 	void Update () {
@@ -96,7 +124,7 @@ public class MenuUIManagement : MonoBehaviour {
 			}
 
 			selectionSS = 1;
-			scriptConfiguration.SetSpeedSelected(selectionSS);
+			PlayerPrefs.SetInt("speedSelected", selectionSS);
 		}
 	}
 	public void SSSpeedRacer(){
@@ -108,7 +136,7 @@ public class MenuUIManagement : MonoBehaviour {
 			}
 
 			selectionSS = 2;
-			scriptConfiguration.SetSpeedSelected(selectionSS);
+			PlayerPrefs.SetInt("speedSelected", selectionSS);
 		}
 	}
 	public void SSTryhard(){
@@ -120,7 +148,7 @@ public class MenuUIManagement : MonoBehaviour {
 			}
 
 			selectionSS = 3;
-			scriptConfiguration.SetSpeedSelected(selectionSS);
+			PlayerPrefs.SetInt("speedSelected", selectionSS);
 		}
 	}
 
@@ -130,7 +158,7 @@ public class MenuUIManagement : MonoBehaviour {
 			modeSelector.transform.localPosition += Vector3.up * 143.9f;
 
 			selectionMS = 1;
-			scriptConfiguration.SetModeSelected(selectionMS);
+			PlayerPrefs.SetInt("modeSelected", selectionMS);
 		}
 	}
 	public void MSNotEnoughOxygen(){
@@ -138,7 +166,7 @@ public class MenuUIManagement : MonoBehaviour {
 			modeSelector.transform.localPosition += Vector3.up * -143.9f;
 
 			selectionMS = 2;
-			scriptConfiguration.SetModeSelected(selectionMS);
+			PlayerPrefs.SetInt("modeSelected", selectionMS);
 		}
 	}
 
@@ -153,9 +181,6 @@ public class MenuUIManagement : MonoBehaviour {
 		mainMenu.SetActive(true);
 		pacman.SetActive(true);
 		optionsMenu.SetActive(false);
-
-		/* Guardar opciones para jugador */
-
 	}
 
 	public void CreditsBt(){
@@ -172,7 +197,38 @@ public class MenuUIManagement : MonoBehaviour {
 
 	/* Click de instrucciones */
 
-	/* Click de ajustes */
+	public void InstructionsBt(){
+		optionsMenu.SetActive(false);
+		instructionsDisplay1.SetActive(true);
+	}
+	public void ExitInstructions1Bt(){
+		instructionsDisplay1.SetActive(false);
+		mainMenu.SetActive(true);
+	}
+	public void ExitInstructions2Bt(){
+		instructionsDisplay2.SetActive(false);
+		mainMenu.SetActive(true);
+	}
+	public void ExitInstructions3Bt(){
+		instructionsDisplay3.SetActive(false);
+		mainMenu.SetActive(true);
+	}
+	public void ContinueInstruction1Bt(){
+		instructionsDisplay1.SetActive(false);
+		instructionsDisplay2.SetActive(true);
+	}
+	public void ContinueInstruction2Bt(){
+		instructionsDisplay2.SetActive(false);
+		instructionsDisplay3.SetActive(true);
+	}
+	public void BackInstruction2Bt(){
+		instructionsDisplay2.SetActive(false);
+		instructionsDisplay1.SetActive(true);
+	}
+	public void BackInstruction3Bt(){
+		instructionsDisplay3.SetActive(false);
+		instructionsDisplay2.SetActive(true);
+	}
 
 	/* Click de GooglePlay */
 

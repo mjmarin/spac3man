@@ -9,25 +9,38 @@ public class PlayUIManagement : MonoBehaviour {
 	[SerializeField] private GameObject pauseBt;
 	[SerializeField] private GameObject pauseMenu;
 	[SerializeField] private GameObject player;
+	[SerializeField] private GameObject FPSCounter;
 	[SerializeField] private Text counterText;
 	[SerializeField] private Text timerText;
+	
 	private PlayerController playerScript;
 	private PauseController pauseScript;
 	private float time;
 	private int timerMinutes;
 	private int timerSeconds;
-	void Start () {
+
+	/// <summary>
+	/// Awake is called when the script instance is being loaded.
+	/// </summary>
+	private void Awake(){
+		playerScript = player.GetComponent<PlayerController>();
+		pauseScript = this.gameObject.GetComponent<PauseController>();
+	}
+	private void Start () {
 		gameOverText.SetActive(false);
 		pauseText.SetActive(false);
 		pauseMenu.SetActive(false);
 
-		playerScript = player.GetComponent<PlayerController>();
-		pauseScript = this.gameObject.GetComponent<PauseController>();
+		if(PlayerPrefs.GetInt("FPSOn") == 1){
+			FPSCounter.SetActive(true);
+		}else{
+			FPSCounter.SetActive(false);
+		}
 
 		time = 0;
 	}
 	
-	void Update(){
+	private void Update(){
 
 		SetTimer();
 
@@ -46,7 +59,7 @@ public class PlayUIManagement : MonoBehaviour {
 		}
 	}
 
-	void SetTimer(){
+	private void SetTimer(){
 		if(playerScript.GetDeath() == false){
 			time += Time.deltaTime;
 			timerSeconds = (int)Mathf.Floor(time);
