@@ -1620,6 +1620,7 @@ GameObject:
   - component: {fileID: 1223066485}
   - component: {fileID: 1223066483}
   - component: {fileID: 1223066484}
+  - component: {fileID: 1223066486}
   m_Layer: 11
   m_Name: Canvas
   m_TagString: Untagged
@@ -1725,6 +1726,7 @@ MonoBehaviour:
   pauseBt: {fileID: 1049986101}
   pauseMenu: {fileID: 706300373}
   player: {fileID: 1887889900}
+  FPSCounter: {fileID: 2014895960}
   counterText: {fileID: 1755010812}
   timerText: {fileID: 1777827444}
 --- !u!114 &1223066484
@@ -1759,6 +1761,19 @@ MonoBehaviour:
   musicOff: {fileID: 21300000, guid: 3461a65a4e0f1d54ab3239d9c9926331, type: 3}
   musicBt: {fileID: 68130086}
   player: {fileID: 1887889900}
+--- !u!114 &1223066486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1223066478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe9ecf40ab7098348946ca6f4a9e6a34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateRate: 4
+  FPSCounter: {fileID: 2014895960}
 --- !u!1 &1243568722
 GameObject:
   m_ObjectHideFlags: 0
