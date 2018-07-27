@@ -19,9 +19,6 @@ public class PlayUIManagement : MonoBehaviour {
 	private int timerMinutes;
 	private int timerSeconds;
 
-	/// <summary>
-	/// Awake is called when the script instance is being loaded.
-	/// </summary>
 	private void Awake(){
 		playerScript = player.GetComponent<PlayerController>();
 		pauseScript = this.gameObject.GetComponent<PauseController>();

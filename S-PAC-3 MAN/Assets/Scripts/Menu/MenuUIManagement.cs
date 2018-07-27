@@ -18,15 +18,11 @@ public class MenuUIManagement : MonoBehaviour {
 	private int selectionSS;
 	private int selectionMS;
 
-	/* FPS 
-	private CalculateFPS scriptFPS;
-	private Text FPSText;
-	*/
-
 	/* Objectos de las distintas fases del menú principal */
 	[SerializeField] private GameObject FPSCounter;
 	[SerializeField] private GameObject pacman;
 	[SerializeField] private GameObject mainMenu;
+	[SerializeField] private Text moneyCounter;
 	[SerializeField] private GameObject optionsMenu;
 	[SerializeField] private Toggle checkMusic;
 	[SerializeField] private Toggle checkSound;
@@ -55,7 +51,6 @@ public class MenuUIManagement : MonoBehaviour {
 		instructionsDisplay2.SetActive(false);
 		instructionsDisplay3.SetActive(false);
 
-
 		if(PlayerPrefs.GetInt("musicOn", 1) == 1){
 			checkMusic.isOn = true;
 			musicBool = true;
@@ -63,6 +58,7 @@ public class MenuUIManagement : MonoBehaviour {
 		}else{
 			checkMusic.isOn = false;
 			musicBool = false;
+			PlayerPrefs.SetInt("musicOn", 0); /* Para solventar error SIN SENTIDO por el que en el else se cambia de 0 a 1 */
 		}
 
 		if(PlayerPrefs.GetInt("soundOn", 1) == 1){
@@ -72,6 +68,7 @@ public class MenuUIManagement : MonoBehaviour {
 		}else{
 			checkSound.isOn = false;
 			soundBool = false;
+			PlayerPrefs.SetInt("soundOn", 0); /* Para solventar error SIN SENTIDO por el que en el else se cambia de 0 a 1 */
 		}
 
 		if(PlayerPrefs.GetInt("FPSOn", 0) == 1){
@@ -84,6 +81,8 @@ public class MenuUIManagement : MonoBehaviour {
 			checkFPS.isOn = false;
 			FPSBool = false;
 		}
+
+		//moneyCounter.text = PlayerPrefs.GetInt("money", 0).ToString();
 	}
 	
 	void Update () {

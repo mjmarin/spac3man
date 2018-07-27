@@ -1839,6 +1839,7 @@ MonoBehaviour:
   FPSCounter: {fileID: 1110013443}
   pacman: {fileID: 1600392198}
   mainMenu: {fileID: 551367789}
+  moneyCounter: {fileID: 771987252}
   optionsMenu: {fileID: 942003860}
   checkMusic: {fileID: 1176793625}
   checkSound: {fileID: 1258750024}
