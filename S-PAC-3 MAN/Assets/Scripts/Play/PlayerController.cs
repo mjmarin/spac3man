@@ -42,10 +42,17 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		if(other.CompareTag("Enemy")) {
+
+			if(!GetComponent<PlayerController>().GetDeath()){		/* El objeto sigue existiendo para que continue hacia delante */
+				int money = PlayerPrefs.GetInt("money", 0);
+				PlayerPrefs.SetInt("money", pickUps + money);
+			}
+			
 			GetComponent<PlayerController>().SetDeath(true);
 			anim.SetBool("isDead",true);
-			int money = PlayerPrefs.GetInt("money");
-			PlayerPrefs.SetInt("money", pickUps + money);
+
+
+			
 		}else{
 			if(GetDeath() == false)
 				pickUps++;

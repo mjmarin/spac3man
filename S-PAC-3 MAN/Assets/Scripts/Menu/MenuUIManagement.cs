@@ -82,7 +82,7 @@ public class MenuUIManagement : MonoBehaviour {
 			FPSBool = false;
 		}
 
-		//moneyCounter.text = PlayerPrefs.GetInt("money", 0).ToString();
+		moneyCounter.text = PlayerPrefs.GetInt("money", 0).ToString();
 	}
 	
 	void Update () {
