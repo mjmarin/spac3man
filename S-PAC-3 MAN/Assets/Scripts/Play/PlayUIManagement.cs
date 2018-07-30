@@ -12,9 +12,14 @@ public class PlayUIManagement : MonoBehaviour {
 	[SerializeField] private GameObject FPSCounter;
 	[SerializeField] private Text counterText;
 	[SerializeField] private Text timerText;
+	[SerializeField] private GameObject score;
+	[SerializeField] private Text scoreMoneyText;
+	[SerializeField] private Text scoreTimerText;
+	[SerializeField] private Text scoreValueText;
 	
 	private PlayerController playerScript;
 	private PauseController pauseScript;
+	
 	private float time;
 	private int timerMinutes;
 	private int timerSeconds;
@@ -27,6 +32,7 @@ public class PlayUIManagement : MonoBehaviour {
 		gameOverText.SetActive(false);
 		pauseText.SetActive(false);
 		pauseMenu.SetActive(false);
+		score.SetActive(false);
 
 		if(PlayerPrefs.GetInt("FPSOn") == 1){
 			FPSCounter.SetActive(true);
@@ -47,6 +53,10 @@ public class PlayUIManagement : MonoBehaviour {
 			pauseBt.SetActive(false);
 			gameOverText.SetActive(true);
 			pauseMenu.SetActive(true);
+			timerText.gameObject.SetActive(false);
+			counterText.transform.parent.gameObject.SetActive(false);
+			SetScore();
+			score.SetActive(true);
 		}else if(pauseScript.GetPaused()){
 			pauseText.SetActive(true);
 			pauseMenu.SetActive(true);
@@ -64,5 +74,11 @@ public class PlayUIManagement : MonoBehaviour {
 
 			timerText.text = string.Format("{0:D2}:{1:D2}", timerMinutes, timerSeconds % 60);
 		}
+	}
+
+	private void SetScore(){
+		scoreMoneyText.text = counterText.text;
+		scoreTimerText.text = timerText.text;
+		scoreValueText.text = (playerScript.GetPickUps() * 10 + timerMinutes * 60 + timerSeconds % 60).ToString();
 	}
 }

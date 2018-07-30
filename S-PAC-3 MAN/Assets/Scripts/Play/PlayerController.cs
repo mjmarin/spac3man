@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour {
 		scriptPause = GameObject.Find("Canvas").GetComponent<PauseController>();
 	}
 
+	/* Controles */
 	void Update () {
 		# if UNITY_EDITOR
 			transform.Rotate(new Vector3(0,0,-Input.GetAxis("Horizontal") * rotationSpeed));		//Para probar en PC
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour {
 		transform.position += transform.up * Time.deltaTime * movementSpeed;
 	}
 
+	/* Muerte y PickUps */
 	void OnTriggerEnter2D(Collider2D other){
 		if(other.CompareTag("Enemy")) {
 
@@ -47,12 +49,10 @@ public class PlayerController : MonoBehaviour {
 				int money = PlayerPrefs.GetInt("money", 0);
 				PlayerPrefs.SetInt("money", pickUps + money);
 			}
-			
+
 			GetComponent<PlayerController>().SetDeath(true);
 			anim.SetBool("isDead",true);
 
-
-			
 		}else{
 			if(GetDeath() == false)
 				pickUps++;

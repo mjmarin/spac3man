@@ -11,6 +11,8 @@ public class MenuUIManagement : MonoBehaviour {
 	[SerializeField] private GameObject modeSelector;
 	[SerializeField] private float range;
 	[SerializeField] private float speed;
+	private const float constantDistanceSS = 242;
+	private const float constantDistanceMS = 143.9f;
 	private float startPositionSS;
 	private float startPositionMS;
 	private int senseSS;
@@ -41,8 +43,11 @@ public class MenuUIManagement : MonoBehaviour {
 		startPositionSS = speedSelector.transform.localPosition.y;
 		startPositionMS = modeSelector.transform.localPosition.x;
 
-		selectionMS = PlayerPrefs.GetInt("modeSelected", 1);
 		selectionSS = PlayerPrefs.GetInt("speedSelected", 1);
+		selectionMS = PlayerPrefs.GetInt("modeSelected", 1);
+		
+		StartArrow(speedSelector, selectionSS, 1);
+		StartArrow(modeSelector, selectionMS, -1);
 
 		mainMenu.SetActive(true);
 		optionsMenu.SetActive(false);
@@ -90,6 +95,19 @@ public class MenuUIManagement : MonoBehaviour {
 	}
 
 	/* Mover las flechas de selección */
+
+	private void StartArrow(GameObject obj, int selection, int option){
+		float change;
+		Vector3 vect;
+		if(option == 1){
+			change = constantDistanceSS;
+			vect = Vector3.right;
+		}else{
+			change = constantDistanceMS;
+			vect = Vector3.up;
+		}
+		obj.transform.localPosition += vect * change * (selection - 1) * option;
+	}
 	private void MoveSelectors(){
 		senseSS = Sense(speedSelector.transform.localPosition.y, startPositionSS, senseSS);
 		speedSelector.transform.localPosition += Vector3.up * speed * senseSS;
@@ -115,11 +133,7 @@ public class MenuUIManagement : MonoBehaviour {
 	/* Click de botones de selección de velocidad */
 	public void SSNormal(){
 		if(selectionSS != 1){
-			if(selectionSS == 2){
-				speedSelector.transform.localPosition += Vector3.right * -242;		//242 es la distancia entre los centros de los botones
-			}else{
-				speedSelector.transform.localPosition += Vector3.right * -484;
-			}
+			speedSelector.transform.localPosition += Vector3.right * constantDistanceSS * (1 - selectionSS);
 
 			selectionSS = 1;
 			PlayerPrefs.SetInt("speedSelected", selectionSS);
@@ -127,11 +141,7 @@ public class MenuUIManagement : MonoBehaviour {
 	}
 	public void SSSpeedRacer(){
 		if(selectionSS != 2){
-			if(selectionSS == 3){
-				speedSelector.transform.localPosition += Vector3.right * -242;
-			}else{
-				speedSelector.transform.localPosition += Vector3.right * 242;
-			}
+			speedSelector.transform.localPosition += Vector3.right * constantDistanceSS * (2 - selectionSS);
 
 			selectionSS = 2;
 			PlayerPrefs.SetInt("speedSelected", selectionSS);
@@ -139,11 +149,7 @@ public class MenuUIManagement : MonoBehaviour {
 	}
 	public void SSTryhard(){
 		if(selectionSS != 3){
-			if(selectionSS == 1){
-				speedSelector.transform.localPosition += Vector3.right * 484;
-			}else{
-				speedSelector.transform.localPosition += Vector3.right * 242;
-			}
+			speedSelector.transform.localPosition += Vector3.right * constantDistanceSS * (3 - selectionSS);
 
 			selectionSS = 3;
 			PlayerPrefs.SetInt("speedSelected", selectionSS);
