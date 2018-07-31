@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestCollection>
+    <Quests>
+        <Quest ID = 0>
+            <Description> "Survive one minute" </Description>
+            <Completed> 0 </Completed>
+            <RequiredAmount> 60 </RequiredAmount>
+            <Reward> 5 </Reward>
+            <Type> 1 </Type>
+        </Quest>
+
+        <Quest ID = 1>
+            <Description> "Survive one minute and a half" </Description>
+            <Completed> 0 </Completed>
+            <RequiredAmount> 90 </RequiredAmount>
+            <Reward> 7 </Reward>
+            <Type> 1 </Type>
+        </Quest>
+
+        <Quest ID = 2>
+            <Description> "Survive two minutes" </Description>
+            <Completed> 0 </Completed>
+            <RequiredAmount> 120 </RequiredAmount>
+            <Reward> 10 </Reward>
+            <Type> 1 </Type>
+        </Quest>
+
+        <Quest ID = 3>
+            <Description> "Survive two minutes and a half" </Description>
+            <Completed> 0 </Completed>
+            <RequiredAmount> 120 </RequiredAmount>
+            <Reward> 12 </Reward>
+            <Type> 1 </Type>
+        </Quest>
+
+        <Quest ID = 4>
+            <Description> "Survive three minutes" </Description>
+            <Completed> 0 </Completed>
+            <RequiredAmount> 180 </RequiredAmount>
+            <Reward> 15 </Reward>
+            <Type> 1 </Type>
+        </Quest>
+
+        <Quest ID = 5>
+            <Description> "Pick 3 coins in a row" </Description>
+            <Completed> 0 </Completed>
+            <RequiredAmount> 3 </RequiredAmount>
+            <Reward> 5 </Reward>
+            <Type> 2 </Type>
+        </Quest>
+
+        <Quest ID = 6>
+            <Description> "Pick 5 coins in a row" </Description>
+            <Completed> 0 </Completed>
+            <RequiredAmount> 5 </RequiredAmount>
+            <Reward> 7 </Reward>
+            <Type> 2 </Type>
+        </Quest>
+
+        <Quest ID = 7>
+            <Description> "Pick 10 coins in a row" </Description>
+            <Completed> 0 </Completed>
+            <RequiredAmount> 10 </RequiredAmount>
+            <Reward> 15 </Reward>
+            <Type> 2 </Type>
+        </Quest>
+
+        <Quest ID = 8>
+            <Description> "Pick 15 coins in a row" </Description>
+            <Completed> 0 </Completed>
+            <RequiredAmount> 15 </RequiredAmount>
+            <Reward> 20 </Reward>
+            <Type> 2 </Type>
+        </Quest>
+
+        <Quest ID = 9>
+            <Description> "Pick 20 coins in a row" </Description>
+            <Completed> 0 </Completed>
+            <RequiredAmount> 20 </RequiredAmount>
+            <Reward> 30 </Reward>
+            <Type> 2 </Type>
+        </Quest>
+
+        <Quest ID = 10>
+            <Description> "Pick 2 shields" </Description>
+            <Completed> 0 </Completed>
+            <RequiredAmount> 3 </RequiredAmount>
+            <Reward> 5 </Reward>
+            <Type> 3 </Type>
+        </Quest>
+
+        <Quest ID = 11>
+            <Description> "Pick 5 shields" </Description>
+            <Completed> 0 </Completed>
+            <RequiredAmount> 5 </RequiredAmount>
+            <Reward> 15 </Reward>
+            <Type> 3 </Type>
+        </Quest>
+
+        <Quest ID = 12>
+            <Description> "Use a shield for one minute" </Description>
+            <Completed> 0 </Completed>
+            <RequiredAmount> 3 </RequiredAmount>
+            <Reward> 10 </Reward>
+            <Type> 4 </Type>
+        </Quest>
+
+        <Quest ID = 13>
+            <Description> "Use a shield for two minutes" </Description>
+            <Completed> 0 </Completed>
+            <RequiredAmount> 5 </RequiredAmount>
+            <Reward> 20 </Reward>
+            <Type> 4 </Type>
+        </Quest>
+
+        <Quest ID = 14>
+            <Description> "Use a shield for three minutes" </Description>
+            <Completed> 0 </Completed>
+            <RequiredAmount> 5 </RequiredAmount>
+            <Reward> 30 </Reward>
+            <Type> 4 </Type>
+        </Quest>
+    </Quests>
+</QuestCollection>
