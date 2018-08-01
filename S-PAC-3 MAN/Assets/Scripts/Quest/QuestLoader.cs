@@ -18,26 +18,9 @@ public class QuestLoader : MonoBehaviour {
 		SetActiveQuest();
 	}
 
-	private int[] RandomIntValues(int count, int minRange, int maxRange){
-		List<int> usedValues = new List<int>();	
-		int value;
-
-		value = UnityEngine.Random.Range(minRange, maxRange);
-		usedValues.Add(value);
-
-		while(usedValues.Count < count){
-			value = UnityEngine.Random.Range(minRange, maxRange);
-			while(usedValues.Contains(value)){
-				value = UnityEngine.Random.Range(minRange, maxRange);
-			}
-			usedValues.Add(value);
-		}
-		return usedValues.ToArray();
-	}
-
 	private void ActualizeQuests(){
 		int[] missions = new int[3];
-		missions = RandomIntValues(3,0,14);
+		missions = Helper.RandomIntValues(3,0,14);
 
 		PlayerPrefs.SetInt("Mission1", missions[0]);
 		PlayerPrefs.SetInt("Mission2", missions[1]);
