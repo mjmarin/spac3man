@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class QuestLoader : MonoBehaviour {
 
-	public const string path = "QuestFile";
-	public static Quest[] quests;
+	private const string path = "Quests/QuestFile";
+	private static Quest[] quests = new Quest[3];
 
 	void Start () {
 		DateTime dt = DateTime.Now;
@@ -20,19 +20,17 @@ public class QuestLoader : MonoBehaviour {
 
 	private int[] RandomIntValues(int count, int minRange, int maxRange){
 		List<int> usedValues = new List<int>();	
-		int[] values = new int[count];
-		int index = 0;
+		int value;
 
-		values[index] = UnityEngine.Random.Range(minRange, maxRange);
-		usedValues.Add(values[index]);
+		value = UnityEngine.Random.Range(minRange, maxRange);
+		usedValues.Add(value);
 
 		while(usedValues.Count < count){
-			index++;
-			values[index] = UnityEngine.Random.Range(minRange, maxRange);
-			while(usedValues.Contains(values[index])){
-				values[index] = UnityEngine.Random.Range(minRange, maxRange);
+			value = UnityEngine.Random.Range(minRange, maxRange);
+			while(usedValues.Contains(value)){
+				value = UnityEngine.Random.Range(minRange, maxRange);
 			}
-			usedValues.Add(values[index]);
+			usedValues.Add(value);
 		}
 		return usedValues.ToArray();
 	}
@@ -44,6 +42,10 @@ public class QuestLoader : MonoBehaviour {
 		PlayerPrefs.SetInt("Mission1", missions[0]);
 		PlayerPrefs.SetInt("Mission2", missions[1]);
 		PlayerPrefs.SetInt("Mission3", missions[2]);
+
+		PlayerPrefs.SetInt("Mission1Completed", 0);
+		PlayerPrefs.SetInt("Mission2Completed", 0);
+		PlayerPrefs.SetInt("Mission3Completed", 0);
 	}
 
 	private void ActualizeDate(int day, int month){
@@ -58,8 +60,8 @@ public class QuestLoader : MonoBehaviour {
 		quests[1] = qc.quests[PlayerPrefs.GetInt("Mission2")];
 		quests[2] = qc.quests[PlayerPrefs.GetInt("Mission3")];
 	}
-	
-	public Quest[] GetActiveQuest(){
+
+	public static Quest[] GetActiveQuests(){
 		return quests;
 	}  
 	

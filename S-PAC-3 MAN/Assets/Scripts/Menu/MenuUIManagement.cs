@@ -26,16 +26,31 @@ public class MenuUIManagement : MonoBehaviour {
 	[SerializeField] private GameObject mainMenu;
 	[SerializeField] private Text moneyCounter;
 	[SerializeField] private GameObject optionsMenu;
+	[SerializeField] private GameObject questsMenu;
+	[SerializeField] private GameObject creditsDisplay;
+	[SerializeField] private GameObject instructionsDisplay1;
+	[SerializeField] private GameObject instructionsDisplay2;
+	[SerializeField] private GameObject instructionsDisplay3;
+
+	/* Variables option Menu */
 	[SerializeField] private Toggle checkMusic;
 	[SerializeField] private Toggle checkSound;
 	[SerializeField] private Toggle checkFPS;
 	private bool musicBool;
 	private bool soundBool;
 	private bool FPSBool;
-	[SerializeField] private GameObject creditsDisplay;
-	[SerializeField] private GameObject instructionsDisplay1;
-	[SerializeField] private GameObject instructionsDisplay2;
-	[SerializeField] private GameObject instructionsDisplay3;
+
+	/* Variables quest Menu */
+	[SerializeField] private Text mission1Text;
+	[SerializeField] private Text mission1Reward;
+	[SerializeField] private Text mission1Complete;
+	[SerializeField] private Text mission2Text;
+	[SerializeField] private Text mission2Reward;
+	[SerializeField] private Text mission2Complete;
+	[SerializeField] private Text mission3Text;
+	[SerializeField] private Text mission3Reward;
+	[SerializeField] private Text mission3Complete;
+
 
 	void Start(){
 		senseMS = 1;
@@ -52,6 +67,7 @@ public class MenuUIManagement : MonoBehaviour {
 		mainMenu.SetActive(true);
 		optionsMenu.SetActive(false);
 		creditsDisplay.SetActive(false);
+		questsMenu.SetActive(false);
 		instructionsDisplay1.SetActive(false);
 		instructionsDisplay2.SetActive(false);
 		instructionsDisplay3.SetActive(false);
@@ -237,6 +253,39 @@ public class MenuUIManagement : MonoBehaviour {
 	}
 
 	/* Click de misiones */
+
+	public void QuestsBt(){
+		mainMenu.SetActive(false);
+		pacman.SetActive(false);
+		questsMenu.SetActive(true);
+
+		Quest[] quests = QuestLoader.GetActiveQuests();
+
+		mission1Text.text = "Mission: " + quests[0].description;
+		mission1Reward.text = "Reward: " + quests[0].reward.ToString();
+		if(PlayerPrefs.GetInt("Mission1Completed") == 0)
+			mission1Complete.gameObject.SetActive(false);
+		
+
+		mission2Text.text = "Mission: " + quests[1].description;
+		mission2Reward.text = "Reward: " + quests[1].reward.ToString();
+		if(PlayerPrefs.GetInt("Mission2Completed") == 0)
+			mission2Complete.gameObject.SetActive(false);
+		
+
+		mission3Text.text = "Mission: " + quests[2].description;
+		mission3Reward.text = "Reward: " + quests[2].reward.ToString();
+		if(PlayerPrefs.GetInt("Mission1Completed") == 0)
+			mission3Complete.gameObject.SetActive(false);
+
+	}
+
+	public void ExitQuestsBt(){
+		mainMenu.SetActive(true);
+		pacman.SetActive(true);
+		questsMenu.SetActive(false);
+
+	}
 
 	/* Click de instrucciones */
 
