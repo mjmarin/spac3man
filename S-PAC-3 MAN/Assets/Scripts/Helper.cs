@@ -1,13 +1,14 @@
 ﻿using System; 							/* Convert class */
 using System.Text;
 using System.Security.Cryptography;
-using System.Collections.Generic;		/* List class */
+using System.Collections.Generic;       /* List class */
+using System.Globalization;				/* CultureInfo class */
 
 public class Helper {
 
 	/* Protection data */
 	private static string hash = "c57f431343f100b441e268cc12babc34";
-	public static string Encrypt(string toEncrypt){
+	public static string EncryptString(string toEncrypt){
 
 		byte[] data = UTF8Encoding.UTF8.GetBytes(toEncrypt);
 
@@ -22,7 +23,17 @@ public class Helper {
 		return Convert.ToBase64String(encrypted,0,encrypted.Length);
 	}
 
-	public static string Decrypt(string toDecrypt){
+	public static string EncryptInt(int toEncrypt){
+		string str = toEncrypt.ToString();
+		return EncryptString(str);
+	}
+
+	public static string EncryptFloat(float toEncrypt){
+		string str = toEncrypt.ToString();
+		return EncryptString(str);
+	}
+
+	public static string DecryptString(string toDecrypt){
 
 		byte[] data = Convert.FromBase64String(toDecrypt);
 
@@ -35,6 +46,16 @@ public class Helper {
 		byte[] decrypted = tr.TransformFinalBlock(data,0,data.Length);
 
 		return UTF8Encoding.UTF8.GetString(decrypted);
+	}
+
+	public static int DecryptInt(string toDecrypt){
+		string result = DecryptString(toDecrypt);
+		return Int32.Parse(result);
+	}
+
+	public static float DecryptFloat(string toDecrypt){
+		string result = DecryptString(toDecrypt);
+		return float.Parse(result, CultureInfo.InvariantCulture.NumberFormat);
 	}
 
 	/* It gives random integers without repetition */
