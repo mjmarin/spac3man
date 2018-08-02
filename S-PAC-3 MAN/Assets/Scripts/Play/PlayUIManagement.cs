@@ -34,7 +34,7 @@ public class PlayUIManagement : MonoBehaviour {
 		pauseMenu.SetActive(false);
 		score.SetActive(false);
 
-		if(PlayerPrefs.GetInt("FPSOn") == 1){
+		if(Helper.DecryptInt(PlayerPrefs.GetString("FPSOn")) == 1){
 			FPSCounter.SetActive(true);
 		}else{
 			FPSCounter.SetActive(false);

@@ -11,8 +11,8 @@ public class MenuUIManagement : MonoBehaviour {
 	[SerializeField] private GameObject modeSelector;
 	[SerializeField] private float range;
 	[SerializeField] private float speed;
-	private const float constantDistanceSS = 242;
-	private const float constantDistanceMS = 143.9f;
+	private const float constantDistanceSS = 242;		// Píxeles entre las opciones de velocidad en 1920 x 1080
+	private const float constantDistanceMS = 143.9f;	// Píxeles entre las opciones de modo en 1920 x 1080
 	private float startPositionSS;
 	private float startPositionMS;
 	private int senseSS;
@@ -57,10 +57,9 @@ public class MenuUIManagement : MonoBehaviour {
 		senseSS = 1;
 		startPositionSS = speedSelector.transform.localPosition.y;
 		startPositionMS = modeSelector.transform.localPosition.x;
-
-		selectionSS = PlayerPrefs.GetInt("speedSelected", 1);
-		selectionMS = PlayerPrefs.GetInt("modeSelected", 1);
 		
+		InitializePlayerData();
+
 		StartArrow(speedSelector, selectionSS, 1);
 		StartArrow(modeSelector, selectionMS, -1);
 
@@ -72,46 +71,76 @@ public class MenuUIManagement : MonoBehaviour {
 		instructionsDisplay2.SetActive(false);
 		instructionsDisplay3.SetActive(false);
 
-		if(PlayerPrefs.GetInt("musicOn", 1) == 1){
-			checkMusic.isOn = true;
-			musicBool = true;
-			PlayerPrefs.SetInt("musicOn", 1);
-		}else{
-			checkMusic.isOn = false;
-			musicBool = false;
-			PlayerPrefs.SetInt("musicOn", 0); /* Para solventar error SIN SENTIDO por el que en el else se cambia de 0 a 1 */
-		}
-
-		if(PlayerPrefs.GetInt("soundOn", 1) == 1){
-			checkSound.isOn = true;
-			soundBool = true;
-			PlayerPrefs.SetInt("soundOn", 1);
-		}else{
-			checkSound.isOn = false;
-			soundBool = false;
-			PlayerPrefs.SetInt("soundOn", 0); /* Para solventar error SIN SENTIDO por el que en el else se cambia de 0 a 1 */
-		}
-
-		if(PlayerPrefs.GetInt("FPSOn", 0) == 1){
-			FPSCounter.SetActive(true);
-			checkFPS.isOn = true;
-			FPSBool = true;
-			PlayerPrefs.SetInt("FPSOn", 0);
-		}else{
-			FPSCounter.SetActive(false);
-			checkFPS.isOn = false;
-			FPSBool = false;
-		}
-
-		moneyCounter.text = PlayerPrefs.GetInt("money", 0).ToString();
 	}
 	
 	void Update () {
 		MoveSelectors();
 	}
 
+	/* Inicializar Datos */
+	void InitializePlayerData(){
+
+		/* Si no hay datos previos, inicializa a 1, sino desencripta la cadena */
+		if(PlayerPrefs.HasKey("speedSelected")){
+			selectionSS = Helper.DecryptInt(PlayerPrefs.GetString("speedSelected"));
+		}else{
+			selectionSS = 1;
+			PlayerPrefs.SetString("speedSelected", Helper.EncryptInt(selectionSS));
+		}
+		
+		
+		if(PlayerPrefs.HasKey("modeSelected")){
+			selectionMS = Helper.DecryptInt(PlayerPrefs.GetString("modeSelected"));
+		}else{
+			selectionMS = 1;
+			PlayerPrefs.SetString("modeSelected", Helper.EncryptInt(selectionMS));
+		}
+
+
+		if(!PlayerPrefs.HasKey("musicOn") || Helper.DecryptInt(PlayerPrefs.GetString("musicOn")) == 1){	
+			checkMusic.isOn = true;
+			musicBool = true;
+			PlayerPrefs.SetString("musicOn", Helper.EncryptInt(1));
+		}else{
+			checkMusic.isOn = false;
+			musicBool = false;
+			PlayerPrefs.SetString("musicOn", Helper.EncryptInt(0));
+		}
+
+		if(!PlayerPrefs.HasKey("soundOn") || Helper.DecryptInt(PlayerPrefs.GetString("soundOn")) == 1){	
+			checkSound.isOn = true;
+			soundBool = true;
+			PlayerPrefs.SetString("soundOn", Helper.EncryptInt(1));
+		}else{
+			checkSound.isOn = false;
+			soundBool = false;
+			PlayerPrefs.SetString("soundOn", Helper.EncryptInt(0));
+		}
+
+		if(!PlayerPrefs.HasKey("FPSOn") || Helper.DecryptInt(PlayerPrefs.GetString("FPSOn")) == 0){	
+			checkFPS.isOn = false;
+			FPSBool = false;
+			PlayerPrefs.SetString("FPSOn", Helper.EncryptInt(0));
+		}else{
+			checkFPS.isOn = true;
+			FPSBool = true;
+			PlayerPrefs.SetString("FPSOn", Helper.EncryptInt(1));
+		}
+
+		if(PlayerPrefs.HasKey("money")){
+			moneyCounter.text = Helper.DecryptString(PlayerPrefs.GetString("money"));
+		}else{
+			moneyCounter.text = "0";
+			PlayerPrefs.SetString("money", Helper.EncryptInt(0));
+		}
+		
+	}
+
 	/* Mover las flechas de selección */
 
+	/* Situar las flechas en la posición de la última elección
+		option = 1 flecha de Speed Selector
+		option = -1 flecha de Mode Selector */
 	private void StartArrow(GameObject obj, int selection, int option){
 		float change;
 		Vector3 vect;
@@ -122,7 +151,7 @@ public class MenuUIManagement : MonoBehaviour {
 			change = constantDistanceMS;
 			vect = Vector3.up;
 		}
-		obj.transform.localPosition += vect * change * (selection - 1) * option;
+		obj.transform.localPosition += vect * change * (selection - 1) * option; // * option
 	}
 	private void MoveSelectors(){
 		senseSS = Sense(speedSelector.transform.localPosition.y, startPositionSS, senseSS);
@@ -152,7 +181,7 @@ public class MenuUIManagement : MonoBehaviour {
 			speedSelector.transform.localPosition += Vector3.right * constantDistanceSS * (1 - selectionSS);
 
 			selectionSS = 1;
-			PlayerPrefs.SetInt("speedSelected", selectionSS);
+			PlayerPrefs.SetString("speedSelected", Helper.EncryptInt(selectionSS));
 		}
 	}
 	public void SSSpeedRacer(){
@@ -160,7 +189,7 @@ public class MenuUIManagement : MonoBehaviour {
 			speedSelector.transform.localPosition += Vector3.right * constantDistanceSS * (2 - selectionSS);
 
 			selectionSS = 2;
-			PlayerPrefs.SetInt("speedSelected", selectionSS);
+			PlayerPrefs.SetString("speedSelected", Helper.EncryptInt(selectionSS));
 		}
 	}
 	public void SSTryhard(){
@@ -168,7 +197,7 @@ public class MenuUIManagement : MonoBehaviour {
 			speedSelector.transform.localPosition += Vector3.right * constantDistanceSS * (3 - selectionSS);
 
 			selectionSS = 3;
-			PlayerPrefs.SetInt("speedSelected", selectionSS);
+			PlayerPrefs.SetString("speedSelected", Helper.EncryptInt(selectionSS));
 		}
 	}
 
@@ -178,7 +207,7 @@ public class MenuUIManagement : MonoBehaviour {
 			modeSelector.transform.localPosition += Vector3.up * 143.9f;
 
 			selectionMS = 1;
-			PlayerPrefs.SetInt("modeSelected", selectionMS);
+			PlayerPrefs.SetString("modeSelected", Helper.EncryptInt(selectionMS));
 		}
 	}
 	public void MSNotEnoughOxygen(){
@@ -186,7 +215,7 @@ public class MenuUIManagement : MonoBehaviour {
 			modeSelector.transform.localPosition += Vector3.up * -143.9f;
 
 			selectionMS = 2;
-			PlayerPrefs.SetInt("modeSelected", selectionMS);
+			PlayerPrefs.SetString("modeSelected", Helper.EncryptInt(selectionMS));
 		}
 	}
 
@@ -201,8 +230,6 @@ public class MenuUIManagement : MonoBehaviour {
 		mainMenu.SetActive(true);
 		pacman.SetActive(true);
 		optionsMenu.SetActive(false);
-
-		PlayerPrefs.Save();
 	}
 
 	public void CheckMusic(){
@@ -214,7 +241,7 @@ public class MenuUIManagement : MonoBehaviour {
 			boolInt = 1;
 			musicBool = true;
 		}
-		PlayerPrefs.SetInt("musicOn", boolInt);
+		PlayerPrefs.SetString("musicOn", Helper.EncryptInt(boolInt));
 	}
 
 	public void CheckSound(){
@@ -226,7 +253,7 @@ public class MenuUIManagement : MonoBehaviour {
 			boolInt = 1;
 			soundBool = true;
 		}
-		PlayerPrefs.SetInt("soundOn", boolInt);
+		PlayerPrefs.SetString("soundOn", Helper.EncryptInt(boolInt));
 	}
 	public void CheckFPS(){
 		int boolInt;
@@ -237,7 +264,7 @@ public class MenuUIManagement : MonoBehaviour {
 			boolInt = 1;
 			FPSBool = true;
 		}
-		PlayerPrefs.SetInt("FPSOn", boolInt);
+		PlayerPrefs.SetString("FPSOn", Helper.EncryptInt(boolInt));
 		
 		FPSCounter.SetActive(FPSBool);
 	}
@@ -263,19 +290,19 @@ public class MenuUIManagement : MonoBehaviour {
 
 		mission1Text.text = "Mission: " + quests[0].description;
 		mission1Reward.text = "Reward: " + quests[0].reward.ToString();
-		if(PlayerPrefs.GetInt("Mission1Completed") == 0)
+		if(Helper.DecryptInt(PlayerPrefs.GetString("Mission1Completed")) == 0)
 			mission1Complete.gameObject.SetActive(false);
 		
 
 		mission2Text.text = "Mission: " + quests[1].description;
 		mission2Reward.text = "Reward: " + quests[1].reward.ToString();
-		if(PlayerPrefs.GetInt("Mission2Completed") == 0)
+		if(Helper.DecryptInt(PlayerPrefs.GetString("Mission2Completed")) == 0)
 			mission2Complete.gameObject.SetActive(false);
 		
 
 		mission3Text.text = "Mission: " + quests[2].description;
 		mission3Reward.text = "Reward: " + quests[2].reward.ToString();
-		if(PlayerPrefs.GetInt("Mission1Completed") == 0)
+		if(Helper.DecryptInt(PlayerPrefs.GetString("Mission3Completed")) == 0)
 			mission3Complete.gameObject.SetActive(false);
 
 	}

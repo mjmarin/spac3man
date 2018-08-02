@@ -264,7 +264,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1223066485}
-        m_MethodName: MusicClick
+        m_MethodName: MusicBt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1208,7 +1208,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1223066485}
-        m_MethodName: SoundClick
+        m_MethodName: SoundBt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1419,7 +1419,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1223066485}
-        m_MethodName: Menu
+        m_MethodName: MenuBt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1653,7 +1653,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1223066485}
-        m_MethodName: Quit
+        m_MethodName: QuitBt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2835,7 +2835,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1223066485}
-        m_MethodName: Reload
+        m_MethodName: ReloadBt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

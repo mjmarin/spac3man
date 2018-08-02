@@ -9,18 +9,21 @@ public class Helper {
 	/* Protection data */
 	private static string hash = "c57f431343f100b441e268cc12babc34";
 	public static string EncryptString(string toEncrypt){
+		if(toEncrypt.Length == 0){
+			return "-1";
+		}else{
+			byte[] data = UTF8Encoding.UTF8.GetBytes(toEncrypt);
 
-		byte[] data = UTF8Encoding.UTF8.GetBytes(toEncrypt);
+			MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+			byte[] key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash));
 
-		MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-        byte[] key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash));
+			TripleDESCryptoServiceProvider trip = new TripleDESCryptoServiceProvider(){Key = key, Mode = CipherMode.ECB, Padding = PaddingMode.PKCS7};
 
-		TripleDESCryptoServiceProvider trip = new TripleDESCryptoServiceProvider(){Key = key, Mode = CipherMode.ECB, Padding = PaddingMode.PKCS7};
+			ICryptoTransform tr = trip.CreateEncryptor();
+			byte[] encrypted = tr.TransformFinalBlock(data,0,data.Length);
 
-		ICryptoTransform tr = trip.CreateEncryptor();
-		byte[] encrypted = tr.TransformFinalBlock(data,0,data.Length);
-
-		return Convert.ToBase64String(encrypted,0,encrypted.Length);
+			return Convert.ToBase64String(encrypted,0,encrypted.Length);
+		}
 	}
 
 	public static string EncryptInt(int toEncrypt){
@@ -34,18 +37,21 @@ public class Helper {
 	}
 
 	public static string DecryptString(string toDecrypt){
+		if(toDecrypt.Length == 0){
+			return "-1";
+		}else{
+			byte[] data = Convert.FromBase64String(toDecrypt);
 
-		byte[] data = Convert.FromBase64String(toDecrypt);
+			MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+			byte[] key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash));
 
-		MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-        byte[] key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash));
+			TripleDESCryptoServiceProvider trip = new TripleDESCryptoServiceProvider(){Key = key, Mode = CipherMode.ECB, Padding = PaddingMode.PKCS7};
 
-		TripleDESCryptoServiceProvider trip = new TripleDESCryptoServiceProvider(){Key = key, Mode = CipherMode.ECB, Padding = PaddingMode.PKCS7};
+			ICryptoTransform tr = trip.CreateDecryptor();
+			byte[] decrypted = tr.TransformFinalBlock(data,0,data.Length);
 
-		ICryptoTransform tr = trip.CreateDecryptor();
-		byte[] decrypted = tr.TransformFinalBlock(data,0,data.Length);
-
-		return UTF8Encoding.UTF8.GetString(decrypted);
+			return UTF8Encoding.UTF8.GetString(decrypted);
+		}
 	}
 
 	public static int DecryptInt(string toDecrypt){

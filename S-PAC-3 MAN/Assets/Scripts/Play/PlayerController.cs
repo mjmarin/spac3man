@@ -46,8 +46,8 @@ public class PlayerController : MonoBehaviour {
 		if(other.CompareTag("Enemy")) {
 
 			if(!GetComponent<PlayerController>().GetDeath()){		/* El objeto sigue existiendo para que continue hacia delante */
-				int money = PlayerPrefs.GetInt("money", 0);
-				PlayerPrefs.SetInt("money", pickUps + money);
+				int money = Helper.DecryptInt(PlayerPrefs.GetString("money"));
+				PlayerPrefs.SetString("money", Helper.EncryptInt(pickUps + money));
 			}
 
 			GetComponent<PlayerController>().SetDeath(true);

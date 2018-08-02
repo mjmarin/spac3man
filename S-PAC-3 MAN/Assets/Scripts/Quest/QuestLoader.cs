@@ -11,7 +11,7 @@ public class QuestLoader : MonoBehaviour {
 	void Start () {
 		DateTime dt = DateTime.Now;
 
-		if(PlayerPrefs.GetInt("LastDay", 0) != dt.Day || PlayerPrefs.GetInt("LastMonth", 0) != dt.Month){
+		if(Helper.DecryptInt(PlayerPrefs.GetString("LastDay")) != dt.Day || Helper.DecryptInt(PlayerPrefs.GetString("LastMonth")) != dt.Month){
 			ActualizeDate(dt.Day, dt.Month);
 			ActualizeQuests();
 		}
@@ -22,26 +22,26 @@ public class QuestLoader : MonoBehaviour {
 		int[] missions = new int[3];
 		missions = Helper.RandomIntValues(3,0,14);
 
-		PlayerPrefs.SetInt("Mission1", missions[0]);
-		PlayerPrefs.SetInt("Mission2", missions[1]);
-		PlayerPrefs.SetInt("Mission3", missions[2]);
+		PlayerPrefs.SetString("Mission1", Helper.EncryptInt(missions[0]));
+		PlayerPrefs.SetString("Mission2", Helper.EncryptInt(missions[1]));
+		PlayerPrefs.SetString("Mission3", Helper.EncryptInt(missions[2]));
 
-		PlayerPrefs.SetInt("Mission1Completed", 0);
-		PlayerPrefs.SetInt("Mission2Completed", 0);
-		PlayerPrefs.SetInt("Mission3Completed", 0);
+		PlayerPrefs.SetString("Mission1Completed", Helper.EncryptInt(0));
+		PlayerPrefs.SetString("Mission2Completed", Helper.EncryptInt(0));
+		PlayerPrefs.SetString("Mission3Completed", Helper.EncryptInt(0));
 	}
 
 	private void ActualizeDate(int day, int month){
-		PlayerPrefs.SetInt("LastDay", day);
-		PlayerPrefs.SetInt("LastMonth", month);
+		PlayerPrefs.SetString("LastDay", Helper.EncryptInt(day));
+		PlayerPrefs.SetString("LastMonth", Helper.EncryptInt(month));
 	}
 
 	private void SetActiveQuest(){
 		QuestContainer qc = QuestContainer.Load(path);
 
-		quests[0] = qc.quests[PlayerPrefs.GetInt("Mission1")];
-		quests[1] = qc.quests[PlayerPrefs.GetInt("Mission2")];
-		quests[2] = qc.quests[PlayerPrefs.GetInt("Mission3")];
+		quests[0] = qc.quests[Helper.DecryptInt(PlayerPrefs.GetString("Mission1"))];
+		quests[1] = qc.quests[Helper.DecryptInt(PlayerPrefs.GetString("Mission2"))];
+		quests[2] = qc.quests[Helper.DecryptInt(PlayerPrefs.GetString("Mission3"))];
 	}
 
 	public static Quest[] GetActiveQuests(){

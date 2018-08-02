@@ -21,15 +21,15 @@ public class PauseMenu : MonoBehaviour {
 	}
 
 	private void Start(){
-		if(PlayerPrefs.GetInt("musicOn") == 1){
+		if(Helper.DecryptInt(PlayerPrefs.GetString("musicOn")) == 1){
 			musicBool = true;
 			musicBt.GetComponent<Image>().sprite = musicOn;
 		}else{
 			musicBool = false;
 			musicBt.GetComponent<Image>().sprite = musicOff;
 		}
-			
-		if(PlayerPrefs.GetInt("soundOn") == 1){
+		
+		if(Helper.DecryptInt(PlayerPrefs.GetString("soundOn")) == 1){
 			soundBool = true;
 			soundBt.GetComponent<Image>().sprite = soundOn;
 		}else{
@@ -38,41 +38,41 @@ public class PauseMenu : MonoBehaviour {
 		}
 	}
 	
-	public void Reload(){
+	public void ReloadBt(){
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 
-	public void Menu(){
+	public void MenuBt(){
 		if(!player.GetComponent<PlayerController>().GetDeath())
 			scriptPause.ChangeState();
 		PlayerPrefs.Save();
 		SceneManager.LoadScene(0);
 	}
 
-	public void Quit(){
+	public void QuitBt(){
 		Application.Quit();
 	}
 
-	public void SoundClick(){
+	public void SoundBt(){
 		if(soundBool){
 			soundBt.GetComponent<Image>().sprite = soundOff;
-			PlayerPrefs.SetInt("soundOn", 0);
+			PlayerPrefs.SetString("soundOn", Helper.EncryptInt(0));
 			soundBool =  false;
 		}else{
 			soundBt.GetComponent<Image>().sprite = soundOn;
-			PlayerPrefs.SetInt("soundOn", 1);
+			PlayerPrefs.SetString("soundOn", Helper.EncryptInt(1));
 			soundBool = true;
 		}
 	}
 
-	public void MusicClick(){
+	public void MusicBt(){
 		if(musicBool){
 			musicBt.GetComponent<Image>().sprite = musicOff;
-			PlayerPrefs.SetInt("musicOn", 0);
+			PlayerPrefs.SetString("musicOn", Helper.EncryptInt(0));
 			musicBool = false;
 		}else{
 			musicBt.GetComponent<Image>().sprite = musicOn;
-			PlayerPrefs.SetInt("musicOn", 1);
+			PlayerPrefs.SetString("musicOn", Helper.EncryptInt(1));
 			musicBool = true;
 		}
 	}
