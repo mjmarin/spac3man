@@ -9,10 +9,16 @@ public class RemovePickUps : MonoBehaviour {
 	private GameObject player;
 	private GameObject spawnObject;
 
-	void Start(){
+	void Awake(){
 		player = GameObject.Find("Pacman");
 		spawnObject = GameObject.Find("ItemRespawn");
 	}
+
+	void Start(){
+		float[] multSpeed = {1.0f, 1.5f, 2.0f};
+		removeDistance = removeDistance * multSpeed[Helper.DecryptInt(PlayerPrefs.GetString("speedSelected")) - 1];
+	}
+
 	void Update () {
 		if(player != null){
 			float distance = (transform.position.x - player.transform.position.x) + 
@@ -23,6 +29,7 @@ public class RemovePickUps : MonoBehaviour {
 			}
 		}
 	}
+	
 	void OnTriggerEnter2D(Collider2D other){
 		if(other.CompareTag("Player") && player.GetComponent<PlayerController>().GetDeath() == false) {
 			Destroyed(this.gameObject);

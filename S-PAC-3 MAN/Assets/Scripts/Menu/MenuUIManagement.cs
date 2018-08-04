@@ -6,7 +6,20 @@ using UnityEngine.UI;
 
 public class MenuUIManagement : MonoBehaviour {
 
-	/* Variables movimiento flechas */
+	/* Objectos de las distintas fases del menú principal */
+	[SerializeField] private GameObject FPSCounter;
+	[SerializeField] private GameObject pacman;
+	[SerializeField] private GameObject mainMenu;
+	[SerializeField] private Text moneyCounter;
+	[SerializeField] private GameObject optionsMenu;
+	[SerializeField] private GameObject questsMenu;
+	[SerializeField] private GameObject creditsDisplay;
+	[SerializeField] private GameObject instructionsDisplay1;
+	[SerializeField] private GameObject instructionsDisplay2;
+	[SerializeField] private GameObject instructionsDisplay3;
+	[SerializeField] private GameObject recordsDisplay;
+
+	/* Variables movimiento flechas en menu principal */
 	[SerializeField] private GameObject speedSelector;
 	[SerializeField] private GameObject modeSelector;
 	[SerializeField] private float range;
@@ -20,19 +33,7 @@ public class MenuUIManagement : MonoBehaviour {
 	private int selectionSS;
 	private int selectionMS;
 
-	/* Objectos de las distintas fases del menú principal */
-	[SerializeField] private GameObject FPSCounter;
-	[SerializeField] private GameObject pacman;
-	[SerializeField] private GameObject mainMenu;
-	[SerializeField] private Text moneyCounter;
-	[SerializeField] private GameObject optionsMenu;
-	[SerializeField] private GameObject questsMenu;
-	[SerializeField] private GameObject creditsDisplay;
-	[SerializeField] private GameObject instructionsDisplay1;
-	[SerializeField] private GameObject instructionsDisplay2;
-	[SerializeField] private GameObject instructionsDisplay3;
-
-	/* Variables option Menu */
+	/* Variables option menu */
 	[SerializeField] private Toggle checkMusic;
 	[SerializeField] private Toggle checkSound;
 	[SerializeField] private Toggle checkFPS;
@@ -40,7 +41,7 @@ public class MenuUIManagement : MonoBehaviour {
 	private bool soundBool;
 	private bool FPSBool;
 
-	/* Variables quest Menu */
+	/* Variables quest menu */
 	[SerializeField] private Text mission1Text;
 	[SerializeField] private Text mission1Reward;
 	[SerializeField] private Text mission1Complete;
@@ -50,6 +51,15 @@ public class MenuUIManagement : MonoBehaviour {
 	[SerializeField] private Text mission3Text;
 	[SerializeField] private Text mission3Reward;
 	[SerializeField] private Text mission3Complete;
+
+	/* Variables cambio color records menu */
+
+	[SerializeField] private GameObject NormalSubtitle;
+	[SerializeField] private GameObject NEOSubtitle;
+	[SerializeField] private float speedColor;
+	private Vector4 color = new Vector4(0.999f,0.999f,0.001f,1.0f);
+	private Vector3 colorSense = new Vector3(-1,-1,1);
+	private int colorTurn = 1;
 
 
 	void Start(){
@@ -63,6 +73,8 @@ public class MenuUIManagement : MonoBehaviour {
 		StartArrow(speedSelector, selectionSS, 1);
 		StartArrow(modeSelector, selectionMS, -1);
 
+		SetRecords();
+
 		mainMenu.SetActive(true);
 		optionsMenu.SetActive(false);
 		creditsDisplay.SetActive(false);
@@ -70,15 +82,17 @@ public class MenuUIManagement : MonoBehaviour {
 		instructionsDisplay1.SetActive(false);
 		instructionsDisplay2.SetActive(false);
 		instructionsDisplay3.SetActive(false);
+		recordsDisplay.SetActive(false);
 
 	}
 	
 	void Update () {
 		MoveSelectors();
+		ChangeColor();
 	}
 
 	/* Inicializar Datos */
-	void InitializePlayerData(){
+	private void InitializePlayerData(){
 
 		/* Si no hay datos previos, inicializa a 1, sino desencripta la cadena */
 		if(PlayerPrefs.HasKey("speedSelected")){
@@ -151,7 +165,7 @@ public class MenuUIManagement : MonoBehaviour {
 			change = constantDistanceMS;
 			vect = Vector3.up;
 		}
-		obj.transform.localPosition += vect * change * (selection - 1) * option; // * option
+		obj.transform.localPosition += vect * change * (selection - 1) * option;
 	}
 	private void MoveSelectors(){
 		senseSS = Sense(speedSelector.transform.localPosition.y, startPositionSS, senseSS);
@@ -168,6 +182,73 @@ public class MenuUIManagement : MonoBehaviour {
 			return sense;
 		}
 	}
+
+	/* Funciones de recordsDisplay */
+
+	/* Función para situar los records */
+	private void SetRecords(){
+		Text[] normalTexts = recordsDisplay.GetComponentsInChildren<Text>()[1].GetComponentsInChildren<Text>();
+		Text[] NEOTexts = recordsDisplay.GetComponentsInChildren<Text>()[8].GetComponentsInChildren<Text>();
+
+		int score;
+
+		score = Helper.DecryptInt(PlayerPrefs.GetString("NNormalRecord"));
+		if(score < 0){
+			score = 0;
+		}
+		normalTexts[2].text = score.ToString() + " Pts";
+
+		score = Helper.DecryptInt(PlayerPrefs.GetString("NSPRecord"));
+		if(score < 0){
+			score = 0;
+		}
+		normalTexts[4].text = score.ToString() + " Pts";
+
+		score = Helper.DecryptInt(PlayerPrefs.GetString("NTryhardRecord"));
+		if(score < 0){
+			score = 0;
+		}
+		normalTexts[6].text = score.ToString() + " Pts";
+
+		score = Helper.DecryptInt(PlayerPrefs.GetString("NEONormalRecord"));
+		if(score < 0){
+			score = 0;
+		}
+		NEOTexts[2].text = score.ToString() + " Pts";
+
+		score = Helper.DecryptInt(PlayerPrefs.GetString("NEOSPRecord"));
+		if(score < 0){
+			score = 0;
+		}
+		NEOTexts[4].text = score.ToString() + " Pts";
+
+		score = Helper.DecryptInt(PlayerPrefs.GetString("NEOTryhardRecord"));
+		if(score < 0){
+			score = 0;
+		}
+		NEOTexts[6].text = score.ToString() + " Pts";
+	}
+
+	/* Función para cambiar el color de los rótulos constantemente */
+	private void ChangeColor(){
+
+		if(color[colorTurn] > 1.0f){
+			color[colorTurn] = 1.0f;
+			colorSense[colorTurn] = -colorSense[colorTurn];
+			colorTurn = (colorTurn + 1) % 3;
+		}else if(color[colorTurn] < 0.0f){
+			color[colorTurn] = 0.0f;
+			colorSense[colorTurn] = -colorSense[colorTurn];
+			colorTurn = (colorTurn + 1) % 3;
+		}
+
+		NormalSubtitle.GetComponent<Image>().color = color;
+		NEOSubtitle.GetComponent<Image>().color = color;
+
+		color[colorTurn] = color[colorTurn] + speedColor * colorSense[colorTurn];
+	}
+
+	/* Funciones aplicadas a botones */
 
 	/* Click de ready! */
 	public void StartPlay(){
@@ -317,7 +398,7 @@ public class MenuUIManagement : MonoBehaviour {
 	/* Click de instrucciones */
 
 	public void InstructionsBt(){
-		optionsMenu.SetActive(false);
+		mainMenu.SetActive(false);
 		instructionsDisplay1.SetActive(true);
 	}
 	public void ExitInstructions1Bt(){
@@ -352,4 +433,13 @@ public class MenuUIManagement : MonoBehaviour {
 	/* Click de GooglePlay */
 
 	/* Click de records */
+	public void RecordsBt(){
+		mainMenu.SetActive(false);
+		recordsDisplay.SetActive(true);
+	}
+	public void ExitRecordsBt(){
+		recordsDisplay.SetActive(false);
+		mainMenu.SetActive(true);
+	}
+
 }
