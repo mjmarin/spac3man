@@ -8,7 +8,7 @@ public class SpawnRotation : MonoBehaviour {
 	private GameObject player;
 
 	void Start(){
-		player = GameObject.Find("Pacman");
+		player = GameObject.FindWithTag("Player");
 	}
 	void Update () {
 		transform.RotateAround(player.transform.position, Vector3.forward, speed * Time.deltaTime);

@@ -14,7 +14,7 @@ public class SpawnManager : MonoBehaviour {
 	public void Start(){
 		Random.InitState((int)System.DateTime.Now.Ticks); 
 		timer = spawnCooldown + initDelay;
-		player = GameObject.Find("Pacman");
+		player = GameObject.FindWithTag("Player");
 	}
 	public void ReloadTimer(){
 		float random = Random.Range(0, 2 * spawnCooldown / 3);

@@ -10,7 +10,7 @@ public class OffscreenIndicator : MonoBehaviour {
 
 	void Start(){
 		cam = Camera.main;
-		player = GameObject.Find("Pacman");
+		player = GameObject.FindWithTag("Player");
 		PointToTarget();
 	}
 	void Update () {

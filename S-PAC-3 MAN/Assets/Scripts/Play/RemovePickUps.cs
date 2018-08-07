@@ -10,7 +10,7 @@ public class RemovePickUps : MonoBehaviour {
 	private GameObject spawnObject;
 
 	void Awake(){
-		player = GameObject.Find("Pacman");
+		player = GameObject.FindWithTag("Player");
 		spawnObject = GameObject.Find("ItemRespawn");
 	}
 

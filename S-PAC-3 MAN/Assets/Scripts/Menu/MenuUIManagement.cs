@@ -8,9 +8,10 @@ public class MenuUIManagement : MonoBehaviour {
 
 	/* Objectos de las distintas fases del menú principal */
 	[SerializeField] private GameObject FPSCounter;
-	[SerializeField] private GameObject pacman;
+	[SerializeField] private GameObject player;
 	[SerializeField] private GameObject mainMenu;
 	[SerializeField] private Text moneyCounter;
+	[SerializeField] private GameObject shopMenu;
 	[SerializeField] private GameObject optionsMenu;
 	[SerializeField] private GameObject questsMenu;
 	[SerializeField] private GameObject creditsDisplay;
@@ -32,6 +33,22 @@ public class MenuUIManagement : MonoBehaviour {
 	private int senseMS;
 	private int selectionSS;
 	private int selectionMS;
+
+	/* Variables shop menu */
+	[SerializeField] private Transform ItemsPanel;
+	[SerializeField] private Image descriptionImage;
+	private Text buttonText;
+	private Text skinNameText;
+	private Text skinDescriptionText;
+	private Text skinPriceText;
+	private Text moneyCounterShop;
+	private AnimationController animatorController;
+	
+	private int selectedSkin;
+	private int settedSkin;
+	private int money;
+	private bool[] ownedSkin = new bool[12];
+	private int [] skinPrices = { 0, -20, 30, 35, 40, 50, 70, 85, 90, 100, 120, 150};
 
 	/* Variables option menu */
 	[SerializeField] private Toggle checkMusic;
@@ -61,6 +78,14 @@ public class MenuUIManagement : MonoBehaviour {
 	private Vector3 colorSense = new Vector3(-1,-1,1);
 	private int colorTurn = 1;
 
+	void Awake(){
+		animatorController = player.GetComponent<AnimationController>();
+		buttonText = shopMenu.GetComponentsInChildren<Text>()[0];
+		moneyCounterShop = shopMenu.GetComponentsInChildren<Text>()[1];
+		skinPriceText = shopMenu.GetComponentsInChildren<Text>()[3];
+		skinDescriptionText = shopMenu.GetComponentsInChildren<Text>()[4];
+		skinNameText = shopMenu.GetComponentsInChildren<Text>()[5];
+	}
 
 	void Start(){
 		senseMS = 1;
@@ -76,6 +101,7 @@ public class MenuUIManagement : MonoBehaviour {
 		SetRecords();
 
 		mainMenu.SetActive(true);
+		shopMenu.SetActive(false);
 		optionsMenu.SetActive(false);
 		creditsDisplay.SetActive(false);
 		questsMenu.SetActive(false);
@@ -83,7 +109,6 @@ public class MenuUIManagement : MonoBehaviour {
 		instructionsDisplay2.SetActive(false);
 		instructionsDisplay3.SetActive(false);
 		recordsDisplay.SetActive(false);
-
 	}
 	
 	void Update () {
@@ -142,12 +167,50 @@ public class MenuUIManagement : MonoBehaviour {
 		}
 
 		if(PlayerPrefs.HasKey("money")){
-			moneyCounter.text = Helper.DecryptString(PlayerPrefs.GetString("money"));
+			money = Helper.DecryptInt(PlayerPrefs.GetString("money"));
 		}else{
-			moneyCounter.text = "0";
+			money = 0;
 			PlayerPrefs.SetString("money", Helper.EncryptInt(0));
 		}
-		
+
+		money = 1000;
+
+		SetMoneyText(moneyCounter, money);
+		SetMoneyText(moneyCounterShop, money);
+
+		InitShop();
+
+		if(PlayerPrefs.HasKey("settedSkin")){
+			settedSkin = Helper.DecryptInt(PlayerPrefs.GetString("settedSkin"));
+		}else{
+			settedSkin = 0;
+		}
+		OnItemSelect(settedSkin);
+
+	}
+
+	private void SetMoneyText(Text moneyText, int money){
+		moneyText.text = money.ToString();
+	}
+
+	private void InitShop(){
+		int i = 0;
+		foreach(Transform t in ItemsPanel){
+			int currentIndex = i; 							// Para solucionar un error de OnItemSelect (Siempre seleccionaría el último integer con i)
+			Button b = t.GetComponent<Button>();
+			b.onClick.AddListener(() => OnItemSelect(currentIndex));
+			i++;
+		}
+
+		ownedSkin[0] = true;
+		for(i=1;i<12;i++){
+			if(Helper.DecryptInt(PlayerPrefs.GetString("is" + i + "SkinOwned")) == 1){
+				ownedSkin[i] = true;
+			}else{
+				ownedSkin[i] = false;
+			}
+		}
+
 	}
 
 	/* Mover las flechas de selección */
@@ -256,6 +319,175 @@ public class MenuUIManagement : MonoBehaviour {
 		SceneManager.LoadScene(1);
 	}
 
+	/* Click de botones de tienda */
+
+	public void ShopBt(){
+		mainMenu.SetActive(false);
+		shopMenu.SetActive(true);
+	}
+
+	public void ExitShopBt(){
+		mainMenu.SetActive(true);
+		shopMenu.SetActive(false);
+	}
+
+	public void BuySetItem(){
+		if(ownedSkin[selectedSkin]){
+			settedSkin = selectedSkin;
+			animatorController.ChangeSkin(settedSkin);
+		}else{
+			if(money >= skinPrices[selectedSkin]){
+				ownedSkin[selectedSkin] = true;
+				money = money - skinPrices[selectedSkin];
+
+				PlayerPrefs.SetString("is" + selectedSkin + "SkinOwned", Helper.EncryptInt(1));
+				PlayerPrefs.SetString("money", Helper.EncryptInt(money));
+
+				SetMoneyText(moneyCounter, money);
+				SetMoneyText(moneyCounterShop, money);
+
+				buttonText.text = "Set";
+				skinPriceText.text = "bought";
+			}
+		}
+	}
+	private void OnItemSelect(int index){
+
+		selectedSkin = index;
+
+		SetNameText(index);
+		SetDescriptionText(index);
+
+		if(ownedSkin[index]){
+			buttonText.text = "Set";
+			skinPriceText.text = "bought";
+		}else{
+			buttonText.text = "Buy";
+			skinPriceText.text = skinPrices[index].ToString();
+		}
+
+		descriptionImage.sprite = shopMenu.GetComponentsInChildren<Button>()[index + 1].GetComponent<Image>().sprite;
+		
+	}
+
+	private void SetNameText(int index){
+		string skinName;
+		switch(index){
+			case 0:
+				skinName = "S-PAC-3 MAN";
+			break;
+
+			case 1:
+				skinName = "POLITICAL CASPER";
+			break;
+
+			case 2:
+				skinName = "MARGARITA POWER";
+			break;
+
+			case 3:
+				skinName = "PAC-KUNG FURY";
+			break;
+
+			case 4:
+				skinName = "WOR-BU KBYO";
+			break;
+
+			case 5:
+				skinName = "THE BLACKSMITH";
+			break;
+
+			case 6:
+				skinName = "DON RAMON";
+			break;
+
+			case 7:
+				skinName = "MRS COVA";
+			break;
+
+			case 8:
+				skinName = "WOR-BU AN-R0K";
+			break;
+
+			case 9:
+				skinName = "REBEL CD";
+			break;
+
+			case 10:
+				skinName = "A-OI NKO";
+			break;
+
+			case 11:
+				skinName = "LEAD ASTUR";
+			break;
+
+			default:
+				skinName = "ERROR";
+			break;
+		}
+
+		skinNameText.text = "Name: " + skinName;
+	}
+
+	private void SetDescriptionText(int index){
+		string skinDescrip;
+		switch(index){
+			case 0:
+				skinDescrip = "His nickname comes from S: Super, PAC: Pakku, his race, 3: he is the third sexiest Pakku of all times according to Pac-Times magazine, MAN: Mononucleous Anchocobo with Not-very-cooked-rice, his favourite food, but people just call him space man. He is a super astronaut hero that studied in the PUA Hero Academy with the famous Pikoriya.";
+			break;
+
+			case 1:
+				skinDescrip = "He was a political in a hot a chaotic planet. After lying about his postgrade, he was so humilliated that he wanted to go outside his planer. He went to space and boasted about being the best space runner in the galaxy until his spaceship's comrades left him out. now he must survive like a true space runner.";
+			break;
+
+			case 2:
+				skinDescrip = "She used to be a sniper on eagle's army but it changed when she was sended to war. She got hard depressed cause she couldn't hit a single shot because of the jungle. Now she is ready to rise again as the best space runner of the universe...\n\nAt least that's what she put on her linkedIn.";
+			break;
+
+			case 3:
+				skinDescrip = "She is a pakku who domained the kung fury path fighting against crime, even defeating Kung Fuhrer, a crazy pakku leader from the past who came back to present and tried to domain the world. Now she must left her friends back on the earth to infiltrate on a space criminal web and see what happens out there.";
+			break;
+
+			case 4:
+				skinDescrip = "He is a Wor-Bu which means he is an intellectual of language, focused on knowing all languages. He thought that running for his life throughout the universe would put him in a critical situation and allow him to learn many languages faster than anyone else. He love videogames and he is making an Android one, just check it.";
+			break;
+
+			case 5:
+				skinDescrip = "He is a mythical space creature that is as vague as it is intelligent. He is also known for hating noisy things, even saying once at a planetary party 'Hey stop throwing firecrackers, they can hurt my heart, let's drink more alcohol instead of throwing firecrackers'. He became a space runner risking his life to entertain himself.";
+			break;
+
+			case 6:
+				skinDescrip = "He is a wanted space drug dealer who can transport any number of things in his magic pocket. After having a mishap in his last deal he must make a living as a space runner while looking for his partner Pokkita.";
+			break;
+
+			case 7:
+				skinDescrip = "Cova is the youngest Marshall of the Royal Spaceship navy of all times, a brilliant strategist who leads his navy by musically movements. In the wake of peace, she has decided to be a space runner so as not to lose her abilities and extend the blue of the royal empire throughout the galaxy. She also loves sweet things like honey.";
+			break;
+
+			case 8:
+				skinDescrip = "An was a Wor-Bu like KBYO, but he thought that they could use his intelligence to reach what he called the rockiness body level. That's this is the reason why he implanted himself robotics improvements that he called Rocket-0 contaminant-Kraken, changing his name to An-R0k. He is running to test his implants and improve them.";
+			break;
+
+			case 9:
+				skinDescrip = "He lived so peacefully until a new race arrived and dominated them, the evil DVDs. Now he must find allies around the galaxy to make a rebel army that takes down the dvds... Okay, okay, it's not the best character story, but what about you? You think this description part talk to you... you are so egocentric, you should have a professional look about that.";
+			break;
+
+			case 10:
+				skinDescrip = "NKO is a unique robot model that use the Archic architecture, a forgotten civilization's architecture. This one, together with the Obviously Dont Limit Interface model, called the OI model, has allowed NKO to create an awareness of itself and develop its intelligence in a feline way. Now he just wants to run through the galaxy.";
+			break;
+
+			case 11:
+				skinDescrip = "He was born in Astur a green and humid planet full of mountains in which a good fruit alcohol is prepared. Moreover, he was a member of the legendary military group The Lead Alliance, which achieved the supremacy of half the galaxy, thus avoiding the assaults of stellar pirates. Years has passed since then, he returns to his passion, speed, being a space runner.";
+			break;
+
+			default:
+				skinDescrip = "ERROR";
+			break;
+		}
+
+		skinDescriptionText.text = "Name: " + skinDescrip;
+	}
+
 	/* Click de botones de selección de velocidad */
 	public void SSNormal(){
 		if(selectionSS != 1){
@@ -303,13 +535,13 @@ public class MenuUIManagement : MonoBehaviour {
 	/* Click de ajustes */
 	public void OptionsBt(){
 		mainMenu.SetActive(false);
-		pacman.SetActive(false);
+		player.SetActive(false);
 		optionsMenu.SetActive(true);
 	}
 
 	public void ExitOptionsBt(){
 		mainMenu.SetActive(true);
-		pacman.SetActive(true);
+		player.SetActive(true);
 		optionsMenu.SetActive(false);
 	}
 
@@ -364,7 +596,7 @@ public class MenuUIManagement : MonoBehaviour {
 
 	public void QuestsBt(){
 		mainMenu.SetActive(false);
-		pacman.SetActive(false);
+		player.SetActive(false);
 		questsMenu.SetActive(true);
 
 		Quest[] quests = QuestLoader.GetActiveQuests();
@@ -390,7 +622,7 @@ public class MenuUIManagement : MonoBehaviour {
 
 	public void ExitQuestsBt(){
 		mainMenu.SetActive(true);
-		pacman.SetActive(true);
+		player.SetActive(true);
 		questsMenu.SetActive(false);
 
 	}

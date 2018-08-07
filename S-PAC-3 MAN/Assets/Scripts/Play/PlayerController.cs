@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour {
 	void Start(){
 		float[] multSpeed = {1.0f, 1.5f, 2.0f};
 
-		GetComponent<Animator>().SetBool("isDead",false);
 		
 		screenWidth = Screen.width;
 		death = false;
@@ -95,7 +94,6 @@ public class PlayerController : MonoBehaviour {
 		if(boolean){
 			int money = Helper.DecryptInt(PlayerPrefs.GetString("money"));
 			PlayerPrefs.SetString("money", Helper.EncryptInt(pickUps + money));
-			GetComponent<Animator>().SetBool("isDead",true);
 			SetRecords();
 		}
 		death = boolean;
