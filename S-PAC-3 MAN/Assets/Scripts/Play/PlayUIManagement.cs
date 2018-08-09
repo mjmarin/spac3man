@@ -18,6 +18,7 @@ public class PlayUIManagement : MonoBehaviour {
 	[SerializeField] private Text scoreValueText;
 	[SerializeField] private Text addTimeText;
 	[SerializeField] private GameObject newRecordText;
+	[SerializeField] private GameObject questRewardText;
 
 	
 	private PlayerController playerScript;
@@ -52,6 +53,7 @@ public class PlayUIManagement : MonoBehaviour {
 		pauseMenu.SetActive(false);
 		score.SetActive(false);
 		newRecordText.SetActive(false);
+		questRewardText.SetActive(false);
 
 		if(Helper.DecryptInt(PlayerPrefs.GetString("FPSOn")) == 1){
 			FPSCounter.SetActive(true);
@@ -101,7 +103,7 @@ public class PlayUIManagement : MonoBehaviour {
 	private void SetTimer(){
 		if(playerScript.GetDeath() == false){
 			time += Time.deltaTime;
-			timerSeconds = (int)Mathf.Floor(time);
+			timerSeconds = Mathf.FloorToInt(time);
 			timerMinutes = timerSeconds / 60;
 
 			if(NEOActivated){
@@ -128,6 +130,11 @@ public class PlayUIManagement : MonoBehaviour {
 
 	public void UpNewRecordText(){
 		newRecordText.SetActive(true);
+	}
+
+	public void UpQuestRewardText(int reward){
+		questRewardText.GetComponent<Text>().text = "Quest reward:" + reward;
+		questRewardText.SetActive(true);
 	}
 
 	public float GetTime(){

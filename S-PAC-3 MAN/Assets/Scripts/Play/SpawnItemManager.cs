@@ -7,11 +7,11 @@ public class SpawnItemManager : SpawnManager {
 	[SerializeField] private int maxItem;
 	private int itemCount;
 	void Update () {
-		if(GetItemCount() < maxItem && player.GetComponent<PlayerController>().GetDeath() == false){
+		if(itemCount < maxItem && player.GetComponent<PlayerController>().GetDeath() == false){
 			timer -= Time.deltaTime;
 			if(timer < 0){
 				ReloadTimer();	
-				SpawnIndicator(Instantiate(spawnable, transform.position, Quaternion.identity));
+				SpawnIndicator(Instantiate(spawnable, transform.position * speedBuff, Quaternion.identity));	/* A más velocidad spawnean más lejos */
 				IncreaseItemCount(true);
 			}
 			
@@ -26,7 +26,4 @@ public class SpawnItemManager : SpawnManager {
 		}
 	}
 
-	public int GetItemCount(){
-		return itemCount;
-	}
 }

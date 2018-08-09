@@ -44,6 +44,47 @@ public class QuestLoader : MonoBehaviour {
 		quests[2] = qc.quests[Helper.DecryptInt(PlayerPrefs.GetString("Mission3"))];
 	}
 
+	public static int CheckQuests(int secondsAlive, int pickedMoney, int pickedShields, int secondsShielded){
+		int i = 1;
+		int reward = 0;
+		int parameter = 0;
+
+		foreach (Quest quest in quests){ /* Para cada misión */
+			if(Helper.DecryptInt(PlayerPrefs.GetString("Mission"+i+"Completed")) == 0){	/* Si no está completa */
+
+				switch(quest.type){
+					case 1:
+						parameter = secondsAlive;
+					break;
+
+					case 2:
+						parameter = pickedMoney;
+					break;
+
+					case 3:
+						parameter = pickedShields;
+					break;
+
+					case 4:
+						parameter = secondsShielded;
+					break;
+
+					default:
+						parameter = 0;
+					break;
+				}
+
+				if(parameter >= quest.requiredAmount){
+					reward += quest.reward;
+					PlayerPrefs.SetString("Mission"+i+"Completed", Helper.EncryptInt(1));
+				}
+			}
+			i++;
+		}
+
+		return reward;
+	}
+
 	public static Quest[] GetActiveQuests(){
 		return quests;
 	}  

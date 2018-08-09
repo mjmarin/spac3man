@@ -11,10 +11,10 @@
         <Quest ID = "7" Description = "Pick 10 coins in a row" Completed = "0" RequiredAmount = "10" Reward = "15" Type = "2"></Quest>
         <Quest ID = "8" Description = "Pick 15 coins in a row" Completed = "0" RequiredAmount = "15" Reward = "20" Type = "2"></Quest>
         <Quest ID = "9" Description = "Pick 20 coins in a row" Completed = "0" RequiredAmount = "20" Reward = "30" Type = "2"></Quest>
-        <Quest ID = "10" Description = "Pick 2 shields" Completed = "0" RequiredAmount = "3" Reward = "5" Type = "3"></Quest>
-        <Quest ID = "11" Description = "Pick 5 shields" Completed = "0" RequiredAmount = "5" Reward = "15" Type = "3"></Quest>
-        <Quest ID = "12" Description = "Use a shield for 1 minute" Completed = "0" RequiredAmount = "60" Reward = "10" Type = "4"></Quest>
-        <Quest ID = "13" Description = "Use a shield for 2 minutes" Completed = "0" RequiredAmount = "120" Reward = "20" Type = "4"></Quest>
-        <Quest ID = "14" Description = "Use a shield for 3 minutes" Completed = "0" RequiredAmount = "180" Reward = "30" Type = "4"></Quest>
+        <Quest ID = "10" Description = "Pick 1 shields in a game" Completed = "0" RequiredAmount = "1" Reward = "5" Type = "3"></Quest>
+        <Quest ID = "11" Description = "Pick 3 shields in a game" Completed = "0" RequiredAmount = "3" Reward = "20" Type = "3"></Quest>
+        <Quest ID = "12" Description = "Use a shield for 1 minute in a game" Completed = "0" RequiredAmount = "60" Reward = "10" Type = "4"></Quest>
+        <Quest ID = "13" Description = "Use a shield for 2 minutes in a game" Completed = "0" RequiredAmount = "120" Reward = "20" Type = "4"></Quest>
+        <Quest ID = "14" Description = "Use a shield for 3 minutes in a game" Completed = "0" RequiredAmount = "180" Reward = "30" Type = "4"></Quest>
     </Quests>
 </QuestCollection>

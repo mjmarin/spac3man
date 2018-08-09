@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 1aa97ae996cc33a4383a8079dfdee7e1
+guid: 87381f016a45f074fb6f3e56a8d95a41
 TextureImporter:
   fileIDToRecycleName:
-    21300000: deathPacman_0
-    21300002: deathPacman_1
-    21300004: deathPacman_2
-    21300006: deathPacman_3
-    21300008: deathPacman_4
-    21300010: deathPacman_5
-    21300012: deathPacman_6
-    21300014: deathPacman_7
-    21300016: deathPacman_8
-    21300018: deathPacman_9
-    21300020: deathPacman_10
-    21300022: deathPacman_11
+    21300000: deathSkin1_0
+    21300002: deathSkin1_1
+    21300004: deathSkin1_2
+    21300006: deathSkin1_3
+    21300008: deathSkin1_4
+    21300010: deathSkin1_5
+    21300012: deathSkin1_6
+    21300014: deathSkin1_7
+    21300016: deathSkin1_8
+    21300018: deathSkin1_9
+    21300020: deathSkin1_10
+    21300022: deathSkin1_11
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
@@ -116,7 +116,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: deathPacman_0
+      name: deathSkin1_0
       rect:
         serializedVersion: 2
         x: 1
@@ -124,19 +124,19 @@ TextureImporter:
         width: 13
         height: 9
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0772cd9ef14906146b1d323afb21c021
+      spriteID: 6409540aae8baac4a8c61cb78301b642
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: deathPacman_1
+      name: deathSkin1_1
       rect:
         serializedVersion: 2
         x: 20
@@ -144,19 +144,19 @@ TextureImporter:
         width: 15
         height: 8
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 83ee3b461d455c24485a0bb77afc3291
+      spriteID: 31dac7f09569d8f439f2f08243eba3fd
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: deathPacman_2
+      name: deathSkin1_2
       rect:
         serializedVersion: 2
         x: 40
@@ -164,19 +164,19 @@ TextureImporter:
         width: 15
         height: 6
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c98baab4cd774c409f257d8e52c68f4
+      spriteID: 768e945623657fa47a28a4188c49a64e
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: deathPacman_3
+      name: deathSkin1_3
       rect:
         serializedVersion: 2
         x: 60
@@ -184,19 +184,19 @@ TextureImporter:
         width: 15
         height: 5
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0166a60e8c2d6bc468a112886fd85d68
+      spriteID: cbfdcdf88c9a1d747be7eacd797afe02
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: deathPacman_4
+      name: deathSkin1_4
       rect:
         serializedVersion: 2
         x: 80
@@ -204,19 +204,19 @@ TextureImporter:
         width: 15
         height: 5
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 776eb5f91e206e44fbfe206c4c509e72
+      spriteID: f3f8a8643f238f7478b474c9b649f09a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: deathPacman_5
+      name: deathSkin1_5
       rect:
         serializedVersion: 2
         x: 100
@@ -224,19 +224,19 @@ TextureImporter:
         width: 15
         height: 6
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 599c8513264d5e84e8590ee2c90c2702
+      spriteID: 61815dbfc11ddea4f8d7aa5c57f15bb3
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: deathPacman_6
+      name: deathSkin1_6
       rect:
         serializedVersion: 2
         x: 121
@@ -244,19 +244,19 @@ TextureImporter:
         width: 13
         height: 7
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d78114cc38c53046a3e7a9ad6c0ac24
+      spriteID: 0494dbcfd587a224abbfc2a6b3961c0b
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: deathPacman_7
+      name: deathSkin1_7
       rect:
         serializedVersion: 2
         x: 143
@@ -264,85 +264,25 @@ TextureImporter:
         width: 9
         height: 7
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a11665175c3fd714e8fc4a692e559248
+      spriteID: e5ca7c4421f21e44a854e5772d92f4ea
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: deathPacman_8
+      name: deathSkin1_8
       rect:
         serializedVersion: 2
         x: 165
-        y: 2
-        width: 5
-        height: 7
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2a249901a7065484c8db2587c101b57c
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: deathPacman_9
-      rect:
-        serializedVersion: 2
-        x: 186
-        y: 3
-        width: 3
-        height: 6
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cefb853b120972448b89c402ac961472
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: deathPacman_10
-      rect:
-        serializedVersion: 2
-        x: 202
         y: 1
-        width: 11
+        width: 5
         height: 10
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a956e8a7c06dd0945ada49ff85c854fe
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: deathPacman_11
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 9
-        width: 6
-        height: 4
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -350,7 +290,67 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9ef4f7da6386caf4a84401b64b68d7e8
+      spriteID: e9063e77974739a42adc622323404042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deathSkin1_9
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 3
+        width: 1
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76d2174af87d55e49bef2a4c2a5daf1d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deathSkin1_10
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 1
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ee36b77554f8984ab5d1f77111387a8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deathSkin1_11
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 4
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2f6afc1503f49341b34f1678a95402f
       vertices: []
       indices: 
       edges: []
@@ -358,7 +358,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 1f6e59e21cd5fd043926848635b15a9f
+    spriteID: 11de72148a8139342a09e5fd11842b89
     vertices: []
     indices: 
     edges: []

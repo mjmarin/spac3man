@@ -66,8 +66,8 @@ public class AnimationController : MonoBehaviour {
 
 	private void Dead(){
 		if(turn < 12){
-			turn = (turn + 1);
 			playerSprite.sprite = deathSprites[turn];
+			turn ++;
 			time = 0;
 		}
 	}

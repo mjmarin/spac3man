@@ -51,12 +51,10 @@ public class MenuUIManagement : MonoBehaviour {
 	private int [] skinPrices = { 0, -20, 30, 35, 40, 50, 70, 85, 90, 100, 120, 150};
 
 	/* Variables option menu */
-	[SerializeField] private Toggle checkMusic;
-	[SerializeField] private Toggle checkSound;
-	[SerializeField] private Toggle checkFPS;
-	private bool musicBool;
-	private bool soundBool;
-	private bool FPSBool;
+	[SerializeField] private GameObject checkMusic;
+	[SerializeField] private GameObject checkSound;
+	[SerializeField] private GameObject checkFPS;
+	private bool FPSOn;
 
 	/* Variables quest menu */
 	[SerializeField] private Text mission1Text;
@@ -135,35 +133,13 @@ public class MenuUIManagement : MonoBehaviour {
 			PlayerPrefs.SetString("modeSelected", Helper.EncryptInt(selectionMS));
 		}
 
-
-		if(!PlayerPrefs.HasKey("musicOn") || Helper.DecryptInt(PlayerPrefs.GetString("musicOn")) == 1){	
-			checkMusic.isOn = true;
-			musicBool = true;
-			PlayerPrefs.SetString("musicOn", Helper.EncryptInt(1));
-		}else{
-			checkMusic.isOn = false;
-			musicBool = false;
-			PlayerPrefs.SetString("musicOn", Helper.EncryptInt(0));
-		}
-
-		if(!PlayerPrefs.HasKey("soundOn") || Helper.DecryptInt(PlayerPrefs.GetString("soundOn")) == 1){	
-			checkSound.isOn = true;
-			soundBool = true;
-			PlayerPrefs.SetString("soundOn", Helper.EncryptInt(1));
-		}else{
-			checkSound.isOn = false;
-			soundBool = false;
-			PlayerPrefs.SetString("soundOn", Helper.EncryptInt(0));
-		}
-
-		if(!PlayerPrefs.HasKey("FPSOn") || Helper.DecryptInt(PlayerPrefs.GetString("FPSOn")) == 0){	
-			checkFPS.isOn = false;
-			FPSBool = false;
+		if(PlayerPrefs.HasKey("FPSOn") == false || Helper.DecryptInt(PlayerPrefs.GetString("FPSOn")) == 0){	
+			checkFPS.SetActive(false);
+			FPSOn = false;
 			PlayerPrefs.SetString("FPSOn", Helper.EncryptInt(0));
 		}else{
-			checkFPS.isOn = true;
-			FPSBool = true;
-			PlayerPrefs.SetString("FPSOn", Helper.EncryptInt(1));
+			checkFPS.SetActive(false);
+			FPSOn = true;
 		}
 
 		if(PlayerPrefs.HasKey("money")){
@@ -173,7 +149,17 @@ public class MenuUIManagement : MonoBehaviour {
 			PlayerPrefs.SetString("money", Helper.EncryptInt(0));
 		}
 
-		money = 1000;
+		if(MusicManager.GetMusicOn()){	
+			checkMusic.SetActive(true);
+		}else{
+			checkMusic.SetActive(false);
+		}
+
+		if(SoundManager.GetSoundOn()){	
+			checkSound.SetActive(true);
+		}else{
+			checkSound.SetActive(false);
+		}
 
 		SetMoneyText(moneyCounter, money);
 		SetMoneyText(moneyCounterShop, money);
@@ -186,7 +172,6 @@ public class MenuUIManagement : MonoBehaviour {
 			settedSkin = 0;
 		}
 		OnItemSelect(settedSkin);
-
 	}
 
 	private void SetMoneyText(Text moneyText, int money){
@@ -355,8 +340,8 @@ public class MenuUIManagement : MonoBehaviour {
 
 		selectedSkin = index;
 
-		SetNameText(index);
-		SetDescriptionText(index);
+		skinNameText.text = StoryText.GetNameText(index);
+		skinDescriptionText.text = StoryText.GetDescriptionText(index);
 
 		if(ownedSkin[index]){
 			buttonText.text = "Set";
@@ -368,124 +353,6 @@ public class MenuUIManagement : MonoBehaviour {
 
 		descriptionImage.sprite = shopMenu.GetComponentsInChildren<Button>()[index + 1].GetComponent<Image>().sprite;
 		
-	}
-
-	private void SetNameText(int index){
-		string skinName;
-		switch(index){
-			case 0:
-				skinName = "S-PAC-3 MAN";
-			break;
-
-			case 1:
-				skinName = "POLITICAL CASPER";
-			break;
-
-			case 2:
-				skinName = "MARGARITA POWER";
-			break;
-
-			case 3:
-				skinName = "PAC-KUNG FURY";
-			break;
-
-			case 4:
-				skinName = "WOR-BU KBYO";
-			break;
-
-			case 5:
-				skinName = "THE BLACKSMITH";
-			break;
-
-			case 6:
-				skinName = "DON RAMON";
-			break;
-
-			case 7:
-				skinName = "MRS COVA";
-			break;
-
-			case 8:
-				skinName = "WOR-BU AN-R0K";
-			break;
-
-			case 9:
-				skinName = "REBEL CD";
-			break;
-
-			case 10:
-				skinName = "A-OI NKO";
-			break;
-
-			case 11:
-				skinName = "LEAD ASTUR";
-			break;
-
-			default:
-				skinName = "ERROR";
-			break;
-		}
-
-		skinNameText.text = "Name: " + skinName;
-	}
-
-	private void SetDescriptionText(int index){
-		string skinDescrip;
-		switch(index){
-			case 0:
-				skinDescrip = "His nickname comes from S: Super, PAC: Pakku, his race, 3: he is the third sexiest Pakku of all times according to Pac-Times magazine, MAN: Mononucleous Anchocobo with Not-very-cooked-rice, his favourite food, but people just call him space man. He is a super astronaut hero that studied in the PUA Hero Academy with the famous Pikoriya.";
-			break;
-
-			case 1:
-				skinDescrip = "He was a political in a hot a chaotic planet. After lying about his postgrade, he was so humilliated that he wanted to go outside his planer. He went to space and boasted about being the best space runner in the galaxy until his spaceship's comrades left him out. now he must survive like a true space runner.";
-			break;
-
-			case 2:
-				skinDescrip = "She used to be a sniper on eagle's army but it changed when she was sended to war. She got hard depressed cause she couldn't hit a single shot because of the jungle. Now she is ready to rise again as the best space runner of the universe...\n\nAt least that's what she put on her linkedIn.";
-			break;
-
-			case 3:
-				skinDescrip = "She is a pakku who domained the kung fury path fighting against crime, even defeating Kung Fuhrer, a crazy pakku leader from the past who came back to present and tried to domain the world. Now she must left her friends back on the earth to infiltrate on a space criminal web and see what happens out there.";
-			break;
-
-			case 4:
-				skinDescrip = "He is a Wor-Bu which means he is an intellectual of language, focused on knowing all languages. He thought that running for his life throughout the universe would put him in a critical situation and allow him to learn many languages faster than anyone else. He love videogames and he is making an Android one, just check it.";
-			break;
-
-			case 5:
-				skinDescrip = "He is a mythical space creature that is as vague as it is intelligent. He is also known for hating noisy things, even saying once at a planetary party 'Hey stop throwing firecrackers, they can hurt my heart, let's drink more alcohol instead of throwing firecrackers'. He became a space runner risking his life to entertain himself.";
-			break;
-
-			case 6:
-				skinDescrip = "He is a wanted space drug dealer who can transport any number of things in his magic pocket. After having a mishap in his last deal he must make a living as a space runner while looking for his partner Pokkita.";
-			break;
-
-			case 7:
-				skinDescrip = "Cova is the youngest Marshall of the Royal Spaceship navy of all times, a brilliant strategist who leads his navy by musically movements. In the wake of peace, she has decided to be a space runner so as not to lose her abilities and extend the blue of the royal empire throughout the galaxy. She also loves sweet things like honey.";
-			break;
-
-			case 8:
-				skinDescrip = "An was a Wor-Bu like KBYO, but he thought that they could use his intelligence to reach what he called the rockiness body level. That's this is the reason why he implanted himself robotics improvements that he called Rocket-0 contaminant-Kraken, changing his name to An-R0k. He is running to test his implants and improve them.";
-			break;
-
-			case 9:
-				skinDescrip = "He lived so peacefully until a new race arrived and dominated them, the evil DVDs. Now he must find allies around the galaxy to make a rebel army that takes down the dvds... Okay, okay, it's not the best character story, but what about you? You think this description part talk to you... you are so egocentric, you should have a professional look about that.";
-			break;
-
-			case 10:
-				skinDescrip = "NKO is a unique robot model that use the Archic architecture, a forgotten civilization's architecture. This one, together with the Obviously Dont Limit Interface model, called the OI model, has allowed NKO to create an awareness of itself and develop its intelligence in a feline way. Now he just wants to run through the galaxy.";
-			break;
-
-			case 11:
-				skinDescrip = "He was born in Astur a green and humid planet full of mountains in which a good fruit alcohol is prepared. Moreover, he was a member of the legendary military group The Lead Alliance, which achieved the supremacy of half the galaxy, thus avoiding the assaults of stellar pirates. Years has passed since then, he returns to his passion, speed, being a space runner.";
-			break;
-
-			default:
-				skinDescrip = "ERROR";
-			break;
-		}
-
-		skinDescriptionText.text = "Name: " + skinDescrip;
 	}
 
 	/* Click de botones de selección de velocidad */
@@ -545,41 +412,35 @@ public class MenuUIManagement : MonoBehaviour {
 		optionsMenu.SetActive(false);
 	}
 
-	public void CheckMusic(){
-		int boolInt;
-		if(musicBool){
-			boolInt = 0;
-			musicBool = false;
+	public void MusicBt(){
+		if(MusicManager.GetMusicOn()){
+			checkMusic.SetActive(true);
 		}else{
-			boolInt = 1;
-			musicBool = true;
+			checkMusic.SetActive(false);
 		}
-		PlayerPrefs.SetString("musicOn", Helper.EncryptInt(boolInt));
 	}
 
-	public void CheckSound(){
-		int boolInt;
-		if(soundBool){
-			boolInt = 0;
-			soundBool = false;
+	public void SoundBt(){
+		if(SoundManager.GetSoundOn()){
+			checkSound.SetActive(true);
 		}else{
-			boolInt = 1;
-			soundBool = true;
+			checkSound.SetActive(false);
 		}
-		PlayerPrefs.SetString("soundOn", Helper.EncryptInt(boolInt));
 	}
-	public void CheckFPS(){
+
+	public void FPSBt(){
 		int boolInt;
-		if(FPSBool){
+		if(FPSOn){
 			boolInt = 0;
-			FPSBool = false;
+			FPSOn = false;
 		}else{
 			boolInt = 1;
-			FPSBool = true;
+			FPSOn = true;
 		}
 		PlayerPrefs.SetString("FPSOn", Helper.EncryptInt(boolInt));
 		
-		FPSCounter.SetActive(FPSBool);
+		FPSCounter.SetActive(FPSOn);
+		checkFPS.SetActive(FPSOn);
 	}
 
 	public void CreditsBt(){

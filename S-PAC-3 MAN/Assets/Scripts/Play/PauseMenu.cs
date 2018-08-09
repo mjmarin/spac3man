@@ -5,36 +5,30 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour {
-	[SerializeField] private Sprite soundOn;
-	[SerializeField] private Sprite soundOff;
+	[SerializeField] private Sprite soundOnSprite;
+	[SerializeField] private Sprite soundOffSprite;
 	[SerializeField] private Button soundBt;
-	[SerializeField] private Sprite musicOn;
-	[SerializeField] private Sprite musicOff;
+	[SerializeField] private Sprite musicOnSprite;
+	[SerializeField] private Sprite musicOffSprite;
 	[SerializeField] private Button musicBt;
 	[SerializeField] private GameObject player;
 	private PauseController scriptPause;
-	private bool musicBool;
-	private bool soundBool;
 
 	private void Awake(){
 		scriptPause = this.gameObject.GetComponent<PauseController>();
 	}
 
 	private void Start(){
-		if(Helper.DecryptInt(PlayerPrefs.GetString("musicOn")) == 1){
-			musicBool = true;
-			musicBt.GetComponent<Image>().sprite = musicOn;
+		if(MusicManager.GetMusicOn()){
+			musicBt.GetComponent<Image>().sprite = musicOnSprite;
 		}else{
-			musicBool = false;
-			musicBt.GetComponent<Image>().sprite = musicOff;
+			musicBt.GetComponent<Image>().sprite = musicOffSprite;
 		}
 		
-		if(Helper.DecryptInt(PlayerPrefs.GetString("soundOn")) == 1){
-			soundBool = true;
-			soundBt.GetComponent<Image>().sprite = soundOn;
+		if(SoundManager.GetSoundOn()){
+			soundBt.GetComponent<Image>().sprite = soundOnSprite;
 		}else{
-			soundBool = false;
-			soundBt.GetComponent<Image>().sprite = soundOff;
+			soundBt.GetComponent<Image>().sprite = soundOffSprite;
 		}
 	}
 	
@@ -54,26 +48,18 @@ public class PauseMenu : MonoBehaviour {
 	}
 
 	public void SoundBt(){
-		if(soundBool){
-			soundBt.GetComponent<Image>().sprite = soundOff;
-			PlayerPrefs.SetString("soundOn", Helper.EncryptInt(0));
-			soundBool =  false;
+		if(SoundManager.GetSoundOn()){
+			soundBt.GetComponent<Image>().sprite = soundOffSprite;
 		}else{
-			soundBt.GetComponent<Image>().sprite = soundOn;
-			PlayerPrefs.SetString("soundOn", Helper.EncryptInt(1));
-			soundBool = true;
+			soundBt.GetComponent<Image>().sprite = soundOnSprite;
 		}
 	}
 
 	public void MusicBt(){
-		if(musicBool){
-			musicBt.GetComponent<Image>().sprite = musicOff;
-			PlayerPrefs.SetString("musicOn", Helper.EncryptInt(0));
-			musicBool = false;
+		if(MusicManager.GetMusicOn()){
+			musicBt.GetComponent<Image>().sprite = musicOffSprite;
 		}else{
-			musicBt.GetComponent<Image>().sprite = musicOn;
-			PlayerPrefs.SetString("musicOn", Helper.EncryptInt(1));
-			musicBool = true;
+			musicBt.GetComponent<Image>().sprite = musicOnSprite;
 		}
 	}
 }

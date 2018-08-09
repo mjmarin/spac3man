@@ -1,0 +1,188 @@
+RESOURCES
+
+
+
+BACKGROUND
+
+Space background has been made using 3 resources from 2 differents authors
+
+Tileable space background
+This work is made by "Satur9" from www.opengameart.org 
+Licensed under CC0 1.0 Universal (CC0 1.0) Public Domain Dedication 
+https://opengameart.org/users/satur9
+https://opengameart.org/content/space-background-01
+
+
+Space backgrounds
+This work is made by "zeroisnotnull" from www.opengameart.org   
+Licensed under the Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0) 
+https://opengameart.org/users/fraang
+https://opengameart.org/content/space-backgrounds-0
+
+
+
+SPRITES
+
+Shield sprite
+This work is made by Florian R. A. Angermeier "fraang" from www.opengameart.org   
+Licensed under CC0 1.0 Universal (CC0 1.0) Public Domain Dedication 
+https://opengameart.org/users/zeroisnotnull
+https://opengameart.org/content/shield-sprite
+
+
+Play button and pause button icons
+This work is made by Daniele De Santis from www.flaticon.com
+Licensed under the Attribution 3.0 Unported (CC BY 3.0)
+https://www.flaticon.com/authors/daniele-de-santis
+https://www.flaticon.com/free-icon/play-button_131258
+https://www.flaticon.com/free-icon/pause_131254
+
+
+Arcade font
+This work is made by Yui Adachi
+Licensed by himself on http://9031.com/fonts/license/
+http://9031.com/profile/
+http://9031.com/fonts/#arcade
+
+
+Shop icon
+This work is made by Joseph Crown "jcrown41" from www.opengameart.org 
+Licensed under CC0 1.0 Universal (CC0 1.0) Public Domain Dedication 
+https://opengameart.org/users/jcrown41
+https://opengameart.org/content/2d-shop-set
+
+
+Mission list icon
+This work is made by Unknow(?) from https://icons8.com
+Licensed under Attribution-NoDerivs 3.0 Unported (CC BY-ND 3.0) 
+https://icons8.com/icon/61410/clipboard-checklist
+
+
+Question mark sprite
+This work is made by Unknow(?) from http://pngimg.com
+Licensed under Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
+http://pngimg.com/download/38180
+
+
+Trophy icon 
+This work is made by Unknow(?) from www.kisspng.com
+License: personal use
+https://www.kisspng.com/png-trophy-icon-cup-374873/
+
+
+Exit icon
+This work is made by "Samuel1983" from http://pngimg.com
+Licensed under CC0 1.0 Universal (CC0 1.0) Public Domain Dedication 
+https://pixabay.com/es/users/Samuel1983-1626596/
+https://pixabay.com/es/x-salida-bot%C3%B3n-icono-s%C3%ADmbolo-1152114/
+
+
+Music icon
+This work is made by "Freepik" from http://flaticon.com
+Free license with attributtion
+https://www.flaticon.com/authors/freepik
+https://www.flaticon.com/free-icon/sound-button_275
+
+
+Sound and muteSound icons
+These works are made by "Smashicons" from http://flaticon.com
+Free license with attributtion
+https://www.flaticon.com/authors/smashicons
+https://www.flaticon.com/free-icon/speaker_149136#term=speaker&page=1&position=6
+https://www.flaticon.com/free-icon/mute_149138#term=speaker&page=1&position=8
+
+
+
+MUSIC
+
+Dreams made by Benjamin Tissot on from Bensound.com - (Menu music)
+https://www.bensound.com/royalty-free-music/track/dreams-chill-out
+
+
+2018-05-19 - (Normal speed mode music)
+This work is made by "Zalyx" from https://freesound.org 
+Licensed under CC0 1.0 Universal (CC0 1.0) Public Domain Dedication 
+https://freesound.org/people/Zalyx
+https://freesound.org/people/Zalyx/sounds/429347/
+
+
+Arcade Music Loop - (SpeedRacer speed mode music)
+This work is made by "joshuaempyre" from https://freesound.org
+Licensed under Attribution 3.0 Unported (CC BY 3.0) 
+https://freesound.org/people/joshuaempyre/
+https://freesound.org/people/joshuaempyre/sounds/251461/
+
+
+Arcade War - (Tryhard speed mode music)
+This work is made by "uso_sketch" from https://freesound.org 
+Licensed under CC0 1.0 Universal (CC0 1.0) Public Domain Dedication 
+https://freesound.org/people/uso_sketch
+https://freesound.org/people/uso_sketch/sounds/404807/
+
+
+Gaming circuit beat - (Not enough oxygen play mode music)
+This work is made by Goran Andrić "zagi2" from https://freesound.org
+Licensed under Attribution-NonCommercial 3.0 Unported (CC BY-NC 3.0)
+https://freesound.org/people/zagi2
+https://freesound.org/people/zagi2/sounds/345391/
+
+
+
+SOUNDS
+
+Menu navigation sfx - (Click sound)
+This work is made by "stumpbutt" from https://freesound.org 
+Licensed under Attribution-NonCommercial 3.0 Unported (CC BY-NC 3.0) 
+https://freesound.org/people/stumpbutt
+https://freesound.org/people/stumpbutt/sounds/381766/
+
+
+Arcade Bleep Sound - (Get coin sound)
+This work is made by "Kodack" from https://freesound.org 
+Licensed under CC0 1.0 Universal (CC0 1.0) Public Domain Dedication 
+https://freesound.org/people/Kodack
+https://freesound.org/people/Kodack/sounds/258020/
+
+
+Troy's free video game sounds - (Get shield sound)
+This work is made by "PlanetroniK" from https://freesound.org 
+Licensed under CC0 1.0 Universal (CC0 1.0) Public Domain Dedication 
+https://freesound.org/people/PlanetroniK
+https://freesound.org/people/PlanetroniK/sounds/399885/
+
+
+Retro arcade video game end or completed tone - (Death sound)
+This work is made by Alan McKinney "alanmcki" from https://freesound.org
+Licensed under Attribution 3.0 Unported (CC BY 3.0) 
+https://freesound.org/people/alanmcki
+https://freesound.org/people/alanmcki/sounds/400579/
+
+
+
+TESTERS
+
+Covadonga Romero Moreno
+
+Ines Perez Pulido
+
+Manuel Espejo Alcala
+
+Maria del Carmen Espejo Alcala
+
+Alvaro Herrero Perez
+
+Jose Cabello Cubero
+
+
+
+DIRECTORS
+
+Manuel Jesus Marin Jimenez
+
+Enrique Yeguas Bolivar
+
+
+
+AUTHOR
+
+Victor Manuel Espejo Perez

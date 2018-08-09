@@ -10,17 +10,22 @@ public class SpawnManager : MonoBehaviour {
 	[SerializeField] protected float initDelay;
 	protected float timer;
 	protected GameObject player;
+	protected float speedBuff;
 
-	public void Start(){
+	protected void Start(){
+		float[] multSpeed = {1.0f, 1.5f, 2.0f};
+		speedBuff = multSpeed[Helper.DecryptInt(PlayerPrefs.GetString("speedSelected")) - 1];
+		
 		Random.InitState((int)System.DateTime.Now.Ticks); 
+
 		timer = spawnCooldown + initDelay;
 		player = GameObject.FindWithTag("Player");
 	}
-	public void ReloadTimer(){
-		float random = Random.Range(0, 2 * spawnCooldown / 3);
+	protected void ReloadTimer(){
+		float random = Random.Range(0, 1 * spawnCooldown / 3);
 		timer=spawnCooldown - random;
 	}
-	public void SpawnIndicator(GameObject obj){
+	protected void SpawnIndicator(GameObject obj){
 		GameObject ind = Instantiate(indicator, transform.position, Quaternion.identity);
 		ind.transform.parent = player.transform;
 		ind.transform.position = player.transform.position;
