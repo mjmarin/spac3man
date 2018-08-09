@@ -7,6 +7,9 @@ public class QuestLoader : MonoBehaviour {
 
 	private const string path = "Quests/QuestFile";
 	private static Quest[] quests = new Quest[3];
+	private static int mission1Completed;
+	private static int mission2Completed;
+	private static int mission3Completed;
 
 	void Start () {
 		DateTime dt = DateTime.Now;
@@ -42,6 +45,10 @@ public class QuestLoader : MonoBehaviour {
 		quests[0] = qc.quests[Helper.DecryptInt(PlayerPrefs.GetString("Mission1"))];
 		quests[1] = qc.quests[Helper.DecryptInt(PlayerPrefs.GetString("Mission2"))];
 		quests[2] = qc.quests[Helper.DecryptInt(PlayerPrefs.GetString("Mission3"))];
+
+		mission1Completed = Helper.DecryptInt(PlayerPrefs.GetString("Mission1Completed"));
+		mission2Completed = Helper.DecryptInt(PlayerPrefs.GetString("Mission2Completed"));
+		mission3Completed = Helper.DecryptInt(PlayerPrefs.GetString("Mission3Completed"));
 	}
 
 	public static int CheckQuests(int secondsAlive, int pickedMoney, int pickedShields, int secondsShielded){
@@ -50,7 +57,7 @@ public class QuestLoader : MonoBehaviour {
 		int parameter = 0;
 
 		foreach (Quest quest in quests){ /* Para cada misión */
-			if(Helper.DecryptInt(PlayerPrefs.GetString("Mission"+i+"Completed")) == 0){	/* Si no está completa */
+			if(Helper.DecryptInt(PlayerPrefs.GetString("Mission" + i + "Completed")) == 0){	/* Si no está completa */
 
 				switch(quest.type){
 					case 1:
@@ -88,5 +95,32 @@ public class QuestLoader : MonoBehaviour {
 	public static Quest[] GetActiveQuests(){
 		return quests;
 	}  
+
+	public static bool GetMissionCompleted(int mission){
+		int parameter;
+		switch(mission){
+			case 1:
+				parameter = mission1Completed;
+			break;
+
+			case 2:
+				parameter = mission2Completed;
+			break;
+
+			case 3:
+				parameter = mission3Completed;
+			break;
+
+			default:
+				parameter = -1;
+			break;
+		}
+
+		if(parameter == 1){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	
 }

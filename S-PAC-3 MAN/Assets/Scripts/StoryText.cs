@@ -83,7 +83,7 @@ public class StoryText  {
 			break;
 
 			case 4:
-				skinDescrip = "He is a Wor-Bu which means he is a language expert, focused on knowing all comunication ways. He thought that running for his life throughout the universe would put him in a critical situation and allow him to learn many languages faster than anyone else. He love videogames and he is making an Android one, just check it at GooglePlay: \"Dungeon\"";
+				skinDescrip = "He is a Wor-Bu which means he is a language expert, focused on knowing all comunication ways. He thought that running for his life throughout the universe would put him in a critical situation and allow him to learn many languages faster than anyone else. He love videogames and he is making an Android one, just check it in GooglePlay: \"Dungeon\"";
 			break;
 
 			case 5:

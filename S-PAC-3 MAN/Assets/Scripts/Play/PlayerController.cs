@@ -92,12 +92,10 @@ public class PlayerController : MonoBehaviour {
 			if(other.CompareTag("Enemy")) {		/* Al chocarte con un enemigo o mueres o se quita escudo y comienza cuenta atrás de invulnerabilidad */
 				if(shielded){
 					SetShield(false);
-					if(timeInv < 0){
-						timeInv = 0;
+				}else{
+					if(timeInv <= 0){
 						SetDeath(true);
 					}
-				}else{
-					SetDeath(true);
 				}	
 			}else{
 				if(other.CompareTag("ShieldPick")){
@@ -117,7 +115,7 @@ public class PlayerController : MonoBehaviour {
 	private void SetDeath(bool boolean){
 		if(boolean){
 			int money = Helper.DecryptInt(PlayerPrefs.GetString("money"));
-			int reward = QuestLoader.CheckQuests(Mathf.RoundToInt(PlayUIManagement.GetTime()), pickUps, pickedShields, Mathf.RoundToInt(timeShield));
+			int reward = QuestLoader.CheckQuests(Mathf.FloorToInt(PlayUIManagement.GetTime()), pickUps, pickedShields, Mathf.FloorToInt(timeShield));
 			PlayerPrefs.SetString("money", Helper.EncryptInt(pickUps + money + reward));
 
 			if(reward > 0){

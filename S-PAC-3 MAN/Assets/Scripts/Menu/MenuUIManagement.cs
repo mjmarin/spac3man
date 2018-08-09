@@ -464,20 +464,27 @@ public class MenuUIManagement : MonoBehaviour {
 
 		mission1Text.text = "Mission: " + quests[0].description;
 		mission1Reward.text = "Reward: " + quests[0].reward.ToString();
-		if(Helper.DecryptInt(PlayerPrefs.GetString("Mission1Completed")) == 0)
+		if(QuestLoader.GetMissionCompleted(1)){
+			mission1Complete.gameObject.SetActive(true);
+		}else{
 			mission1Complete.gameObject.SetActive(false);
-		
-
+		}
+			
 		mission2Text.text = "Mission: " + quests[1].description;
 		mission2Reward.text = "Reward: " + quests[1].reward.ToString();
-		if(Helper.DecryptInt(PlayerPrefs.GetString("Mission2Completed")) == 0)
+		if(QuestLoader.GetMissionCompleted(2)){
+			mission2Complete.gameObject.SetActive(true);
+		}else{
 			mission2Complete.gameObject.SetActive(false);
+		}
 		
-
 		mission3Text.text = "Mission: " + quests[2].description;
 		mission3Reward.text = "Reward: " + quests[2].reward.ToString();
-		if(Helper.DecryptInt(PlayerPrefs.GetString("Mission3Completed")) == 0)
+		if(QuestLoader.GetMissionCompleted(3)){
+			mission3Complete.gameObject.SetActive(true);
+		}else{
 			mission3Complete.gameObject.SetActive(false);
+		}
 
 	}
 
