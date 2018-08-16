@@ -2611,7 +2611,7 @@ MonoBehaviour:
   addTimeText: {fileID: 1580680977}
   newRecordText: {fileID: 575877123}
   questRewardText: {fileID: 1744499646}
-  alphaProgression: 0.5
+  alphaProgression: 1
 --- !u!114 &1223066484
 MonoBehaviour:
   m_ObjectHideFlags: 0
