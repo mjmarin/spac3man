@@ -5392,7 +5392,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 365923130}
-        m_MethodName: OptionsBt
+        m_MethodName: SettingsBt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10393,7 +10393,7 @@ GameObject:
   - component: {fileID: 1610258533}
   - component: {fileID: 1610258532}
   m_Layer: 5
-  m_Name: ExitOptionsBt
+  m_Name: ExitSettingsBt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10457,7 +10457,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 365923130}
-        m_MethodName: ExitOptionsBt
+        m_MethodName: ExitSettingsBt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

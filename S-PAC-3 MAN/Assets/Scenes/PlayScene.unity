@@ -263,7 +263,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1223066485}
+      - m_Target: {fileID: 1223066483}
         m_MethodName: MusicBt
         m_Mode: 1
         m_Arguments:
@@ -1568,7 +1568,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1223066485}
+      - m_Target: {fileID: 1223066483}
         m_MethodName: SoundBt
         m_Mode: 1
         m_Arguments:
@@ -1875,7 +1875,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1223066485}
+      - m_Target: {fileID: 1223066483}
         m_MethodName: MenuBt
         m_Mode: 1
         m_Arguments:
@@ -2120,7 +2120,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1223066485}
+      - m_Target: {fileID: 1223066483}
         m_MethodName: QuitBt
         m_Mode: 1
         m_Arguments:
@@ -2363,6 +2363,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1223066483}
+        m_MethodName: PauseBt
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1049986104
@@ -2470,7 +2481,6 @@ GameObject:
   - component: {fileID: 1223066481}
   - component: {fileID: 1223066480}
   - component: {fileID: 1223066479}
-  - component: {fileID: 1223066485}
   - component: {fileID: 1223066483}
   - component: {fileID: 1223066484}
   - component: {fileID: 1223066486}
@@ -2587,13 +2597,20 @@ MonoBehaviour:
   counterText: {fileID: 1755010812}
   timerText: {fileID: 1777827444}
   score: {fileID: 1362362132}
+  playSprite: {fileID: 21300000, guid: 2d81ca82aa7690e4d8bf61b364b990c9, type: 3}
+  pauseSprite: {fileID: 21300000, guid: 039c357cecf257b49b9d63c98e91de68, type: 3}
+  soundOnSprite: {fileID: 21300000, guid: 5e653906d4cd83f468118946f9f0c580, type: 3}
+  soundOffSprite: {fileID: 21300000, guid: 962096011f2ef2f4ca01e888f0024ac5, type: 3}
+  soundBt: {fileID: 568581970}
+  musicOnSprite: {fileID: 21300000, guid: 514482327fd0b6a4898148d70a6ba82d, type: 3}
+  musicOffSprite: {fileID: 21300000, guid: 3461a65a4e0f1d54ab3239d9c9926331, type: 3}
+  musicBt: {fileID: 68130086}
   scoreMoneyText: {fileID: 350315247}
   scoreTimerText: {fileID: 36942060}
   scoreValueText: {fileID: 793115294}
   addTimeText: {fileID: 1580680977}
   newRecordText: {fileID: 575877123}
   questRewardText: {fileID: 1744499646}
-  NEOtime: 20
   alphaProgression: 0.5
 --- !u!114 &1223066484
 MonoBehaviour:
@@ -2606,27 +2623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6292aeabfde0f7f4cba7a9268af0fa39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  play: {fileID: 21300000, guid: 2d81ca82aa7690e4d8bf61b364b990c9, type: 3}
-  pause: {fileID: 21300000, guid: 039c357cecf257b49b9d63c98e91de68, type: 3}
-  pauseBt: {fileID: 1049986101}
---- !u!114 &1223066485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1223066478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05f0c78f6ec5a62479864eea39dc4819, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundOnSprite: {fileID: 21300000, guid: 5e653906d4cd83f468118946f9f0c580, type: 3}
-  soundOffSprite: {fileID: 21300000, guid: 962096011f2ef2f4ca01e888f0024ac5, type: 3}
-  soundBt: {fileID: 568581970}
-  musicOnSprite: {fileID: 21300000, guid: 514482327fd0b6a4898148d70a6ba82d, type: 3}
-  musicOffSprite: {fileID: 21300000, guid: 3461a65a4e0f1d54ab3239d9c9926331, type: 3}
-  musicBt: {fileID: 68130086}
-  player: {fileID: 1887889900}
+  NEOtime: 20
 --- !u!114 &1223066486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3490,7 +3487,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1223066485}
+      - m_Target: {fileID: 1223066483}
         m_MethodName: ReloadBt
         m_Mode: 1
         m_Arguments:

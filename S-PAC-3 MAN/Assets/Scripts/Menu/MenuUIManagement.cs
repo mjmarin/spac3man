@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -69,6 +70,9 @@ public class MenuUIManagement : MonoBehaviour {
 	private Vector3 colorSense = new Vector3(-1,-1,1);
 	private int colorTurn = 1;
 
+	/* Variable de pantalla actual -> Uso de back Android */
+	private int currentWindow = 0;
+
 	void Awake(){
 		animatorController = player.GetComponent<AnimationController>();
 		buttonText = shopMenu.GetComponentsInChildren<Text>()[0];
@@ -79,6 +83,8 @@ public class MenuUIManagement : MonoBehaviour {
 	}
 
 	void Start(){
+		currentWindow = 0;
+
 		senseMS = 1;
 		senseSS = 1;
 		startPositionSS = speedSelector.transform.localPosition.y;
@@ -103,10 +109,45 @@ public class MenuUIManagement : MonoBehaviour {
 	void Update () {
 		MoveSelectors();
 		ChangeColor();
+		BackListener();
 	}
 
-	/* Inicializar Datos */
-	private void InitializeUI(){
+    private void BackListener(){
+        if(Input.GetKeyDown(KeyCode.Escape)){
+			switch(currentWindow){
+				case 0:
+					Application.Quit();
+				break;
+				case 1:
+					ExitShopBt();
+				break;
+				case 2:
+					ExitSettingsBt();
+				break;
+				case 3:
+					BackCreditsBt();
+				break;
+				case 4:
+					ExitQuestsBt();
+				break;
+				case 5:
+					ExitInstructions1Bt();
+				break;
+				case 6:
+					ExitInstructions2Bt();
+				break;
+				case 7:
+					ExitInstructions3Bt();
+				break;
+				case 8:
+					ExitRecordsBt();
+				break;
+			}
+		}
+    }
+
+    /* Inicializar Datos */
+    private void InitializeUI(){
 
 		if(DataManager.GetFPSOn()){	
 			checkFPS.SetActive(true);
@@ -236,11 +277,13 @@ public class MenuUIManagement : MonoBehaviour {
 	public void ShopBt(){
 		mainMenu.SetActive(false);
 		shopMenu.SetActive(true);
+		currentWindow = 1;
 	}
 
 	public void ExitShopBt(){
 		mainMenu.SetActive(true);
 		shopMenu.SetActive(false);
+		currentWindow = 0;
 	}
 
 	public void BuySetItem(){
@@ -315,16 +358,18 @@ public class MenuUIManagement : MonoBehaviour {
 	}
 
 	/* Click de ajustes */
-	public void OptionsBt(){
+	public void SettingsBt(){
 		mainMenu.SetActive(false);
 		player.SetActive(false);
 		settingsMenu.SetActive(true);
+		currentWindow = 2;
 	}
 
-	public void ExitOptionsBt(){
+	public void ExitSettingsBt(){
 		mainMenu.SetActive(true);
 		player.SetActive(true);
 		settingsMenu.SetActive(false);
+		currentWindow = 0;
 	}
 
 	public void MusicBt(){
@@ -359,11 +404,13 @@ public class MenuUIManagement : MonoBehaviour {
 	public void CreditsBt(){
 		settingsMenu.SetActive(false);
 		creditsDisplay.SetActive(true);
+		currentWindow = 3;
 	}
 
 	public void BackCreditsBt(){
 		creditsDisplay.SetActive(false);
 		settingsMenu.SetActive(true);
+		currentWindow = 2;
 	}
 
 	/* Click de misiones */
@@ -372,6 +419,7 @@ public class MenuUIManagement : MonoBehaviour {
 		mainMenu.SetActive(false);
 		player.SetActive(false);
 		questsMenu.SetActive(true);
+		currentWindow = 4;
 
 		Quest[] quests = QuestLoader.GetActiveQuests();
 
@@ -405,6 +453,7 @@ public class MenuUIManagement : MonoBehaviour {
 		mainMenu.SetActive(true);
 		player.SetActive(true);
 		questsMenu.SetActive(false);
+		currentWindow = 0;
 
 	}
 
@@ -413,34 +462,42 @@ public class MenuUIManagement : MonoBehaviour {
 	public void InstructionsBt(){
 		mainMenu.SetActive(false);
 		instructionsDisplay1.SetActive(true);
+		currentWindow = 5;
 	}
 	public void ExitInstructions1Bt(){
 		instructionsDisplay1.SetActive(false);
 		mainMenu.SetActive(true);
+		currentWindow = 0;
 	}
 	public void ExitInstructions2Bt(){
 		instructionsDisplay2.SetActive(false);
 		mainMenu.SetActive(true);
+		currentWindow = 0;
 	}
 	public void ExitInstructions3Bt(){
 		instructionsDisplay3.SetActive(false);
 		mainMenu.SetActive(true);
+		currentWindow = 0;
 	}
 	public void ContinueInstruction1Bt(){
 		instructionsDisplay1.SetActive(false);
 		instructionsDisplay2.SetActive(true);
+		currentWindow = 6;
 	}
 	public void ContinueInstruction2Bt(){
 		instructionsDisplay2.SetActive(false);
 		instructionsDisplay3.SetActive(true);
+		currentWindow = 7;
 	}
 	public void BackInstruction2Bt(){
 		instructionsDisplay2.SetActive(false);
 		instructionsDisplay1.SetActive(true);
+		currentWindow = 5;
 	}
 	public void BackInstruction3Bt(){
 		instructionsDisplay3.SetActive(false);
 		instructionsDisplay2.SetActive(true);
+		currentWindow = 6;
 	}
 
 	/* Click de GooglePlay */
@@ -449,10 +506,12 @@ public class MenuUIManagement : MonoBehaviour {
 	public void RecordsBt(){
 		mainMenu.SetActive(false);
 		recordsDisplay.SetActive(true);
+		currentWindow = 8;
 	}
 	public void ExitRecordsBt(){
 		recordsDisplay.SetActive(false);
 		mainMenu.SetActive(true);
+		currentWindow = 0;
 	}
 
 }

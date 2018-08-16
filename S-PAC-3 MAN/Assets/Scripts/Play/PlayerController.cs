@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour {
 
 	private GameObject ShieldRespawn;
 	
-	private PauseController scriptPause;
+	private Timer timerScript;
 	private PlayUIManagement PlayUIManagement;
 	private bool shielded;
 	private float timeInv;
@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Awake(){
 		GameObject canvas = GameObject.Find("Canvas");
-		scriptPause = canvas.GetComponent<PauseController>();
+		timerScript = canvas.GetComponent<Timer>();
 		PlayUIManagement = canvas.GetComponent<PlayUIManagement>();
 		ShieldRespawn = GameObject.Find("ShieldRespawn");
 	}
@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour {
 			transform.Rotate(new Vector3(0,0,-Input.GetAxis("Horizontal") * rotationSpeed * speedBuff));		//Para probar en PC
 		#else
 			int direction = 0;
-			if(GetDeath() == false && scriptPause.GetPaused() == false ){		// Quiero que al morir siga hacia delante pero ya no se pueda controlar
+			if(GetDeath() == false && timerScript.GetPaused() == false ){		// Quiero que al morir siga hacia delante pero ya no se pueda controlar
 				if (Input.touchCount > 0){
 					if (Input.GetTouch (0).position.x > screenWidth / 2) {					//Move Right
 						direction = -1;
@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void CheckNEODeath(){
-		if(PlayUIManagement.GetNeoTime() <= 0 && GetDeath() == false){
+		if(timerScript.GetNeoTime() <= 0 && GetDeath() == false){
 			SetDeath(true);
 		}
 	}
@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour {
 					pickUps++;
 					SoundManager.SetSound("getCoin");
 					if(NEOActivated){
-						PlayUIManagement.EnlargeNeoTime(timePickUps);
+						timerScript.EnlargeNeoTime(timePickUps);
 					}
 				}
 			}
@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour {
 		if(boolean){
 			float money = System.Convert.ToSingle(DataManager.GetMoney());
 
-			float reward = QuestLoader.CheckQuests(PlayUIManagement.GetTime(), pickUps, pickedShields, timeShield);
+			float reward = QuestLoader.CheckQuests(timerScript.GetTime(), pickUps, pickedShields, timeShield);
 			DataManager.SetMoney(pickUps + money + reward);
 
 			if(reward > 0){
@@ -162,7 +162,7 @@ public class PlayerController : MonoBehaviour {
 		ulong bestScore;
 		float score;
 
-		score = GetActualScore();
+		score = GetCurrentScore();
 
 		bestScore = DataManager.GetRecords(index);
 
@@ -172,8 +172,8 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	public float GetActualScore(){
-		return GetPickUps() * 10 + Mathf.Floor(PlayUIManagement.GetTime());
+	public float GetCurrentScore(){
+		return GetPickUps() * 10 + Mathf.Floor(timerScript.GetTime());
 	}
 	public float GetPickUps(){
 		return pickUps;

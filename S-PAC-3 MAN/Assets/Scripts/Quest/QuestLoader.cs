@@ -12,13 +12,13 @@ public class QuestLoader : MonoBehaviour {
 		DateTime dt = DateTime.Now;
 
 		if(DataManager.GetLastDay() != dt.Day || DataManager.GetLastMonth() != dt.Month){
-			ActualizeDate(dt.Day, dt.Month);
-			ActualizeQuests();
+			UpdateDate(dt.Day, dt.Month);
+			UpdateQuests();
 		}
 		SetActiveQuest();
 	}
 
-	private void ActualizeQuests(){
+	private void UpdateQuests(){
 		int[] missions = new int[3];
 		missions = Helper.RandomIntValues(3,0,14);
 
@@ -32,7 +32,7 @@ public class QuestLoader : MonoBehaviour {
 
 	}
 
-	private void ActualizeDate(int day, int month){
+	private void UpdateDate(int day, int month){
 		DataManager.SetLastDay(day);
 		DataManager.SetLastMonth(month);
 	}
