@@ -5,18 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class MusicManager : MonoBehaviour {
 
-	private static bool musicOn = true;
-
 	void Start () {
 		string resource;
 		if(SceneManager.GetActiveScene().buildIndex == 0){
 			resource = "Music/dreams";
 		}else{
-			if(Helper.DecryptInt(PlayerPrefs.GetString("modeSelected")) == 2){
+			if(DataManager.GetSelectionMS() == 2){
 				resource = "Music/gamingCircuitBeat";
 			}else{
-				int speed = Helper.DecryptInt(PlayerPrefs.GetString("speedSelected"));
-				switch(speed){
+				switch(DataManager.GetSelectionSS()){
 					case 1:
 						resource = "Music/2018";
 					break;
@@ -38,34 +35,23 @@ public class MusicManager : MonoBehaviour {
 		
 		GetComponent<AudioSource>().clip = Resources.Load<AudioClip>(resource);
 
-		if(PlayerPrefs.HasKey("musicOn") == false || Helper.DecryptInt(PlayerPrefs.GetString("musicOn")) == 1){	
-			musicOn = true;
+		if(DataManager.GetMusicOn()){	
 			GetComponent<AudioSource>().Play();
-			PlayerPrefs.SetString("musicOn", Helper.EncryptInt(1));
 		}else{
-			musicOn = false;
 			GetComponent<AudioSource>().Stop();
 		}
 		
 	}
 
-	public static bool GetMusicOn(){
-		return musicOn;
-	}
-
 	/* BOTONES */
 	/* Para que se ponga/quite cuando se clicken los botones de música ON/OFF */
 	public void TurnOnOffMusic(){
-		int boolInt;
-		if(musicOn){
-			musicOn = false;
-			boolInt = 0;
+		if(DataManager.GetMusicOn()){
 			GetComponent<AudioSource>().Stop();
+			DataManager.SetMusicOn(false);
 		}else{
-			musicOn = true;
-			boolInt = 1;
 			GetComponent<AudioSource>().Play();
+			DataManager.SetMusicOn(true);
 		}
-		PlayerPrefs.SetString("musicOn", Helper.EncryptInt(boolInt));
 	}
 }

@@ -6,15 +6,12 @@ using UnityEngine;
 public class QuestLoader : MonoBehaviour {
 
 	private const string path = "Quests/QuestFile";
-	private static Quest[] quests = new Quest[3];
-	private static int mission1Completed;
-	private static int mission2Completed;
-	private static int mission3Completed;
+	private static Quest[] activeQuests = new Quest[3];
 
 	void Start () {
 		DateTime dt = DateTime.Now;
 
-		if(Helper.DecryptInt(PlayerPrefs.GetString("LastDay")) != dt.Day || Helper.DecryptInt(PlayerPrefs.GetString("LastMonth")) != dt.Month){
+		if(DataManager.GetLastDay() != dt.Day || DataManager.GetLastMonth() != dt.Month){
 			ActualizeDate(dt.Day, dt.Month);
 			ActualizeQuests();
 		}
@@ -25,39 +22,37 @@ public class QuestLoader : MonoBehaviour {
 		int[] missions = new int[3];
 		missions = Helper.RandomIntValues(3,0,14);
 
-		PlayerPrefs.SetString("Mission1", Helper.EncryptInt(missions[0]));
-		PlayerPrefs.SetString("Mission2", Helper.EncryptInt(missions[1]));
-		PlayerPrefs.SetString("Mission3", Helper.EncryptInt(missions[2]));
+		DataManager.SetActiveMissionsIndex(0, missions[0]);
+		DataManager.SetActiveMissionsIndex(1, missions[1]);
+		DataManager.SetActiveMissionsIndex(2, missions[2]);
 
-		PlayerPrefs.SetString("Mission1Completed", Helper.EncryptInt(0));
-		PlayerPrefs.SetString("Mission2Completed", Helper.EncryptInt(0));
-		PlayerPrefs.SetString("Mission3Completed", Helper.EncryptInt(0));
+		DataManager.SetMissionsCompleted(0, false);
+		DataManager.SetMissionsCompleted(1, false);
+		DataManager.SetMissionsCompleted(2, false);
+
 	}
 
 	private void ActualizeDate(int day, int month){
-		PlayerPrefs.SetString("LastDay", Helper.EncryptInt(day));
-		PlayerPrefs.SetString("LastMonth", Helper.EncryptInt(month));
+		DataManager.SetLastDay(day);
+		DataManager.SetLastMonth(month);
 	}
 
 	private void SetActiveQuest(){
 		QuestContainer qc = QuestContainer.Load(path);
 
-		quests[0] = qc.quests[Helper.DecryptInt(PlayerPrefs.GetString("Mission1"))];
-		quests[1] = qc.quests[Helper.DecryptInt(PlayerPrefs.GetString("Mission2"))];
-		quests[2] = qc.quests[Helper.DecryptInt(PlayerPrefs.GetString("Mission3"))];
+		activeQuests[0] = qc.quests[DataManager.GetActiveMissionsIndex(0)];
+		activeQuests[1] = qc.quests[DataManager.GetActiveMissionsIndex(1)];
+		activeQuests[2] = qc.quests[DataManager.GetActiveMissionsIndex(2)];
 
-		mission1Completed = Helper.DecryptInt(PlayerPrefs.GetString("Mission1Completed"));
-		mission2Completed = Helper.DecryptInt(PlayerPrefs.GetString("Mission2Completed"));
-		mission3Completed = Helper.DecryptInt(PlayerPrefs.GetString("Mission3Completed"));
 	}
 
-	public static int CheckQuests(int secondsAlive, int pickedMoney, int pickedShields, int secondsShielded){
-		int i = 1;
-		int reward = 0;
-		int parameter = 0;
+	public static float CheckQuests(float secondsAlive, float pickedMoney, float pickedShields, float secondsShielded){
+		int i = 0;
+		float reward = 0;
+		float parameter = 0;
 
-		foreach (Quest quest in quests){ /* Para cada misión */
-			if(Helper.DecryptInt(PlayerPrefs.GetString("Mission" + i + "Completed")) == 0){	/* Si no está completa */
+		foreach (Quest quest in activeQuests){ /* Para cada misión */
+			if(DataManager.GetMissionCompleted(i) == false){ /* Si no está completa */
 
 				switch(quest.type){
 					case 1:
@@ -83,44 +78,16 @@ public class QuestLoader : MonoBehaviour {
 
 				if(parameter >= quest.requiredAmount){
 					reward += quest.reward;
-					PlayerPrefs.SetString("Mission"+i+"Completed", Helper.EncryptInt(1));
+					DataManager.SetMissionsCompleted(i,true);
 				}
 			}
 			i++;
 		}
-
 		return reward;
 	}
 
 	public static Quest[] GetActiveQuests(){
-		return quests;
+		return activeQuests;
 	}  
-
-	public static bool GetMissionCompleted(int mission){
-		int parameter;
-		switch(mission){
-			case 1:
-				parameter = mission1Completed;
-			break;
-
-			case 2:
-				parameter = mission2Completed;
-			break;
-
-			case 3:
-				parameter = mission3Completed;
-			break;
-
-			default:
-				parameter = -1;
-			break;
-		}
-
-		if(parameter == 1){
-			return true;
-		}else{
-			return false;
-		}
-	}
 	
 }

@@ -19,13 +19,13 @@ public class PauseMenu : MonoBehaviour {
 	}
 
 	private void Start(){
-		if(MusicManager.GetMusicOn()){
+		if(DataManager.GetMusicOn()){
 			musicBt.GetComponent<Image>().sprite = musicOnSprite;
 		}else{
 			musicBt.GetComponent<Image>().sprite = musicOffSprite;
 		}
 		
-		if(SoundManager.GetSoundOn()){
+		if(DataManager.GetSoundOn()){
 			soundBt.GetComponent<Image>().sprite = soundOnSprite;
 		}else{
 			soundBt.GetComponent<Image>().sprite = soundOffSprite;
@@ -39,7 +39,6 @@ public class PauseMenu : MonoBehaviour {
 	public void MenuBt(){
 		if(!player.GetComponent<PlayerController>().GetDeath())
 			scriptPause.ChangeState();
-		PlayerPrefs.Save();
 		SceneManager.LoadScene(0);
 	}
 
@@ -48,7 +47,7 @@ public class PauseMenu : MonoBehaviour {
 	}
 
 	public void SoundBt(){
-		if(SoundManager.GetSoundOn()){
+		if(DataManager.GetSoundOn()){
 			soundBt.GetComponent<Image>().sprite = soundOffSprite;
 		}else{
 			soundBt.GetComponent<Image>().sprite = soundOnSprite;
@@ -56,7 +55,7 @@ public class PauseMenu : MonoBehaviour {
 	}
 
 	public void MusicBt(){
-		if(MusicManager.GetMusicOn()){
+		if(DataManager.GetMusicOn()){
 			musicBt.GetComponent<Image>().sprite = musicOffSprite;
 		}else{
 			musicBt.GetComponent<Image>().sprite = musicOnSprite;

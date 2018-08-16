@@ -1951,7 +1951,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 1635cc925cf593e4fb0ba77b95f7caca, type: 3}
+  m_Sprite: {fileID: 21300004, guid: e45e629e475ae574c9348b31912dec71, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2571,7 +2571,7 @@ MonoBehaviour:
   mainMenu: {fileID: 551367789}
   moneyCounter: {fileID: 771987252}
   shopMenu: {fileID: 1682632198}
-  optionsMenu: {fileID: 942003860}
+  settingsMenu: {fileID: 942003860}
   questsMenu: {fileID: 804305341}
   creditsDisplay: {fileID: 869282074}
   instructionsDisplay1: {fileID: 1157920347}
@@ -2918,6 +2918,8 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
+  - component: {fileID: 519420035}
   m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3006,6 +3008,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fde9ff80951be643be6e699e5b5ce73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5654ed94f6d25047ba5c49099782bf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &519420035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccbeb2f1d48c9bd48bcce7498333a1c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &525638036
@@ -5865,7 +5889,7 @@ GameObject:
   m_Component:
   - component: {fileID: 942003861}
   m_Layer: 5
-  m_Name: OptionsMenu
+  m_Name: SettingsMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9059,7 +9083,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1381111529
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10335,7 +10359,7 @@ SpriteRenderer:
   m_SortingLayerID: -829198445
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300004, guid: e45e629e475ae574c9348b31912dec71, type: 3}
+  m_Sprite: {fileID: 21300022, guid: 9d21b00122b48824383d6190cf8ff309, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -6,8 +6,9 @@ using System.Globalization;				/* CultureInfo class */
 
 public class Helper {
 
-	/* Protection data */
+	/* Encriptado */
 	private static string hash = "c57f431343f100b441e268cc12babc34";
+	
 	public static string EncryptString(string toEncrypt){
 		if(toEncrypt.Length == 0){
 			return "-1";
@@ -34,6 +35,16 @@ public class Helper {
 	public static string EncryptFloat(float toEncrypt){
 		string str = toEncrypt.ToString();
 		return EncryptString(str);
+	}
+
+	public static string EncryptBool(bool toEncrypt){
+		int boolInt;
+		if(toEncrypt){
+			boolInt = 1;
+		}else{
+			boolInt = 0;
+		}
+		return EncryptInt(boolInt);
 	}
 
 	public static string DecryptString(string toDecrypt){
@@ -64,21 +75,39 @@ public class Helper {
 		return float.Parse(result, CultureInfo.InvariantCulture.NumberFormat);
 	}
 
-	/* It gives random integers without repetition */
+	public static bool DecryptBool(string toDecrypt){
+		int intBool = DecryptInt(toDecrypt);
+		if(intBool > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	/* Devuelve un array de enteros entre minRange(incluido) y maxRange(excluido) sin repetición */
 	public static int[] RandomIntValues(int count, int minRange, int maxRange){
 		List<int> usedValues = new List<int>();	
-		int value;
+		if(count <= maxRange - minRange ){
+			int value;
 
-		value = UnityEngine.Random.Range(minRange, maxRange);
-		usedValues.Add(value);
-
-		while(usedValues.Count < count){
 			value = UnityEngine.Random.Range(minRange, maxRange);
-			while(usedValues.Contains(value)){
-				value = UnityEngine.Random.Range(minRange, maxRange);
-			}
 			usedValues.Add(value);
+
+			while(usedValues.Count < count){
+				value = UnityEngine.Random.Range(minRange, maxRange);
+				while(usedValues.Contains(value)){
+					value = UnityEngine.Random.Range(minRange, maxRange);
+				}
+				usedValues.Add(value);
+			}
 		}
 		return usedValues.ToArray();
+	}
+	public static bool CheckLongOverflow(float number){
+		if(long.MaxValue < number){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }

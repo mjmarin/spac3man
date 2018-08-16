@@ -28,7 +28,6 @@ public class PlayUIManagement : MonoBehaviour {
 	private int timerMinutes;
 	private int timerSeconds;
 
-	private bool NEOActivated;
 	[SerializeField] private float NEOtime;
 	private int NEOtimerMinutes;
 	private int NEOtimerSeconds;
@@ -42,7 +41,7 @@ public class PlayUIManagement : MonoBehaviour {
 		pauseScript = this.gameObject.GetComponent<PauseController>();
 	}
 	private void Start () {
-		if(NEOActivated){
+		if(DataManager.GetSelectionMS() == 1){
 			addTimeText.gameObject.SetActive(false);
 		}else{
 			addTimeText.gameObject.SetActive(true);
@@ -55,18 +54,11 @@ public class PlayUIManagement : MonoBehaviour {
 		newRecordText.SetActive(false);
 		questRewardText.SetActive(false);
 
-		if(Helper.DecryptInt(PlayerPrefs.GetString("FPSOn")) == 1){
+		if(DataManager.GetFPSOn()){
 			FPSCounter.SetActive(true);
 		}else{
 			FPSCounter.SetActive(false);
 		}
-
-		if(Helper.DecryptInt(PlayerPrefs.GetString("modeSelected")) == 1){
-			NEOActivated = false;
-		}else{
-			NEOActivated =  true;
-		}
-
 		time = 0.0f;
 	}
 	
@@ -74,7 +66,7 @@ public class PlayUIManagement : MonoBehaviour {
 
 		SetTimer();
 
-		counterText.text = playerScript.GetPickUps().ToString();
+		counterText.text = playerScript.GetPickUps().ToString("F0");
 		
 		if(playerScript.GetDeath()){
 			pauseBt.SetActive(false);
@@ -106,7 +98,7 @@ public class PlayUIManagement : MonoBehaviour {
 			timerSeconds = Mathf.FloorToInt(time);
 			timerMinutes = timerSeconds / 60;
 
-			if(NEOActivated){
+			if(DataManager.GetSelectionMS() == 2){
 				if(NEOtime <= 0){
 					NEOtime = 0;
 				}else{
@@ -125,15 +117,15 @@ public class PlayUIManagement : MonoBehaviour {
 	private void SetScore(){
 		scoreMoneyText.text = counterText.text;
 		scoreTimerText.text = string.Format("{0:D2}:{1:D2}", timerMinutes, timerSeconds % 60);
-		scoreValueText.text = playerScript.GetScore().ToString();
+		scoreValueText.text = Mathf.FloorToInt(playerScript.GetActualScore()).ToString();
 	}
 
 	public void UpNewRecordText(){
 		newRecordText.SetActive(true);
 	}
 
-	public void UpQuestRewardText(int reward){
-		questRewardText.GetComponent<Text>().text = "Quest reward:" + reward;
+	public void UpQuestRewardText(float reward){
+		questRewardText.GetComponent<Text>().text = "Quest reward:" + reward.ToString("F0");
 		questRewardText.SetActive(true);
 	}
 

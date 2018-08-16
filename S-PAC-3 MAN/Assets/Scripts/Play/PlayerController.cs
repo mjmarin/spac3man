@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour {
 	private float timeInv;
 	private bool death;
 	private float screenWidth;
-	private int pickUps;
+	private float pickUps;
 	private int pickedShields;
 	private float timeShield;
 
@@ -41,10 +41,10 @@ public class PlayerController : MonoBehaviour {
 		pickedShields = 0;
 		timeShield = 0;
 
-		speedMode = Helper.DecryptInt(PlayerPrefs.GetString("speedSelected"));
+		speedMode = DataManager.GetSelectionSS();
 		speedBuff = multSpeed[speedMode - 1];
 
-		if(Helper.DecryptInt(PlayerPrefs.GetString("modeSelected")) == 1){
+		if(DataManager.GetSelectionMS() == 1){
 			NEOActivated = false;
 		}else{
 			NEOActivated =  true;
@@ -114,15 +114,18 @@ public class PlayerController : MonoBehaviour {
 	/* Establece muerte del jugador */
 	private void SetDeath(bool boolean){
 		if(boolean){
-			int money = Helper.DecryptInt(PlayerPrefs.GetString("money"));
-			int reward = QuestLoader.CheckQuests(Mathf.FloorToInt(PlayUIManagement.GetTime()), pickUps, pickedShields, Mathf.FloorToInt(timeShield));
-			PlayerPrefs.SetString("money", Helper.EncryptInt(pickUps + money + reward));
+			float money = System.Convert.ToSingle(DataManager.GetMoney());
+
+			float reward = QuestLoader.CheckQuests(PlayUIManagement.GetTime(), pickUps, pickedShields, timeShield);
+			DataManager.SetMoney(pickUps + money + reward);
 
 			if(reward > 0){
 				PlayUIManagement.UpQuestRewardText(reward);
 			}
 
-			SetRecords();
+			int modeIndex = DataManager.GetSelectionSS() - 1 + (DataManager.GetSelectionMS() - 1) * 3;
+
+			SetRecords(modeIndex);
 
 			SoundManager.SetSound("death");
 		}
@@ -155,43 +158,24 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	/* Evalúa si se ha alcanzado un nuevo record */
-	private void SetRecords(){
-		int bestScore, score;
-		string recordMode;
+	private void SetRecords(int index){
+		ulong bestScore;
+		float score;
 
-		score = GetScore();
+		score = GetActualScore();
 
-		if(NEOActivated){
-			if(speedMode == 1){
-				recordMode = "NEONormalRecord";
-			}else if(speedMode == 2){
-				recordMode = "NEOSPRecord";
-			}else{
-				recordMode = "NEOTryhardRecord";
-			}
-		}else{
-			if(speedMode == 1){
-				recordMode = "NNormalRecord";
-			}else if(speedMode == 2){
-				recordMode = "NSPRecord";
-			}else{
-				recordMode = "NTryhardRecord";
-			}
-		}
-
-		bestScore = Helper.DecryptInt(PlayerPrefs.GetString(recordMode));
+		bestScore = DataManager.GetRecords(index);
 
 		if(score > bestScore){
 			PlayUIManagement.UpNewRecordText();
-			PlayerPrefs.SetString(recordMode, Helper.EncryptInt(score));
+			DataManager.SetRecords(index, score);
 		}
 	}
 
-	public int GetScore(){
-		int time = Mathf.FloorToInt(PlayUIManagement.GetTime());
-		return GetPickUps() * 10 + time;
+	public float GetActualScore(){
+		return GetPickUps() * 10 + Mathf.Floor(PlayUIManagement.GetTime());
 	}
-	public int GetPickUps(){
+	public float GetPickUps(){
 		return pickUps;
 	}
 

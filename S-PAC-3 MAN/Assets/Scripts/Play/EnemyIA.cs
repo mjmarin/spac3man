@@ -12,7 +12,7 @@ public class EnemyIA : MonoBehaviour {
 	void Start(){
 		float[] multSpeed = {1.0f, 1.5f, 2.0f};
 		player = GameObject.FindWithTag("Player");
-		speedMode = multSpeed[Helper.DecryptInt(PlayerPrefs.GetString("speedSelected"))-1];
+		speedMode = multSpeed[DataManager.GetSelectionSS() - 1];
 	}
 	void Update () {
 		if(player!=null){

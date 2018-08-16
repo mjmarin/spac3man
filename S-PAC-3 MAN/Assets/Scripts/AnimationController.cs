@@ -11,7 +11,6 @@ public class AnimationController : MonoBehaviour {
 	private SpriteRenderer playerSprite;
 	private Sprite[] playSprites = new Sprite[4];
 	private Sprite[] deathSprites = new Sprite[12];
-	private int settedSkin;
 	private bool wasDead;
 	
 
@@ -20,14 +19,7 @@ public class AnimationController : MonoBehaviour {
 		playerSprite = GameObject.FindGameObjectWithTag("Player").GetComponent<SpriteRenderer>();
 	}
 	void Start () {
-
-		if(PlayerPrefs.HasKey("settedSkin")){
-			settedSkin = Helper.DecryptInt(PlayerPrefs.GetString("settedSkin"));
-		}else{
-			settedSkin = 0;
-		}
-
-		ChargeSkins(settedSkin);
+		ChargeSkin(DataManager.GetSettedSkin());
 
 		time = 0;
 		turn = 0;
@@ -72,23 +64,22 @@ public class AnimationController : MonoBehaviour {
 		}
 	}
 
-	public void ChangeSkin(int settedSkin){
-		PlayerPrefs.SetString("settedSkin", Helper.EncryptInt(settedSkin));
-		
-		ChargeSkins(settedSkin);
+	public void ChangeSkin(int skin){
+		DataManager.SetSettedSkin(skin);
+		ChargeSkin(skin);
 	}
 
-	private void ChargeSkins(int settedSkin){
+	private void ChargeSkin(int skin){
 		Sprite[] resourcesArray = new Sprite[3];
 
-		resourcesArray = Resources.LoadAll<Sprite>("Sprites/Skins/skin" + settedSkin);
+		resourcesArray = Resources.LoadAll<Sprite>("Sprites/Skins/skin" + skin);
 		playSprites[0] = resourcesArray[2];
 		playSprites[1] = resourcesArray[1];
 		playSprites[2] = resourcesArray[0];
 		playSprites[3] = resourcesArray[1];
 
 		if(player != null){ /* Se encuentra jugando */
-			deathSprites = Resources.LoadAll<Sprite>("Sprites/Skins/deathSkin" + settedSkin);
+			deathSprites = Resources.LoadAll<Sprite>("Sprites/Skins/deathSkin" + skin);
 		}
 	}
 }

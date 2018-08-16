@@ -12,7 +12,7 @@ public class MenuUIManagement : MonoBehaviour {
 	[SerializeField] private GameObject mainMenu;
 	[SerializeField] private Text moneyCounter;
 	[SerializeField] private GameObject shopMenu;
-	[SerializeField] private GameObject optionsMenu;
+	[SerializeField] private GameObject settingsMenu;
 	[SerializeField] private GameObject questsMenu;
 	[SerializeField] private GameObject creditsDisplay;
 	[SerializeField] private GameObject instructionsDisplay1;
@@ -31,8 +31,6 @@ public class MenuUIManagement : MonoBehaviour {
 	private float startPositionMS;
 	private int senseSS;
 	private int senseMS;
-	private int selectionSS;
-	private int selectionMS;
 
 	/* Variables shop menu */
 	[SerializeField] private Transform ItemsPanel;
@@ -45,27 +43,22 @@ public class MenuUIManagement : MonoBehaviour {
 	private AnimationController animatorController;
 	
 	private int selectedSkin;
-	private int settedSkin;
-	private int money;
-	private bool[] ownedSkin = new bool[12];
-	private int [] skinPrices = { 0, -20, 30, 35, 40, 50, 70, 85, 90, 100, 120, 150};
 
 	/* Variables option menu */
-	[SerializeField] private GameObject checkMusic;
-	[SerializeField] private GameObject checkSound;
-	[SerializeField] private GameObject checkFPS;
-	private bool FPSOn;
+	[SerializeField] private GameObject checkMusic; 
+	[SerializeField] private GameObject checkSound; 
+	[SerializeField] private GameObject checkFPS; 
 
 	/* Variables quest menu */
-	[SerializeField] private Text mission1Text;
-	[SerializeField] private Text mission1Reward;
-	[SerializeField] private Text mission1Complete;
-	[SerializeField] private Text mission2Text;
-	[SerializeField] private Text mission2Reward;
-	[SerializeField] private Text mission2Complete;
-	[SerializeField] private Text mission3Text;
-	[SerializeField] private Text mission3Reward;
-	[SerializeField] private Text mission3Complete;
+	[SerializeField] private Text mission1Text; 
+	[SerializeField] private Text mission1Reward; 
+	[SerializeField] private Text mission1Complete; 
+	[SerializeField] private Text mission2Text; 
+	[SerializeField] private Text mission2Reward; 
+	[SerializeField] private Text mission2Complete; 
+	[SerializeField] private Text mission3Text; 
+	[SerializeField] private Text mission3Reward; 
+	[SerializeField] private Text mission3Complete; 
 
 	/* Variables cambio color records menu */
 
@@ -90,17 +83,15 @@ public class MenuUIManagement : MonoBehaviour {
 		senseSS = 1;
 		startPositionSS = speedSelector.transform.localPosition.y;
 		startPositionMS = modeSelector.transform.localPosition.x;
+
+		StartArrow(speedSelector, DataManager.GetSelectionSS(), 1);
+		StartArrow(modeSelector, DataManager.GetSelectionMS(), -1);
 		
-		InitializePlayerData();
-
-		StartArrow(speedSelector, selectionSS, 1);
-		StartArrow(modeSelector, selectionMS, -1);
-
-		SetRecords();
-
+		InitializeUI();
+		
 		mainMenu.SetActive(true);
 		shopMenu.SetActive(false);
-		optionsMenu.SetActive(false);
+		settingsMenu.SetActive(false);
 		creditsDisplay.SetActive(false);
 		questsMenu.SetActive(false);
 		instructionsDisplay1.SetActive(false);
@@ -115,66 +106,39 @@ public class MenuUIManagement : MonoBehaviour {
 	}
 
 	/* Inicializar Datos */
-	private void InitializePlayerData(){
+	private void InitializeUI(){
 
-		/* Si no hay datos previos, inicializa a 1, sino desencripta la cadena */
-		if(PlayerPrefs.HasKey("speedSelected")){
-			selectionSS = Helper.DecryptInt(PlayerPrefs.GetString("speedSelected"));
-		}else{
-			selectionSS = 1;
-			PlayerPrefs.SetString("speedSelected", Helper.EncryptInt(selectionSS));
-		}
-		
-		
-		if(PlayerPrefs.HasKey("modeSelected")){
-			selectionMS = Helper.DecryptInt(PlayerPrefs.GetString("modeSelected"));
-		}else{
-			selectionMS = 1;
-			PlayerPrefs.SetString("modeSelected", Helper.EncryptInt(selectionMS));
-		}
-
-		if(PlayerPrefs.HasKey("FPSOn") == false || Helper.DecryptInt(PlayerPrefs.GetString("FPSOn")) == 0){	
-			checkFPS.SetActive(false);
-			FPSOn = false;
-			PlayerPrefs.SetString("FPSOn", Helper.EncryptInt(0));
+		if(DataManager.GetFPSOn()){	
+			checkFPS.SetActive(true);
+			FPSCounter.SetActive(true);
 		}else{
 			checkFPS.SetActive(false);
-			FPSOn = true;
+			FPSCounter.SetActive(false);
 		}
 
-		if(PlayerPrefs.HasKey("money")){
-			money = Helper.DecryptInt(PlayerPrefs.GetString("money"));
-		}else{
-			money = 0;
-			PlayerPrefs.SetString("money", Helper.EncryptInt(0));
-		}
-
-		if(MusicManager.GetMusicOn()){	
+		if(DataManager.GetMusicOn()){	
 			checkMusic.SetActive(true);
 		}else{
 			checkMusic.SetActive(false);
 		}
 
-		if(SoundManager.GetSoundOn()){	
+		if(DataManager.GetSoundOn()){	
 			checkSound.SetActive(true);
 		}else{
 			checkSound.SetActive(false);
 		}
 
-		SetMoneyText(moneyCounter, money);
-		SetMoneyText(moneyCounterShop, money);
+		SetMoneyText(moneyCounter, DataManager.GetMoney());
+		SetMoneyText(moneyCounterShop, DataManager.GetMoney());
 
 		InitShop();
 
-		if(PlayerPrefs.HasKey("settedSkin")){
-			settedSkin = Helper.DecryptInt(PlayerPrefs.GetString("settedSkin"));
-		}else{
-			settedSkin = 0;
-		}
-		OnItemSelect(settedSkin);
+		OnItemSelect(DataManager.GetSettedSkin());
+
+		SetRecords();
 	}
 
-	private void SetMoneyText(Text moneyText, int money){
+	private void SetMoneyText(Text moneyText, ulong money){
 		moneyText.text = money.ToString();
 	}
 
@@ -186,16 +150,6 @@ public class MenuUIManagement : MonoBehaviour {
 			b.onClick.AddListener(() => OnItemSelect(currentIndex));
 			i++;
 		}
-
-		ownedSkin[0] = true;
-		for(i=1;i<12;i++){
-			if(Helper.DecryptInt(PlayerPrefs.GetString("is" + i + "SkinOwned")) == 1){
-				ownedSkin[i] = true;
-			}else{
-				ownedSkin[i] = false;
-			}
-		}
-
 	}
 
 	/* Mover las flechas de selección */
@@ -238,46 +192,20 @@ public class MenuUIManagement : MonoBehaviour {
 		Text[] normalTexts = recordsDisplay.GetComponentsInChildren<Text>()[1].GetComponentsInChildren<Text>();
 		Text[] NEOTexts = recordsDisplay.GetComponentsInChildren<Text>()[8].GetComponentsInChildren<Text>();
 
-		int score;
+		normalTexts[2].text = DataManager.GetRecords(0).ToString() + " Pts";
 
-		score = Helper.DecryptInt(PlayerPrefs.GetString("NNormalRecord"));
-		if(score < 0){
-			score = 0;
-		}
-		normalTexts[2].text = score.ToString() + " Pts";
+		normalTexts[4].text = DataManager.GetRecords(1).ToString() + " Pts";
 
-		score = Helper.DecryptInt(PlayerPrefs.GetString("NSPRecord"));
-		if(score < 0){
-			score = 0;
-		}
-		normalTexts[4].text = score.ToString() + " Pts";
+		normalTexts[6].text = DataManager.GetRecords(2).ToString() + " Pts";
 
-		score = Helper.DecryptInt(PlayerPrefs.GetString("NTryhardRecord"));
-		if(score < 0){
-			score = 0;
-		}
-		normalTexts[6].text = score.ToString() + " Pts";
+		NEOTexts[2].text = DataManager.GetRecords(3).ToString() + " Pts";
 
-		score = Helper.DecryptInt(PlayerPrefs.GetString("NEONormalRecord"));
-		if(score < 0){
-			score = 0;
-		}
-		NEOTexts[2].text = score.ToString() + " Pts";
+		NEOTexts[4].text = DataManager.GetRecords(4).ToString() + " Pts";
 
-		score = Helper.DecryptInt(PlayerPrefs.GetString("NEOSPRecord"));
-		if(score < 0){
-			score = 0;
-		}
-		NEOTexts[4].text = score.ToString() + " Pts";
-
-		score = Helper.DecryptInt(PlayerPrefs.GetString("NEOTryhardRecord"));
-		if(score < 0){
-			score = 0;
-		}
-		NEOTexts[6].text = score.ToString() + " Pts";
+		NEOTexts[6].text = DataManager.GetRecords(5).ToString() + " Pts";
 	}
 
-	/* Función para cambiar el color de los rótulos constantemente */
+	/* Función para cambiar el color de los rótulos de records constantemente */
 	private void ChangeColor(){
 
 		if(color[colorTurn] > 1.0f){
@@ -300,7 +228,6 @@ public class MenuUIManagement : MonoBehaviour {
 
 	/* Click de ready! */
 	public void StartPlay(){
-		PlayerPrefs.Save();
 		SceneManager.LoadScene(1);
 	}
 
@@ -317,22 +244,20 @@ public class MenuUIManagement : MonoBehaviour {
 	}
 
 	public void BuySetItem(){
-		if(ownedSkin[selectedSkin]){
-			settedSkin = selectedSkin;
-			animatorController.ChangeSkin(settedSkin);
+		if(DataManager.GetOwnedSkin(selectedSkin)){
+			animatorController.ChangeSkin(selectedSkin);
 		}else{
-			if(money >= skinPrices[selectedSkin]){
-				ownedSkin[selectedSkin] = true;
-				money = money - skinPrices[selectedSkin];
+			float price;
+			price = DataManager.GetSkinPrices(selectedSkin);
+			if(DataManager.GetMoney() >= price){
+				DataManager.SetOwnedSkin(selectedSkin, true);
+				DataManager.SetMoney(DataManager.GetMoney() - price);
 
-				PlayerPrefs.SetString("is" + selectedSkin + "SkinOwned", Helper.EncryptInt(1));
-				PlayerPrefs.SetString("money", Helper.EncryptInt(money));
-
-				SetMoneyText(moneyCounter, money);
-				SetMoneyText(moneyCounterShop, money);
+				SetMoneyText(moneyCounter, DataManager.GetMoney());
+				SetMoneyText(moneyCounterShop, DataManager.GetMoney());
 
 				buttonText.text = "Set";
-				skinPriceText.text = "bought";
+				skinPriceText.text = "Bought";
 			}
 		}
 	}
@@ -343,12 +268,12 @@ public class MenuUIManagement : MonoBehaviour {
 		skinNameText.text = StoryText.GetNameText(index);
 		skinDescriptionText.text = StoryText.GetDescriptionText(index);
 
-		if(ownedSkin[index]){
+		if(DataManager.GetOwnedSkin(index)){
 			buttonText.text = "Set";
 			skinPriceText.text = "bought";
 		}else{
 			buttonText.text = "Buy";
-			skinPriceText.text = skinPrices[index].ToString();
+			skinPriceText.text = DataManager.GetSkinPrices(index).ToString();
 		}
 
 		descriptionImage.sprite = shopMenu.GetComponentsInChildren<Button>()[index + 1].GetComponent<Image>().sprite;
@@ -357,45 +282,35 @@ public class MenuUIManagement : MonoBehaviour {
 
 	/* Click de botones de selección de velocidad */
 	public void SSNormal(){
-		if(selectionSS != 1){
-			speedSelector.transform.localPosition += Vector3.right * constantDistanceSS * (1 - selectionSS);
-
-			selectionSS = 1;
-			PlayerPrefs.SetString("speedSelected", Helper.EncryptInt(selectionSS));
+		if(DataManager.GetSelectionSS() != 1){
+			speedSelector.transform.localPosition += Vector3.right * constantDistanceSS * (1 - DataManager.GetSelectionSS());
+			DataManager.SetSelectionSS(1);
 		}
 	}
 	public void SSSpeedRacer(){
-		if(selectionSS != 2){
-			speedSelector.transform.localPosition += Vector3.right * constantDistanceSS * (2 - selectionSS);
-
-			selectionSS = 2;
-			PlayerPrefs.SetString("speedSelected", Helper.EncryptInt(selectionSS));
+		if(DataManager.GetSelectionSS() != 2){
+			speedSelector.transform.localPosition += Vector3.right * constantDistanceSS * (2 - DataManager.GetSelectionSS());
+			DataManager.SetSelectionSS(2);
 		}
 	}
 	public void SSTryhard(){
-		if(selectionSS != 3){
-			speedSelector.transform.localPosition += Vector3.right * constantDistanceSS * (3 - selectionSS);
-
-			selectionSS = 3;
-			PlayerPrefs.SetString("speedSelected", Helper.EncryptInt(selectionSS));
+		if(DataManager.GetSelectionSS() != 3){
+			speedSelector.transform.localPosition += Vector3.right * constantDistanceSS * (3 - DataManager.GetSelectionSS());
+			DataManager.SetSelectionSS(3);
 		}
 	}
 
 	/* Click de botones de selección de modo */
 	public void MSNormal(){
-		if(selectionMS != 1){
-			modeSelector.transform.localPosition += Vector3.up * 143.9f;
-
-			selectionMS = 1;
-			PlayerPrefs.SetString("modeSelected", Helper.EncryptInt(selectionMS));
+		if(DataManager.GetSelectionMS() != 1){
+			modeSelector.transform.localPosition += Vector3.up * constantDistanceMS;
+			DataManager.SetSelectionMS(1);
 		}
 	}
 	public void MSNotEnoughOxygen(){
-		if(selectionMS != 2){
-			modeSelector.transform.localPosition += Vector3.up * -143.9f;
-
-			selectionMS = 2;
-			PlayerPrefs.SetString("modeSelected", Helper.EncryptInt(selectionMS));
+		if(DataManager.GetSelectionMS() != 2){
+			modeSelector.transform.localPosition += Vector3.up * constantDistanceMS * -1;
+			DataManager.SetSelectionMS(2);
 		}
 	}
 
@@ -403,17 +318,17 @@ public class MenuUIManagement : MonoBehaviour {
 	public void OptionsBt(){
 		mainMenu.SetActive(false);
 		player.SetActive(false);
-		optionsMenu.SetActive(true);
+		settingsMenu.SetActive(true);
 	}
 
 	public void ExitOptionsBt(){
 		mainMenu.SetActive(true);
 		player.SetActive(true);
-		optionsMenu.SetActive(false);
+		settingsMenu.SetActive(false);
 	}
 
 	public void MusicBt(){
-		if(MusicManager.GetMusicOn()){
+		if(DataManager.GetMusicOn()){
 			checkMusic.SetActive(true);
 		}else{
 			checkMusic.SetActive(false);
@@ -421,7 +336,7 @@ public class MenuUIManagement : MonoBehaviour {
 	}
 
 	public void SoundBt(){
-		if(SoundManager.GetSoundOn()){
+		if(DataManager.GetSoundOn()){
 			checkSound.SetActive(true);
 		}else{
 			checkSound.SetActive(false);
@@ -429,28 +344,26 @@ public class MenuUIManagement : MonoBehaviour {
 	}
 
 	public void FPSBt(){
-		int boolInt;
-		if(FPSOn){
-			boolInt = 0;
+		bool FPSOn;
+		if(DataManager.GetFPSOn()){
 			FPSOn = false;
 		}else{
-			boolInt = 1;
-			FPSOn = true;
+			FPSOn =  true;
 		}
-		PlayerPrefs.SetString("FPSOn", Helper.EncryptInt(boolInt));
-		
+		DataManager.SetFPSOn(FPSOn);
+
 		FPSCounter.SetActive(FPSOn);
 		checkFPS.SetActive(FPSOn);
 	}
 
 	public void CreditsBt(){
-		optionsMenu.SetActive(false);
+		settingsMenu.SetActive(false);
 		creditsDisplay.SetActive(true);
 	}
 
 	public void BackCreditsBt(){
 		creditsDisplay.SetActive(false);
-		optionsMenu.SetActive(true);
+		settingsMenu.SetActive(true);
 	}
 
 	/* Click de misiones */
@@ -464,7 +377,7 @@ public class MenuUIManagement : MonoBehaviour {
 
 		mission1Text.text = "Mission: " + quests[0].description;
 		mission1Reward.text = "Reward: " + quests[0].reward.ToString();
-		if(QuestLoader.GetMissionCompleted(1)){
+		if(DataManager.GetMissionCompleted(0)){
 			mission1Complete.gameObject.SetActive(true);
 		}else{
 			mission1Complete.gameObject.SetActive(false);
@@ -472,7 +385,7 @@ public class MenuUIManagement : MonoBehaviour {
 			
 		mission2Text.text = "Mission: " + quests[1].description;
 		mission2Reward.text = "Reward: " + quests[1].reward.ToString();
-		if(QuestLoader.GetMissionCompleted(2)){
+		if(DataManager.GetMissionCompleted(1)){
 			mission2Complete.gameObject.SetActive(true);
 		}else{
 			mission2Complete.gameObject.SetActive(false);
@@ -480,7 +393,7 @@ public class MenuUIManagement : MonoBehaviour {
 		
 		mission3Text.text = "Mission: " + quests[2].description;
 		mission3Reward.text = "Reward: " + quests[2].reward.ToString();
-		if(QuestLoader.GetMissionCompleted(3)){
+		if(DataManager.GetMissionCompleted(2)){
 			mission3Complete.gameObject.SetActive(true);
 		}else{
 			mission3Complete.gameObject.SetActive(false);

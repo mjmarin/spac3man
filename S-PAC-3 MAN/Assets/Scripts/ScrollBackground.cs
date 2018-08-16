@@ -10,7 +10,7 @@ public class ScrollBackground : MonoBehaviour {
 	void Start(){
 		/* Acelerar el scrolling dependiendo de la velocidad elegida */
 		float[] multSpeed = {1.0f, 1.5f, 2.0f};
-		int speedMode = Helper.DecryptInt(PlayerPrefs.GetString("speedSelected"));
+		int speedMode = DataManager.GetSelectionSS();
 
 		if(speedMode == -1){
 			speedBuff = 1.0f;

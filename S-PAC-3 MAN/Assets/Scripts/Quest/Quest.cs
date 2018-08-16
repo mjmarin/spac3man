@@ -7,9 +7,9 @@ public class Quest{
     [XmlAttribute("Description")]
     public string description;
     [XmlAttribute("RequiredAmount")]
-    public int requiredAmount;
+    public float requiredAmount;
     [XmlAttribute("Reward")]
-    public int reward;
+    public float reward;
     [XmlAttribute("Type")]
     public int type;
 }

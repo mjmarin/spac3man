@@ -14,7 +14,7 @@ public class SpawnManager : MonoBehaviour {
 
 	protected void Start(){
 		float[] multSpeed = {1.0f, 1.5f, 2.0f};
-		speedBuff = multSpeed[Helper.DecryptInt(PlayerPrefs.GetString("speedSelected")) - 1];
+		speedBuff = multSpeed[DataManager.GetSelectionSS() - 1];
 		
 		Random.InitState((int)System.DateTime.Now.Ticks); 
 
