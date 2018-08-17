@@ -8,6 +8,9 @@ public class EnemyIA : MonoBehaviour {
 	[SerializeField] private float movementSpeed;
 	private GameObject player;
 	private float speedMode;
+	private bool disappearing = false;
+	private float alpha = 1.0f;
+	[SerializeField] private float alphaProgression;
 
 	void Start(){
 		float[] multSpeed = {1.0f, 1.5f, 2.0f};
@@ -25,5 +28,18 @@ public class EnemyIA : MonoBehaviour {
 
 			transform.position += transform.up * movementSpeed * Time.deltaTime * speedMode;
 		}
+
+		if(disappearing){
+			this.transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Vector4(1.0f, 1.0f, 1.0f, alpha);
+			if(alpha > 0){
+				alpha -= alphaProgression * Time.deltaTime;
+			}else{
+				Destroy(this.gameObject);
+			}
+		}
+	}
+
+	public void disappearGhost(){
+		disappearing = true;
 	}
 }

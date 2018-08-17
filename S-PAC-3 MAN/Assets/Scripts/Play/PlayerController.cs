@@ -6,8 +6,9 @@ public class PlayerController : MonoBehaviour {
 
 	[SerializeField] private float movementSpeed;
 	[SerializeField] private float rotationSpeed;
-	[SerializeField] private float timePickUps;
+	[SerializeField] private float pickUpsTime;
 	[SerializeField] private float invulnerableTime;
+	[SerializeField] private float turnOffShieldTime;
 
 	private GameObject ShieldRespawn;
 	
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour {
 	private float pickUps;
 	private int pickedShields;
 	private float timeShield;
+	private float offShieldTime;
 
 	private float speedBuff;
 	private bool NEOActivated;
@@ -27,7 +29,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Awake(){
 		GameObject canvas = GameObject.Find("Canvas");
-		timerScript = canvas.GetComponent<Timer>();
+		timerScript = Camera.main.GetComponent<Timer>();
 		PlayUIManagement = canvas.GetComponent<PlayUIManagement>();
 		ShieldRespawn = GameObject.Find("ShieldRespawn");
 	}
@@ -68,7 +70,7 @@ public class PlayerController : MonoBehaviour {
 			int direction = 0;
 			if(GetDeath() == false && timerScript.GetPaused() == false ){		// Quiero que al morir siga hacia delante pero ya no se pueda controlar
 				if (Input.touchCount > 0){
-					if (Input.GetTouch (0).position.x > screenWidth / 2) {					//Move Right
+					if (Input.GetTouch (Input.touchCount - 1).position.x > screenWidth / 2) {					//Move Right
 						direction = -1;
 					}else{																	//Move Left
 						direction = 1;
@@ -104,7 +106,7 @@ public class PlayerController : MonoBehaviour {
 					pickUps++;
 					SoundManager.SetSound("getCoin");
 					if(NEOActivated){
-						timerScript.EnlargeNeoTime(timePickUps);
+						timerScript.EnlargeNeoTime(pickUpsTime);
 					}
 				}
 			}
@@ -134,12 +136,16 @@ public class PlayerController : MonoBehaviour {
 
 	private void SetShield(bool boolean){
 		if(boolean){
+			offShieldTime = turnOffShieldTime;
 			timeInv = invulnerableTime;
 			pickedShields++;
 			SoundManager.SetSound("getShield");
+			transform.GetChild(0).gameObject.SetActive(true);
+		}else{
+			SoundManager.SetSound("shieldDown");
 		}
 		shielded = boolean;
-		transform.GetChild(0).gameObject.SetActive(boolean);
+		
 	}
 
 	private void CheckShield(){
@@ -147,14 +153,27 @@ public class PlayerController : MonoBehaviour {
 			timeShield += Time.deltaTime;
 		}else{
 			if(timeInv > 0){
+				VisualLostedShield(true);
 				timeInv = timeInv - Time.deltaTime;
 				if(timeInv <= 0){
 					timeInv = 0;
-					ShieldRespawn.GetComponent<SpawnItemManager>().IncreaseItemCount(false);
+					VisualLostedShield(false);
+					ShieldRespawn.GetComponent<SpawnItemManager>().IncreaseObjectCount(false);
 				}
 			}
 		}
 
+	}
+	private void VisualLostedShield(bool stillActive){
+		if(stillActive){
+			offShieldTime -= Time.deltaTime;
+			if(offShieldTime < 0){
+				offShieldTime = turnOffShieldTime;
+				transform.GetChild(0).gameObject.SetActive(!transform.GetChild(0).gameObject.activeSelf);
+			}
+		}else{
+			transform.GetChild(0).gameObject.SetActive(false);
+		}
 	}
 
 	/* Evalúa si se ha alcanzado un nuevo record */

@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de60fd713bba1cb4c984cfda7842278a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  removeDistance: 110
   removeTime: 30
 --- !u!212 &212787706723522354
 SpriteRenderer:

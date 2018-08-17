@@ -56,6 +56,9 @@ MonoBehaviour:
   indicator: {fileID: 1362971309334570, guid: 38f082cc42f5769418411f93307c848b, type: 2}
   spawnCooldown: 15
   initDelay: -15
+  maxObjectCount: 50
+  enemyParent: {fileID: 0}
+  bossTime: 900
 --- !u!114 &114982707184551362
 MonoBehaviour:
   m_ObjectHideFlags: 1

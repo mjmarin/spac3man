@@ -54,7 +54,7 @@ public class PlayUIManagement : MonoBehaviour {
 
 	private void Awake(){
 		playerScript = player.GetComponent<PlayerController>();
-		timerScript = this.gameObject.GetComponent<Timer>();
+		timerScript = Camera.main.GetComponent<Timer>();
 	}
 	private void Start () {
 		currentWindow = 0;

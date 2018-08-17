@@ -7,6 +7,7 @@ public class SoundManager : MonoBehaviour {
 
 	private static  AudioClip getCoin;
 	private static AudioClip getShield;
+	private static AudioClip shieldDown;
 	private static AudioClip death;
 	private AudioClip click;
 	private static AudioSource audioSource;
@@ -20,6 +21,7 @@ public class SoundManager : MonoBehaviour {
 		if(SceneManager.GetActiveScene().buildIndex == 1){
 			getCoin = Resources.Load<AudioClip>("Sounds/getCoin");
 			getShield = Resources.Load<AudioClip>("Sounds/getShield");
+			shieldDown = Resources.Load<AudioClip>("Sounds/shieldDown");
 			death = Resources.Load<AudioClip>("Sounds/death");
 		}
 	}
@@ -34,6 +36,10 @@ public class SoundManager : MonoBehaviour {
 
 				case "getShield":
 					clip = getShield;
+				break;
+
+				case "shieldDown":
+					clip = shieldDown;
 				break;
 
 				case "death":

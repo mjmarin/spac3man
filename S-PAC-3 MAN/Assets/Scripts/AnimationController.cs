@@ -36,27 +36,27 @@ public class AnimationController : MonoBehaviour {
 					wasDead = true;
 				}
 				if(time > requiredTime){
-					Dead();
+					DeathAnimation();
 				}
 			}else{
 				if(time > requiredTime){
-					Alive();
+					AliveAnimation();
 				}
 			}
 		}else{ /* Se encuentra en menú */
 			if(time > requiredTime){
-				Alive();
+				AliveAnimation();
 			}
 		}	
 	}
 
-	private void Alive(){
+	private void AliveAnimation(){
 		turn = (turn + 1) % 4;
 		playerSprite.sprite = playSprites[turn];
 		time = 0;
 	}
 
-	private void Dead(){
+	private void DeathAnimation(){
 		if(turn < 12){
 			playerSprite.sprite = deathSprites[turn];
 			turn ++;

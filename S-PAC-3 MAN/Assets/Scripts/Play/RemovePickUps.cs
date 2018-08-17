@@ -4,19 +4,28 @@ using UnityEngine;
 
 public class RemovePickUps : MonoBehaviour {
 
+	[SerializeField] protected float removeDistance;
 	[SerializeField] protected float removeTime;
 	protected GameObject player;
 	protected GameObject spawnObject;
+	private Vector3 distance;
+	private float speedBuff;
 
 	void Awake(){
 		player = GameObject.FindWithTag("Player");
 		spawnObject = GameObject.Find("PickUpRespawn");
 	}
 
+	void Start(){
+		float[] multSpeed = {1.0f, 1.5f, 2.0f};
+		speedBuff = multSpeed[DataManager.GetSelectionSS() - 1];
+	}
+
 	protected void Update () {
 		if(player != null){
+			distance = transform.position - player.transform.position;
 			removeTime -= Time.deltaTime;
-			if (removeTime < 0){
+			if (removeTime < 0 || distance.magnitude > removeDistance * speedBuff){
 				Destroyed(this.gameObject);
 			}
 		}
@@ -29,7 +38,7 @@ public class RemovePickUps : MonoBehaviour {
 	}
 
 	protected void Destroyed(GameObject obj){
-		spawnObject.GetComponent<SpawnItemManager>().IncreaseItemCount(false);
+		spawnObject.GetComponent<SpawnItemManager>().IncreaseObjectCount(false);
 		Destroy(obj);
 	}
 }

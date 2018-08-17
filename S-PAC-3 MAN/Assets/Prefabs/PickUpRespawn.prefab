@@ -68,4 +68,4 @@ MonoBehaviour:
   indicator: {fileID: 1221505863632758, guid: 2919a23949febb040a554c98224a89c4, type: 2}
   spawnCooldown: 5
   initDelay: -5
-  maxItem: 3
+  maxObjectCount: 3
