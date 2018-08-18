@@ -13,7 +13,7 @@ public class Timer : MonoBehaviour {
 	
 	void Awake(){
 		playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-		UIScript = this.gameObject.GetComponent<PlayUIManagement>();
+		UIScript = GameObject.FindGameObjectWithTag("Canvas").GetComponent<PlayUIManagement>();
 	}
 	void Start(){
 		time = 0.0f;

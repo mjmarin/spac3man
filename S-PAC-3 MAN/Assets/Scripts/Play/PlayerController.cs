@@ -116,6 +116,7 @@ public class PlayerController : MonoBehaviour {
 	/* Establece muerte del jugador */
 	private void SetDeath(bool boolean){
 		if(boolean){
+			transform.GetChild(0).gameObject.SetActive(false);
 			float money = System.Convert.ToSingle(DataManager.GetMoney());
 
 			float reward = QuestLoader.CheckQuests(timerScript.GetTime(), pickUps, pickedShields, timeShield);

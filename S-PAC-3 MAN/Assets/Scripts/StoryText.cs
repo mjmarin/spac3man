@@ -83,7 +83,7 @@ public class StoryText  {
 			break;
 
 			case 4:
-				skinDescrip = "He is a Wor-Bu which means he is a language expert, focused on knowing all comunication ways. He thought that running for his life throughout the universe would put him in a critical situation and allow him to learn many languages faster than anyone else. He love videogames and he is making an Android one, just check it in GooglePlay: \"The Dragon Hunt: Roguelike RPG\"";
+				skinDescrip = "He is a Wor-Bu which means he is a language expert, focused on knowing all comunication ways. He thought that running for his life throughout the universe would put him in a critical situation and allow him to learn many languages faster than anyone else. He love videogames and he is making an Android one, just check it in GooglePlay: \"The Dragon Hunt: Roguelike RPG\"-";
 			break;
 
 			case 5:
@@ -111,7 +111,7 @@ public class StoryText  {
 			break;
 
 			case 11:
-				skinDescrip = "He was born in Astur a green and humid planet full of mountains in which a good fruit alcohol is prepared. Moreover, he was a member of the legendary military group The Lead Alliance, which achieved the supremacy of half the galaxy, thus avoiding the assaults of stellar pirates. Years has passed since then, and today he returns to his passion being a space runner.";
+				skinDescrip = "He was born in Astur a green and humid planet full of mountains in which a good fruit alcohol is prepared. Moreover, he was a member of the mythic military group The Lead Alliance, which achieved the supremacy of half the galaxy, thus avoiding the assaults of stellar pirates. Years has passed since then, and today he returns to his passion being a space runner.";
 			break;
 
 			default:
@@ -119,6 +119,6 @@ public class StoryText  {
 			break;
 		}
 
-		return ("Name: " + skinDescrip);
+		return ("Description: " + skinDescrip);
 	}
 }

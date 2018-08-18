@@ -8,6 +8,7 @@ TagManager:
   - Item
   - Shield
   - ShieldPick
+  - Canvas
   layers:
   - Default
   - TransparentFX

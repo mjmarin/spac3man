@@ -130,7 +130,7 @@ public class DataManager : MonoBehaviour {
 			}
 
 			/* MISIONES */
-			for(int i=0;i<maxMissionIndex;i++){
+			for(int i=0;i<maxMissionIndex + 1;i++){
 				if(PlayerPrefs.HasKey("Mission" + i)){
 					activeMissionsIndex[i] = Helper.DecryptInt(PlayerPrefs.GetString("Mission" + i));
 				}else{
@@ -138,7 +138,7 @@ public class DataManager : MonoBehaviour {
 				}
 			}
 
-			for(int i=0;i<maxMissionIndex;i++){
+			for(int i=0;i<maxMissionIndex + 1;i++){
 				if(PlayerPrefs.HasKey("Mission" + i + "Completed")){
 					missionsCompleted[i] = Helper.DecryptBool(PlayerPrefs.GetString("Mission" + i + "Completed"));
 				}else{
@@ -323,7 +323,7 @@ public class DataManager : MonoBehaviour {
 	static public void SetMissionsCompleted(int selection, bool completed){
 		if(selection > -1 && selection < maxMissionIndex + 1){
 			missionsCompleted[selection] = completed;
-			PlayerPrefs.SetString("Mission" + selection + "Completed", Helper.EncryptBool(missionsCompleted[selection]));
+			PlayerPrefs.SetString("Mission" + selection + "Completed", Helper.EncryptBool(completed));
 		}
 	}
 

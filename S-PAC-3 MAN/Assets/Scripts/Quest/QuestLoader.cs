@@ -76,7 +76,7 @@ public class QuestLoader : MonoBehaviour {
 					break;
 				}
 
-				if(parameter >= quest.requiredAmount){
+				if(Mathf.RoundToInt(parameter) >= Mathf.RoundToInt(quest.requiredAmount)){
 					reward += quest.reward;
 					DataManager.SetMissionsCompleted(i,true);
 				}
