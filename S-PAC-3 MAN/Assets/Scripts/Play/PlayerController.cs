@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour {
 	void Start(){
 		float[] multSpeed = {1.0f, 1.5f, 2.0f};
 
-		SetShield(false);
+		shielded = false;
 		death = false;
 		screenWidth = Screen.width;
 		pickUps = 0;
