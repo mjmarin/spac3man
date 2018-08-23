@@ -103,6 +103,14 @@ public class Helper {
 		}
 		return usedValues.ToArray();
 	}
+
+	public static bool CheckUlongOverflow(float number){
+		if(ulong.MaxValue < number){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	public static bool CheckLongOverflow(float number){
 		if(long.MaxValue < number){
 			return true;

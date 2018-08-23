@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using GooglePlayGames;
 
 public class MenuUIManagement : MonoBehaviour {
 
@@ -20,6 +21,7 @@ public class MenuUIManagement : MonoBehaviour {
 	[SerializeField] private GameObject instructionsDisplay2;
 	[SerializeField] private GameObject instructionsDisplay3;
 	[SerializeField] private GameObject recordsDisplay;
+	[SerializeField] private GameObject googlePlayMenu;
 
 	/* Variables movimiento flechas en menu principal */
 	[SerializeField] private GameObject speedSelector;
@@ -61,6 +63,11 @@ public class MenuUIManagement : MonoBehaviour {
 	[SerializeField] private Text mission3Reward; 
 	[SerializeField] private Text mission3Complete; 
 
+	/* Variables googlePlayMenu */
+	[SerializeField] private Button connectBt;
+	private Text connectBtTxt;
+	private Image connectBtImg;
+
 	/* Variables cambio color records menu */
 
 	[SerializeField] private GameObject NormalSubtitle;
@@ -74,12 +81,16 @@ public class MenuUIManagement : MonoBehaviour {
 	private int currentWindow = 0;
 
 	void Awake(){
+		PlayGamesPlatform.Activate();
 		animatorController = player.GetComponent<AnimationController>();
 		buttonText = shopMenu.GetComponentsInChildren<Text>()[0];
 		moneyCounterShop = shopMenu.GetComponentsInChildren<Text>()[1];
 		skinPriceText = shopMenu.GetComponentsInChildren<Text>()[3];
 		skinDescriptionText = shopMenu.GetComponentsInChildren<Text>()[4];
 		skinNameText = shopMenu.GetComponentsInChildren<Text>()[5];
+
+		connectBtTxt = connectBt.GetComponentInChildren<Text>();
+		connectBtImg = connectBt.GetComponentsInChildren<Image>()[1];
 	}
 
 	void Start(){
@@ -94,6 +105,9 @@ public class MenuUIManagement : MonoBehaviour {
 		StartArrow(modeSelector, DataManager.GetSelectionMS(), -1);
 		
 		InitializeUI();
+
+		ChangeConnectBt(PlayGamesPlatform.Instance.localUser.authenticated);
+
 		
 		mainMenu.SetActive(true);
 		shopMenu.SetActive(false);
@@ -103,6 +117,7 @@ public class MenuUIManagement : MonoBehaviour {
 		instructionsDisplay1.SetActive(false);
 		instructionsDisplay2.SetActive(false);
 		instructionsDisplay3.SetActive(false);
+		googlePlayMenu.SetActive(false);
 		recordsDisplay.SetActive(false);
 	}
 	
@@ -140,6 +155,9 @@ public class MenuUIManagement : MonoBehaviour {
 					ExitInstructions3Bt();
 				break;
 				case 8:
+					ExitGooglePlayMenyBt();
+				break;
+				case 9:
 					ExitRecordsBt();
 				break;
 			}
@@ -293,6 +311,7 @@ public class MenuUIManagement : MonoBehaviour {
 			float price;
 			price = DataManager.GetSkinPrices(selectedSkin);
 			if(DataManager.GetMoney() >= price){
+				
 				DataManager.SetOwnedSkin(selectedSkin, true);
 				DataManager.SetMoney(DataManager.GetMoney() - price);
 
@@ -301,6 +320,10 @@ public class MenuUIManagement : MonoBehaviour {
 
 				buttonText.text = "Set";
 				skinPriceText.text = "Bought";
+
+				if(Social.localUser.authenticated){
+					GooglePlayManager.CheckAchievements();
+				}
 			}
 		}
 	}
@@ -502,11 +525,58 @@ public class MenuUIManagement : MonoBehaviour {
 
 	/* Click de GooglePlay */
 
+	public void GooglePlayMenuBt(){
+		googlePlayMenu.SetActive(true);
+		mainMenu.SetActive(false);
+		currentWindow = 8;
+	}
+
+	public void ExitGooglePlayMenyBt(){
+		googlePlayMenu.SetActive(false);
+		mainMenu.SetActive(true);
+		currentWindow = 0;
+	}
+	public void ConnectBt(){
+		if(Social.localUser.authenticated){
+			PlayGamesPlatform.Instance.SignOut();
+			ChangeConnectBt(false);
+		}else{
+			Social.localUser.Authenticate((bool success) => 
+			{
+				if(Social.localUser.authenticated){
+					ChangeConnectBt(true);
+					GooglePlayManager.CheckAchievements();
+				}
+			});
+		}
+	}
+	private void ChangeConnectBt(bool authenticated){
+		if(authenticated){
+			connectBtTxt.text = "Disconnect";
+			connectBtImg.color = new Color32(0,255,0,255);
+		}else{
+			connectBtTxt.text = "Connect";
+			connectBtImg.color = new Color32(255,0,0,255);
+		}
+	}
+
+	public void AchivementsBt(){
+		if(Social.localUser.authenticated){
+			Social.ShowAchievementsUI();
+		}
+	}
+
+	public void LeaderboardsBt(){
+		if(Social.localUser.authenticated){
+			Social.ShowLeaderboardUI();
+		}
+	}
+
 	/* Click de records */
 	public void RecordsBt(){
 		mainMenu.SetActive(false);
 		recordsDisplay.SetActive(true);
-		currentWindow = 8;
+		currentWindow = 9;
 	}
 	public void ExitRecordsBt(){
 		recordsDisplay.SetActive(false);

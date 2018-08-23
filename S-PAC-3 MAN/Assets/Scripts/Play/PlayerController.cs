@@ -131,6 +131,7 @@ public class PlayerController : MonoBehaviour {
 			SetRecords(modeIndex);
 
 			SoundManager.SetSound("death");
+
 		}
 		death = boolean;
 	}
@@ -185,6 +186,13 @@ public class PlayerController : MonoBehaviour {
 		score = GetCurrentScore();
 
 		bestScore = DataManager.GetRecords(index);
+
+		if(Social.localUser.authenticated){
+			if(Helper.CheckLongOverflow(score)){
+				score =  long.MaxValue;
+			}
+			GooglePlayManager.SetOnlineScore(System.Convert.ToInt64(score),GooglePlayManager.GetModeID(DataManager.GetSelectionMS(), DataManager.GetSelectionSS()));
+		}
 
 		if(score > bestScore){
 			PlayUIManagement.UpNewRecordText();

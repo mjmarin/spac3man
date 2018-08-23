@@ -16,22 +16,9 @@ public class SpawnEnemyManager : SpawnManager {
 
 	void Update () {
 		if(boss == false){
-			timer -= Time.deltaTime;
-			if(timer < 0 && player.GetComponent<PlayerController>().GetDeath() == false){
-
-				/* Spawnear un fantasma */
-				spawnEnemy();
-				IncreaseObjectCount(true);
-
-				/* Eliminar un fantasma */
-				if(objectCount > maxObjectCount){
-					IncreaseObjectCount(false);
-					enemyParent.transform.GetChild(0).GetComponent<EnemyIA>().disappearGhost();
-				}
-
-				if(timerScript.GetTime() > bossTime){
-					boss = true;
-				}
+			ghostRespawn();
+			if(timerScript.GetTime() > bossTime){
+				boss = true;
 			}
 		}else{
 			if(bossRespawned == false){
@@ -42,7 +29,7 @@ public class SpawnEnemyManager : SpawnManager {
 				}
 
 				/* Hacerlo más grande */
-				spawnable.transform.localScale = new Vector3(9,9,1);
+				spawnable.transform.localScale = new Vector3(4,4,1);
 
 				/* Spawn fantasma grande */
 				spawnEnemy();
@@ -51,6 +38,12 @@ public class SpawnEnemyManager : SpawnManager {
 				spawnable.transform.localScale = new Vector3(1,1,1);
 
 				bossRespawned = true;
+
+				if(Social.localUser.authenticated){
+					GooglePlayManager.SetOnlineAchievement("CgkInJLw2NEXEAIQEg");
+				}
+			}else{
+				ghostRespawn();
 			}
 		}
 	}
@@ -68,4 +61,23 @@ public class SpawnEnemyManager : SpawnManager {
 		
 	}
 
+	private void ghostRespawn(){
+		timer -= Time.deltaTime;
+		if(timer < 0 && player.GetComponent<PlayerController>().GetDeath() == false){
+
+			/* Spawnear un fantasma */
+			spawnEnemy();
+			IncreaseObjectCount(true);
+
+			/* Eliminar un fantasma */
+			if(objectCount > maxObjectCount){
+				IncreaseObjectCount(false);
+				if(bossRespawned){
+					enemyParent.transform.GetChild(1).GetComponent<EnemyIA>().disappearGhost();
+				}else{
+					enemyParent.transform.GetChild(0).GetComponent<EnemyIA>().disappearGhost();
+				}
+			}
+		}
+	}
 }

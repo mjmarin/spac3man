@@ -245,8 +245,8 @@ public class DataManager : MonoBehaviour {
 		PlayerPrefs.SetString("soundOn", Helper.EncryptBool(soundOn));
 	}
 	static public void SetMoney(float newMoney){
-		if(Helper.CheckLongOverflow(newMoney)){
-			money =  long.MaxValue;
+		if(Helper.CheckUlongOverflow(newMoney)){
+			money =  ulong.MaxValue;
 		}else if(newMoney > 0){
 			money = System.Convert.ToUInt64(newMoney);
 		}else{
@@ -302,8 +302,8 @@ public class DataManager : MonoBehaviour {
 				break;
 			}
 
-			if(Helper.CheckLongOverflow(newRecord)){
-				records[index] =  long.MaxValue;
+			if(Helper.CheckUlongOverflow(newRecord)){
+				records[index] =  ulong.MaxValue;
 			}else if(newRecord > records[index]){
 				records[index] = System.Convert.ToUInt64(newRecord);
 			}else{
