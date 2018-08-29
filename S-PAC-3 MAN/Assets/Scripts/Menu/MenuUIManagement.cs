@@ -23,7 +23,7 @@ public class MenuUIManagement : MonoBehaviour {
 	[SerializeField] private GameObject recordsDisplay;
 	[SerializeField] private GameObject googlePlayMenu;
 
-	/* Variables movimiento flechas en menu principal */
+	/* Variables movimiento flechas en menú principal */
 	[SerializeField] private GameObject speedSelector;
 	[SerializeField] private GameObject modeSelector;
 	[SerializeField] private float range;
@@ -35,7 +35,7 @@ public class MenuUIManagement : MonoBehaviour {
 	private int senseSS;
 	private int senseMS;
 
-	/* Variables shop menu */
+	/* Variables pantalla de tienda */
 	[SerializeField] private Transform ItemsPanel;
 	[SerializeField] private Image descriptionImage;
 	private Text buttonText;
@@ -47,12 +47,12 @@ public class MenuUIManagement : MonoBehaviour {
 	
 	private int selectedSkin;
 
-	/* Variables option menu */
+	/* Variables pantalla de ajustes */
 	[SerializeField] private GameObject checkMusic; 
 	[SerializeField] private GameObject checkSound; 
 	[SerializeField] private GameObject checkFPS; 
 
-	/* Variables quest menu */
+	/* Variables pantalla de misiones */
 	[SerializeField] private Text mission1Text; 
 	[SerializeField] private Text mission1Reward; 
 	[SerializeField] private Text mission1Complete; 
@@ -63,12 +63,12 @@ public class MenuUIManagement : MonoBehaviour {
 	[SerializeField] private Text mission3Reward; 
 	[SerializeField] private Text mission3Complete; 
 
-	/* Variables googlePlayMenu */
+	/* Variables pantalla de GooglePlay */
 	[SerializeField] private Button connectBt;
 	private Text connectBtTxt;
 	private Image connectBtImg;
 
-	/* Variables cambio color records menu */
+	/* Variables cambio color en títulos pantalla de records */
 
 	[SerializeField] private GameObject NormalSubtitle;
 	[SerializeField] private GameObject NEOSubtitle;
@@ -77,9 +77,10 @@ public class MenuUIManagement : MonoBehaviour {
 	private Vector3 colorSense = new Vector3(-1,-1,1);
 	private int colorTurn = 1;
 
-	/* Variable de pantalla actual -> Uso de back Android */
+	/* Variable de pantalla actual -> Uso de back nativo de Android */
 	private int currentWindow = 0;
 
+	/* Toma de referencias */
 	void Awake(){
 		PlayGamesPlatform.Activate();
 		animatorController = player.GetComponent<AnimationController>();
@@ -93,6 +94,7 @@ public class MenuUIManagement : MonoBehaviour {
 		connectBtImg = connectBt.GetComponentsInChildren<Image>()[1];
 	}
 
+	/* Inicialización */
 	void Start(){
 		currentWindow = 0;
 
@@ -122,13 +124,15 @@ public class MenuUIManagement : MonoBehaviour {
 	}
 	
 	void Update () {
-		MoveSelectors();
-		ChangeColor();
-		BackListener();
+		MoveSelectors();	/* Realizar el efecto de las flechas de selección en menú principal */
+		ChangeColor();		/* Cambiar el color de los títulos de menú records */
+		BackListener();		/* Respuesta al back nativo de Android */
 	}
 
+	/* Respuesta al back nativo de Android.Dependiendo de la pantalla
+	en la que se encuentre irá al menú principal o se saldrá de la aplicación */
     private void BackListener(){
-        if(Input.GetKeyDown(KeyCode.Escape)){
+        if(Input.GetKeyDown(KeyCode.Escape)){	
 			switch(currentWindow){
 				case 0:
 					Application.Quit();
@@ -164,7 +168,7 @@ public class MenuUIManagement : MonoBehaviour {
 		}
     }
 
-    /* Inicializar Datos */
+    /* Inicializar componentes gráficos */
     private void InitializeUI(){
 
 		if(DataManager.GetFPSOn()){	
@@ -197,10 +201,12 @@ public class MenuUIManagement : MonoBehaviour {
 		SetRecords();
 	}
 
+	/* Situar en el texto la cantidad de dinero actual */
 	private void SetMoneyText(Text moneyText, ulong money){
 		moneyText.text = money.ToString();
 	}
 
+	/* Añadir listeners al evento OnClick de los botones de tienda */
 	private void InitShop(){
 		int i = 0;
 		foreach(Transform t in ItemsPanel){
@@ -211,7 +217,7 @@ public class MenuUIManagement : MonoBehaviour {
 		}
 	}
 
-	/* Mover las flechas de selección */
+	/*------------------ Mover las flechas de selección ----------------------*/
 
 	/* Situar las flechas en la posición de la última elección
 		option = 1 flecha de Speed Selector
@@ -228,6 +234,8 @@ public class MenuUIManagement : MonoBehaviour {
 		}
 		obj.transform.localPosition += vect * change * (selection - 1) * option;
 	}
+
+	/* Realizar el efecto de las flechas de selección en menú principal */
 	private void MoveSelectors(){
 		senseSS = Sense(speedSelector.transform.localPosition.y, startPositionSS, senseSS);
 		speedSelector.transform.localPosition += Vector3.up * speed * senseSS;
@@ -236,6 +244,7 @@ public class MenuUIManagement : MonoBehaviour {
 		modeSelector.transform.localPosition += Vector3.right * speed * senseMS;
 	}
 
+	/* Devuelve el sentido en el que se deben mover las flechas de selección */
 	private int Sense(float localPosition, float startPosition, int sense){
 		if((localPosition > startPosition + range && sense == 1) || (localPosition < startPosition - range && sense == -1)){
 			return -sense;
@@ -243,10 +252,11 @@ public class MenuUIManagement : MonoBehaviour {
 			return sense;
 		}
 	}
+	/*----------------------------------------------------------------------*/
 
-	/* Funciones de recordsDisplay */
+	/*---------------------- Funciones de recordsDisplay -------------------*/
 
-	/* Función para situar los records */
+	/* Función para escribir las puntuaciones más altas en los textos correspondientes */
 	private void SetRecords(){
 		Text[] normalTexts = recordsDisplay.GetComponentsInChildren<Text>()[1].GetComponentsInChildren<Text>();
 		Text[] NEOTexts = recordsDisplay.GetComponentsInChildren<Text>()[8].GetComponentsInChildren<Text>();
@@ -283,27 +293,32 @@ public class MenuUIManagement : MonoBehaviour {
 		color[colorTurn] = color[colorTurn] + speedColor * colorSense[colorTurn];
 	}
 
-	/* Funciones aplicadas a botones */
+	/*----------------------------------------------------------------------*/
 
-	/* Click de ready! */
+	/*---------------------- Funciones aplicadas a botones -----------------*/
+
+	/* Carga la escena de juego */
 	public void StartPlay(){
 		SceneManager.LoadScene(1);
 	}
 
-	/* Click de botones de tienda */
+	/* Inicio click de botones de tienda */
 
+	/* Abre la pantalla de tienda */
 	public void ShopBt(){
 		mainMenu.SetActive(false);
 		shopMenu.SetActive(true);
 		currentWindow = 1;
 	}
 
+	/* Cierra la pantalla de tienda */
 	public void ExitShopBt(){
 		mainMenu.SetActive(true);
 		shopMenu.SetActive(false);
 		currentWindow = 0;
 	}
 
+	/* Compra o utiliza un personaje de la tienda */
 	public void BuySetItem(){
 		if(DataManager.GetOwnedSkin(selectedSkin)){
 			animatorController.ChangeSkin(selectedSkin);
@@ -327,6 +342,8 @@ public class MenuUIManagement : MonoBehaviour {
 			}
 		}
 	}
+
+	/* Situa la descripción del personaje seleccionado */
 	private void OnItemSelect(int index){
 
 		selectedSkin = index;
@@ -345,34 +362,46 @@ public class MenuUIManagement : MonoBehaviour {
 		descriptionImage.sprite = shopMenu.GetComponentsInChildren<Button>()[index + 1].GetComponent<Image>().sprite;
 		
 	}
+	/* Fin click de botones de tienda */
 
-	/* Click de botones de selección de velocidad */
+	/* Inicio click de botones de selección de velocidad */
+
+	/* Modifica la selección de velocidad a normal y sitúa la flecha de selección encima del botón normal */
 	public void SSNormal(){
 		if(DataManager.GetSelectionSS() != 1){
 			speedSelector.transform.localPosition += Vector3.right * constantDistanceSS * (1 - DataManager.GetSelectionSS());
 			DataManager.SetSelectionSS(1);
 		}
 	}
+
+	/* Modifica la selección de velocidad a speedRacer y sitúa la flecha de selección encima del botón speedRacer */
 	public void SSSpeedRacer(){
 		if(DataManager.GetSelectionSS() != 2){
 			speedSelector.transform.localPosition += Vector3.right * constantDistanceSS * (2 - DataManager.GetSelectionSS());
 			DataManager.SetSelectionSS(2);
 		}
 	}
+
+	/* Modifica la selección de velocidad a tryhard y sitúa la flecha de selección encima del botón tryhard */
 	public void SSTryhard(){
 		if(DataManager.GetSelectionSS() != 3){
 			speedSelector.transform.localPosition += Vector3.right * constantDistanceSS * (3 - DataManager.GetSelectionSS());
 			DataManager.SetSelectionSS(3);
 		}
 	}
+	/* Fin click de botones de selección de velocidad */
 
-	/* Click de botones de selección de modo */
+	/* Inicio click de botones de selección de modo */
+
+	/* Modifica la selección de modo a normal y sitúa la flecha de selección encima del botón de modo normal */
 	public void MSNormal(){
 		if(DataManager.GetSelectionMS() != 1){
 			modeSelector.transform.localPosition += Vector3.up * constantDistanceMS;
 			DataManager.SetSelectionMS(1);
 		}
 	}
+
+	/* Modifica la selección de modo a notEnoughOxygen y sitúa la flecha de selección encima del botón de modo notEnoughOxygen */
 	public void MSNotEnoughOxygen(){
 		if(DataManager.GetSelectionMS() != 2){
 			modeSelector.transform.localPosition += Vector3.up * constantDistanceMS * -1;
@@ -380,7 +409,11 @@ public class MenuUIManagement : MonoBehaviour {
 		}
 	}
 
-	/* Click de ajustes */
+	/* Inicio click de botones de selección de modo */
+
+	/* Inicio click de ajustes */
+
+	/* Abre la pantalla de ajustes */
 	public void SettingsBt(){
 		mainMenu.SetActive(false);
 		player.SetActive(false);
@@ -388,6 +421,7 @@ public class MenuUIManagement : MonoBehaviour {
 		currentWindow = 2;
 	}
 
+	/* Cierra la pantalla de ajustes */
 	public void ExitSettingsBt(){
 		mainMenu.SetActive(true);
 		player.SetActive(true);
@@ -395,6 +429,7 @@ public class MenuUIManagement : MonoBehaviour {
 		currentWindow = 0;
 	}
 
+	/* Activa/desactiva la música y añade/quita el checkmark */
 	public void MusicBt(){
 		if(DataManager.GetMusicOn()){
 			checkMusic.SetActive(true);
@@ -403,6 +438,7 @@ public class MenuUIManagement : MonoBehaviour {
 		}
 	}
 
+	/* Activa/desactiva los efectos de sonido y añade/quita el checkmark */
 	public void SoundBt(){
 		if(DataManager.GetSoundOn()){
 			checkSound.SetActive(true);
@@ -411,6 +447,7 @@ public class MenuUIManagement : MonoBehaviour {
 		}
 	}
 
+	/* Activa/desactiva el amrcador de frames por segundo y añade/quita el checkmark */
 	public void FPSBt(){
 		bool FPSOn;
 		if(DataManager.GetFPSOn()){
@@ -424,20 +461,25 @@ public class MenuUIManagement : MonoBehaviour {
 		checkFPS.SetActive(FPSOn);
 	}
 
+	/* Abre la pantalla de créditos */
 	public void CreditsBt(){
 		settingsMenu.SetActive(false);
 		creditsDisplay.SetActive(true);
 		currentWindow = 3;
 	}
 
+	/* Cierra la pantalla de créditos */
 	public void BackCreditsBt(){
 		creditsDisplay.SetActive(false);
 		settingsMenu.SetActive(true);
 		currentWindow = 2;
 	}
 
-	/* Click de misiones */
+	/* Fin click de ajustes */
 
+	/* Inicio click de misiones */
+
+	/* Abre la pantalla de misiones, carga las misiones activas y sitúa su descripción en los textos de la pantalla */
 	public void QuestsBt(){
 		mainMenu.SetActive(false);
 		player.SetActive(false);
@@ -472,6 +514,7 @@ public class MenuUIManagement : MonoBehaviour {
 
 	}
 
+	/* Cierra la pantalla de misiones */
 	public void ExitQuestsBt(){
 		mainMenu.SetActive(true);
 		player.SetActive(true);
@@ -479,63 +522,84 @@ public class MenuUIManagement : MonoBehaviour {
 		currentWindow = 0;
 
 	}
+	/* Fin click de misiones */
 
-	/* Click de instrucciones */
+	/* Inicio click de instrucciones */
 
+	/* Abre la pantalla de instrucciones */
 	public void InstructionsBt(){
 		mainMenu.SetActive(false);
 		instructionsDisplay1.SetActive(true);
 		currentWindow = 5;
 	}
+
+	/* Cierra la pantalla de instrucciones */
 	public void ExitInstructions1Bt(){
 		instructionsDisplay1.SetActive(false);
 		mainMenu.SetActive(true);
 		currentWindow = 0;
 	}
+
+	/* Cierra la pantalla de instrucciones */
 	public void ExitInstructions2Bt(){
 		instructionsDisplay2.SetActive(false);
 		mainMenu.SetActive(true);
 		currentWindow = 0;
 	}
+
+	/* Cierra la pantalla de instrucciones */
 	public void ExitInstructions3Bt(){
 		instructionsDisplay3.SetActive(false);
 		mainMenu.SetActive(true);
 		currentWindow = 0;
 	}
+
+	/* Pasa a la siguiente pantalla de instrucciones */
 	public void ContinueInstruction1Bt(){
 		instructionsDisplay1.SetActive(false);
 		instructionsDisplay2.SetActive(true);
 		currentWindow = 6;
 	}
+
+	/* Pasa a la siguiente pantalla de instrucciones */
 	public void ContinueInstruction2Bt(){
 		instructionsDisplay2.SetActive(false);
 		instructionsDisplay3.SetActive(true);
 		currentWindow = 7;
 	}
+
+	/* Vuelve a la anterior pantalla de instrucciones */
 	public void BackInstruction2Bt(){
 		instructionsDisplay2.SetActive(false);
 		instructionsDisplay1.SetActive(true);
 		currentWindow = 5;
 	}
+
+	/* Vuelve a la anterior pantalla de instrucciones */
 	public void BackInstruction3Bt(){
 		instructionsDisplay3.SetActive(false);
 		instructionsDisplay2.SetActive(true);
 		currentWindow = 6;
 	}
+	/* Fin click de instrucciones */
 
-	/* Click de GooglePlay */
+	/* Inicio click de GooglePlay */
 
+	/* Abre la pantalla de GooglePlay */
 	public void GooglePlayMenuBt(){
 		googlePlayMenu.SetActive(true);
 		mainMenu.SetActive(false);
 		currentWindow = 8;
 	}
 
+	/* Cierra la pantalla de GooglePlay */
 	public void ExitGooglePlayMenyBt(){
 		googlePlayMenu.SetActive(false);
 		mainMenu.SetActive(true);
 		currentWindow = 0;
 	}
+
+	/* Realiza la conexión con GooglePlay */
 	public void ConnectBt(){
 		if(Social.localUser.authenticated){
 			PlayGamesPlatform.Instance.SignOut();
@@ -550,6 +614,9 @@ public class MenuUIManagement : MonoBehaviour {
 			});
 		}
 	}
+
+	/* Modifica el teto del botón de conexión así como 
+	su marca dependiendo si el usuario esta conectado o no  */
 	private void ChangeConnectBt(bool authenticated){
 		if(authenticated){
 			connectBtTxt.text = "Disconnect";
@@ -560,28 +627,36 @@ public class MenuUIManagement : MonoBehaviour {
 		}
 	}
 
+	/* Despliega la interfaz de usuario de GooglePlay para los logros */
 	public void AchivementsBt(){
 		if(Social.localUser.authenticated){
 			Social.ShowAchievementsUI();
 		}
 	}
 
+	/* Despliega la interfaz de usuario de GooglePlay para los marcadores online */
 	public void LeaderboardsBt(){
 		if(Social.localUser.authenticated){
 			Social.ShowLeaderboardUI();
 		}
 	}
+	/* Fin click de GooglePlay */
 
-	/* Click de records */
+	/* Inicio click de records */
+
+	/* Abre la pantalla de records locales */
 	public void RecordsBt(){
 		mainMenu.SetActive(false);
 		recordsDisplay.SetActive(true);
 		currentWindow = 9;
 	}
+
+	/* Cierra la pantalla de records locales */
 	public void ExitRecordsBt(){
 		recordsDisplay.SetActive(false);
 		mainMenu.SetActive(true);
 		currentWindow = 0;
 	}
+	/* Fin click de records */
 
 }

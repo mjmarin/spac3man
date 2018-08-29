@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using GooglePlayGames;
 
-public class GooglePlayManager : MonoBehaviour {
+public class GooglePlayManager {
 
+	/* Función interfaz de modificación de puntuación online */
 	static public void SetOnlineScore(long score, string leaderboardID){
 		Social.ReportScore(score, leaderboardID, null);
 	}
 
+	/* Función interfaz de modificación de logros online */
 	static public void SetOnlineAchievement(string achivementID){
 		Social.ReportProgress(achivementID, 100.0, null);
 	}
 
+	/* Función interfaz de comprobación de logros online alcanzados */
 	static public void CheckAchievements(){
 		int cont = 0;
 		if(Social.localUser.authenticated){
@@ -29,7 +32,7 @@ public class GooglePlayManager : MonoBehaviour {
 		}
 	}
 
-
+	/* Función de consulta de ID online del logro asociado al desbloqueo de un personaje */
 	static public string GetSkinID(int selectedSkin){
 		string ID;
 		switch(selectedSkin){
@@ -84,6 +87,7 @@ public class GooglePlayManager : MonoBehaviour {
 		return ID;
 	}
 
+	/* Función de consulta de ID online del marcador asociado al modo de juego */
 	static public string GetModeID(int selectedMode, int selectedSpeed){
 		string ID;
 		if(selectedMode == 1){

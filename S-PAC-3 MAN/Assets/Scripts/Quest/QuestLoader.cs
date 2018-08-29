@@ -5,9 +5,13 @@ using UnityEngine;
 
 public class QuestLoader : MonoBehaviour {
 
+	/* Variable path de fichero */
 	private const string path = "Quests/QuestFile";
+
+	/* Variable con las misiones activas */
 	private static Quest[] activeQuests = new Quest[3];
 
+	/* Función de actualización e inicialización de misiones */
 	void Start () {
 		DateTime dt = DateTime.Now;
 
@@ -18,6 +22,7 @@ public class QuestLoader : MonoBehaviour {
 		SetActiveQuest();
 	}
 
+	/* Actualización de misiones */
 	private void UpdateQuests(){
 		int[] missions = new int[3];
 		missions = Helper.RandomIntValues(3,0,14);
@@ -32,11 +37,13 @@ public class QuestLoader : MonoBehaviour {
 
 	}
 
+	/* Actualización de última fecha de acceso */
 	private void UpdateDate(int day, int month){
 		DataManager.SetLastDay(day);
 		DataManager.SetLastMonth(month);
 	}
 
+	/* Inicialización de misiones activas */
 	private void SetActiveQuest(){
 		QuestContainer qc = QuestContainer.Load(path);
 
@@ -46,6 +53,7 @@ public class QuestLoader : MonoBehaviour {
 
 	}
 
+	/* Función interfaz de comprobación de compleción de misiones */
 	public static float CheckQuests(float secondsAlive, float pickedMoney, float pickedShields, float secondsShielded){
 		int i = 0;
 		float reward = 0;
@@ -86,6 +94,7 @@ public class QuestLoader : MonoBehaviour {
 		return reward;
 	}
 
+	/* Función interfaz de consulta de misiones activas */
 	public static Quest[] GetActiveQuests(){
 		return activeQuests;
 	}  

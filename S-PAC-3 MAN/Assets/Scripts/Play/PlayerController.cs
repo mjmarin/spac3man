@@ -4,35 +4,79 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+/* --------------------------- Variables de características de la partida ------------------------------*/
+	/* Velocidad de desplazamiento del personaje */
 	[SerializeField] private float movementSpeed;
+
+	/* Velocidad de rotación del personaje */
 	[SerializeField] private float rotationSpeed;
+
+	/* Tiempo añadido por recogida de monedas en modo notEnoughOxygen */
 	[SerializeField] private float pickUpsTime;
+
+	/* Tiempo de invulnerabilidad al perder un escudo */
 	[SerializeField] private float invulnerableTime;
+
+	/* Tiempo de de efecto visual al perder un escudo */
 	[SerializeField] private float turnOffShieldTime;
 
+/* --------------------------- Referencias ------------------------------*/
+	/* Referencia al objeto spawner de escudos */
 	private GameObject ShieldRespawn;
 	
+	/* Referencia al script de control temporal en partida */
 	private Timer timerScript;
+
+	/* Referencia al script de control gráfica en partida */
 	private PlayUIManagement PlayUIManagement;
+
+/* --------------------------- Variables de estado de la partida ------------------------------*/	
+
+	/* Variable que marca si el objeto jugador tiene escudo */
 	private bool shielded;
+
+	/* Variable que marca el tiempo restante de invulnerabilidad 
+	del objeto jugador al perder un escudo */
 	private float timeInv;
+
+	/* Variable que señala si el objeto jugador ha sido eliminado */
 	private bool death;
-	private float screenWidth;
+
+	/* Variable que guarda la cantidad de monedas recogidas */
 	private float pickUps;
+
+	/* Variable que guarda la cantidad de escudos recogidos */
 	private int pickedShields;
+
+	/* Variable que guarda el tiempo que el objeto jugador ha
+	usado un escudo */
 	private float timeShield;
+
+	/* Varaible que es utilizada para el efecto gráfico de intermitencia al perder el escudo */
 	private float offShieldTime;
 
+	/* Variable que controla el ancho de la pantalla */
+	private float screenWidth;
+
+	/* Variable que contiene el valor añadido de velocidad 
+	según la el modo de velocidad elegido */
 	private float speedBuff;
+
+	/* Variable que guarda si se seleccionó el modo notEnoughOxygen para la partida */
 	private bool NEOActivated;
+
+	/* Variable que guarda el modo de velocdiad seleccionado */
 	private int speedMode;
 
+	/* Inicialización de referencias */
 	void Awake(){
 		GameObject canvas = GameObject.Find("Canvas");
 		timerScript = Camera.main.GetComponent<Timer>();
 		PlayUIManagement = canvas.GetComponent<PlayUIManagement>();
 		ShieldRespawn = GameObject.Find("ShieldRespawn");
 	}
+
+	/* Inicialización de variables */
 	void Start(){
 		float[] multSpeed = {1.0f, 1.5f, 2.0f};
 
@@ -54,7 +98,9 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 
-	/* Control de movimiento */
+	/* Control de movimiento, control de tiempo con escudo y activación
+	de la animación de destrucción del mismo. Control muerte por tiempo
+	en notEnoughOxygen */
 	void Update () {
 		Movement();
 		CheckShield();
@@ -63,25 +109,32 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	/* Tratamiento del entrada */
 	void Movement(){
+		/* Para probar en editor de Unity */
 		# if UNITY_EDITOR
-			transform.Rotate(new Vector3(0,0,-Input.GetAxis("Horizontal") * rotationSpeed * speedBuff));		//Para probar en PC
+			transform.Rotate(new Vector3(0,0,-Input.GetAxis("Horizontal") * rotationSpeed * speedBuff));		
 		#else
 			int direction = 0;
-			if(GetDeath() == false && timerScript.GetPaused() == false ){		// Quiero que al morir siga hacia delante pero ya no se pueda controlar
+			/* Al morir se pierde el control pero el objeto sigue hacia adelante */
+			if(GetDeath() == false && timerScript.GetPaused() == false ){		
 				if (Input.touchCount > 0){
-					if (Input.GetTouch (Input.touchCount - 1).position.x > screenWidth / 2) {					//Move Right
+					/* Movimiento derecha */
+					if (Input.GetTouch (Input.touchCount - 1).position.x > screenWidth / 2) {					
 						direction = -1;
-					}else{																	//Move Left
+					}else{ /* Movimiento izquierda */																		
 						direction = 1;
 					}
 				}
 			}
-			transform.Rotate(new Vector3(0,0,direction * rotationSpeed * speedBuff));
+			transform.Rotate(new Vector3(0,0,direction * rotationSpeed * speedBuff)); /* Cambio de dirección */
 		#endif
-		transform.position += transform.up * Time.deltaTime * movementSpeed * speedBuff;
+
+		/* Cambio de posición según la dirección actual */
+		transform.position += transform.up * Time.deltaTime * movementSpeed * speedBuff;			
 	}
 
+	/* Comprueba la muerte por tiempo en notEnoughOxygen */
 	void CheckNEODeath(){
 		if(timerScript.GetNeoTime() <= 0 && GetDeath() == false){
 			SetDeath(true);
@@ -113,7 +166,10 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 	
-	/* Establece muerte del jugador */
+	/* Establece muerte del jugador. Guarda las monedas obtenidas.
+	Comprueba las misiones superadas, envía la puntuación a los 
+	marcadores online si está conectado y comprueba si se ha superado
+	en record actual, en cuyo caso se guarda el nuevo record */
 	private void SetDeath(bool boolean){
 		if(boolean){
 			transform.GetChild(0).gameObject.SetActive(false);
@@ -136,6 +192,7 @@ public class PlayerController : MonoBehaviour {
 		death = boolean;
 	}
 
+	/* Activa o desactiva el escudo y sus efectos sonoros */
 	private void SetShield(bool boolean){
 		if(boolean){
 			offShieldTime = turnOffShieldTime;
@@ -150,6 +207,8 @@ public class PlayerController : MonoBehaviour {
 		
 	}
 
+	/* Comprueba el tiempo con escudo y activa su
+	intermitencia es destruido */
 	private void CheckShield(){
 		if(shielded){
 			timeShield += Time.deltaTime;
@@ -166,6 +225,8 @@ public class PlayerController : MonoBehaviour {
 		}
 
 	}
+
+	/* Efecto de intermitencia en escudo perdido */
 	private void VisualLostedShield(bool stillActive){
 		if(stillActive){
 			offShieldTime -= Time.deltaTime;
@@ -178,7 +239,7 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	/* Evalúa si se ha alcanzado un nuevo record */
+	/* Evalúa si se ha alcanzado un nuevo record y lo guarda si es así */
 	private void SetRecords(int index){
 		ulong bestScore;
 		float score;
@@ -200,13 +261,17 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	/* Interfaz que devuelve la puntuación actual */
 	public float GetCurrentScore(){
 		return GetPickUps() * 10 + Mathf.Floor(timerScript.GetTime());
 	}
+
+	/* Interfaz que devuelve las monedas recogidas */
 	public float GetPickUps(){
 		return pickUps;
 	}
 
+	/* Interfaz que devuelve si el personaje ha sido eliminado */
 	public bool GetDeath(){
 		return death;
 	}

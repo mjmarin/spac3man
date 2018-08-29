@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class StoryText  {
 
+	/* Función interfaz para obtención de nombre de personaje */
 	public static string GetNameText(int index){
 		string skinName;
 		switch(index){
@@ -63,6 +64,7 @@ public class StoryText  {
 		return ("Name: " + skinName);
 	}
 
+	/* Función interfaz para obtención de descripción de personaje */
 	public static string GetDescriptionText(int index){
 		string skinDescrip;
 		switch(index){

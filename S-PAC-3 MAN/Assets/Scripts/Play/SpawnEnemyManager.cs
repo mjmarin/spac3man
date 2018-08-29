@@ -4,16 +4,25 @@ using UnityEngine;
 
 public class SpawnEnemyManager : SpawnManager {
 
+	/* Referencia a que incluye a todos los objetos enemigos */
 	[SerializeField] private GameObject enemyParent;
+
+	/* Variable que guarda el tiempo necesario para que aparezca el jefe enemigo */
 	[SerializeField] private float bossTime;
+
+	/* Referencia a script de tiempo */
 	private Timer timerScript;
+
+	/* Variables de jefe */
 	private bool boss = false;
 	private bool bossRespawned = false;
 
+	/* Inicialización de referencias */
 	void Awake(){
 		timerScript = Camera.main.GetComponent<Timer>();
 	}
 
+	/* Se encarga de instanciar enemigos */
 	void Update () {
 		if(boss == false){
 			ghostRespawn();
@@ -48,6 +57,7 @@ public class SpawnEnemyManager : SpawnManager {
 		}
 	}
 
+	/* Función que gestiona la instanciación de un enemigo */
 	private void spawnEnemy(){
 		ReloadTimer();
 		/* Fantasmas salen con orientación al jugador */
@@ -61,6 +71,7 @@ public class SpawnEnemyManager : SpawnManager {
 		
 	}
 
+	/* Función que gestiona realiza las acciones consecuentes a la instanciación de un enemigo */
 	private void ghostRespawn(){
 		timer -= Time.deltaTime;
 		if(timer < 0 && player.GetComponent<PlayerController>().GetDeath() == false){

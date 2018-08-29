@@ -7,10 +7,12 @@ using System.IO;
 [XmlRoot("QuestCollection")]
 public class QuestContainer{
 
+	/* Array de todas las misiones disponibles */
 	[XmlArray("Quests")]
 	[XmlArrayItem("Quest")]
 	public Quest[] quests = new Quest[15];
 
+	/* Función interfaz de carga de fichero de misiones */
 	public static QuestContainer Load(string path){
 		TextAsset _xml = Resources.Load<TextAsset>(path);
 

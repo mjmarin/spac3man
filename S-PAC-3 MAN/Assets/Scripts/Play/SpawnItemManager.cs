@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnItemManager : SpawnManager {
+
+	/* Variable que controla la distancia aumentada a la que
+	instanciar objetos consecuente a la selección de velocidad */
 	private Vector3 distance;
+
+	/* Instanciación de objetos */
 	void Update () {
 		if(objectCount < maxObjectCount && player.GetComponent<PlayerController>().GetDeath() == false){
 			timer -= Time.deltaTime;

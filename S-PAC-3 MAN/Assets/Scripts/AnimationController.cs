@@ -4,20 +4,38 @@ using UnityEngine;
 
 public class AnimationController : MonoBehaviour {
 
+	/* Tiempo entre dos instantes consecutivos de una animación */
 	[SerializeField] private float requiredTime;
+
+	/* Temporizador */
 	private float time;
+
+	/* Control del sprite a utilizar en cada momento */
 	private int turn;
+
+	/* Referencia al script que controla el estado del jugador */
 	private PlayerController player;
+
+	/* Referencia al componente que renderiza el sprite del objeto jugador */
 	private SpriteRenderer playerSprite;
+
+	/* Conjunto de sprites que conforma una animación de movimiento */
 	private Sprite[] playSprites = new Sprite[4];
+
+	/* Conjunto de sprites que conforman una animación de muerte */
 	private Sprite[] deathSprites = new Sprite[12];
+
+	/* Variable que confirma si es el primer frame con el objeto jugador eliminado */
 	private bool wasDead;
 	
 
+	/* Inicialización de referencias */
 	void Awake(){
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 		playerSprite = GameObject.FindGameObjectWithTag("Player").GetComponent<SpriteRenderer>();
 	}
+
+	/* Inicialización de variables */
 	void Start () {
 		ChargeSkin(DataManager.GetSettedSkin());
 
@@ -26,6 +44,7 @@ public class AnimationController : MonoBehaviour {
 		wasDead = false;
 	}
 	
+	/* Animación de movimiento y control de activación de animación de muerte */
 	void Update () {
 		time = time + Time.deltaTime;
 		if(player != null){ /* Se encuentra jugando */
@@ -50,12 +69,14 @@ public class AnimationController : MonoBehaviour {
 		}	
 	}
 
+	/* Rotación de animación de movimiento */
 	private void AliveAnimation(){
 		turn = (turn + 1) % 4;
 		playerSprite.sprite = playSprites[turn];
 		time = 0;
 	}
 
+	/* Animación de personaje eliminado */
 	private void DeathAnimation(){
 		if(turn < 12){
 			playerSprite.sprite = deathSprites[turn];
@@ -64,11 +85,14 @@ public class AnimationController : MonoBehaviour {
 		}
 	}
 
+	/* Función interfaz para modificar el personaje */
 	public void ChangeSkin(int skin){
 		DataManager.SetSettedSkin(skin);
 		ChargeSkin(skin);
 	}
 
+	/* Función de carga de sprites de la animación
+	del personaje elegido */
 	private void ChargeSkin(int skin){
 		Sprite[] resourcesArray = new Sprite[3];
 

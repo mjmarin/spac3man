@@ -6,24 +6,26 @@ using System.Globalization;				/* CultureInfo class */
 
 public class Helper {
 
-	/* Encriptado */
+	/* String con el que formar el hash */
 	private static string hash = "c57f431343f100b441e268cc12babc34";
 	
+	/* Encriptación base */
 	public static string EncryptString(string toEncrypt){
-		if(toEncrypt.Length == 0){
+		if(toEncrypt.Length == 0){ // Si no hay algo que encriptar
 			return "-1";
 		}else{
 			byte[] data = UTF8Encoding.UTF8.GetBytes(toEncrypt);
 
 			MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-			byte[] key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash));
+			byte[] key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash)); //Hacer el hash
 
-			TripleDESCryptoServiceProvider trip = new TripleDESCryptoServiceProvider(){Key = key, Mode = CipherMode.ECB, Padding = PaddingMode.PKCS7};
+			TripleDESCryptoServiceProvider trip = new TripleDESCryptoServiceProvider() //Encriptador ECB
+			{Key = key, Mode = CipherMode.ECB, Padding = PaddingMode.PKCS7};
 
 			ICryptoTransform tr = trip.CreateEncryptor();
-			byte[] encrypted = tr.TransformFinalBlock(data,0,data.Length);
+			byte[] encrypted = tr.TransformFinalBlock(data,0,data.Length); //Encriptar en ECB
 
-			return Convert.ToBase64String(encrypted,0,encrypted.Length);
+			return Convert.ToBase64String(encrypted,0,encrypted.Length); //Devolver string encriptada
 		}
 	}
 
@@ -47,21 +49,23 @@ public class Helper {
 		return EncryptInt(boolInt);
 	}
 
+	/* Desencriptación base */
 	public static string DecryptString(string toDecrypt){
-		if(toDecrypt.Length == 0){
+		if(toDecrypt.Length == 0){ // Si no hay algo que encriptar
 			return "-1";
 		}else{
 			byte[] data = Convert.FromBase64String(toDecrypt);
 
 			MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-			byte[] key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash));
+			byte[] key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash)); // Hacer el hash
 
-			TripleDESCryptoServiceProvider trip = new TripleDESCryptoServiceProvider(){Key = key, Mode = CipherMode.ECB, Padding = PaddingMode.PKCS7};
+			TripleDESCryptoServiceProvider trip = new TripleDESCryptoServiceProvider() 
+			{Key = key, Mode = CipherMode.ECB, Padding = PaddingMode.PKCS7}; //Desencriptador ECB
 
 			ICryptoTransform tr = trip.CreateDecryptor();
-			byte[] decrypted = tr.TransformFinalBlock(data,0,data.Length);
+			byte[] decrypted = tr.TransformFinalBlock(data,0,data.Length); // Desencriptado
 
-			return UTF8Encoding.UTF8.GetString(decrypted);
+			return UTF8Encoding.UTF8.GetString(decrypted); // Devolver string desencriptada
 		}
 	}
 
@@ -104,6 +108,7 @@ public class Helper {
 		return usedValues.ToArray();
 	}
 
+	/* Funciónes de comprobación de overflow */
 	public static bool CheckUlongOverflow(float number){
 		if(ulong.MaxValue < number){
 			return true;

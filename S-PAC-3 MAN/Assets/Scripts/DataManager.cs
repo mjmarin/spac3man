@@ -4,41 +4,74 @@ using UnityEngine;
 
 public class DataManager : MonoBehaviour {
 
+	/* Constante con el índice máximo de personajes */
 	private const int maxSkinIndex = 11;
+
+	/* Constante con el índice máximo de misiones activas */
 	private const int maxMissionIndex = 2;
+
+	/* Variable que regula si ya ha sido inicializado o no */
 	static private bool initialized = false;
 
-	/* Variables de selección de velocidad y modo */
+	/*----- Variables de selección de velocidad y modo ------*/
 	static private int selectionSS = 1;
 	static private int selectionMS = 1;
+	/*-------------------------------------------------------*/
 
-	/* Variables de ajustes */
+	/*--------------- Variables de ajustes ------------------*/
+
+	/* Guarda la activación/desactivación del cálculo y muestra de los frame por segundo */
 	static private bool FPSOn = false;
+
+	/* Guarda la activación/desactivación de la reproducción de las pistas de música */
 	static private bool musicOn = true;
+
+	/* Guarda la activación/desactivación de la reproducción de los efectos de sonido */
 	static private bool soundOn = true;
+	/*-------------------------------------------------------*/
 
-	/* Variables de tienda y skins */
+	/*---------- Variables de tienda y skins ----------------*/
+
+	/* Dinero del jugador */
 	static private ulong money = 0;
-	static private int settedSkin = 0;
-	static private bool[] ownedSkin = new bool[12];
-	static private int [] skinPrices = { 0, -20, 30, 35, 40, 50, 70, 85, 90, 100, 120, 150};
 
-	/* Variable de records */
+	/* Personaje seleccionado por el jugador */
+	static private int settedSkin = 0;
+
+	/* Control del desbloqueo de personajes */
+	static private bool[] ownedSkin = new bool[12];
+
+	/* Precio de los personajes */
+	static private int [] skinPrices = { 0, -20, 30, 35, 40, 50, 70, 85, 90, 100, 120, 150};
+	/*-------------------------------------------------------*/
+
+	/* Guardado de los records del usuario */
 	static private ulong [] records = { 0, 0, 0, 0, 0, 0};
 
-	/* Variables de misiones */
+	/*--------------- Variables de misiones -----------------*/
+
+	/* Índice de misiones activas */
 	static private int[] activeMissionsIndex = { 0, 1, 2};
+
+	/* Misiones compleción de misiones activas */
 	static private bool[] missionsCompleted = { false, false, false};
+	/*-------------------------------------------------------*/
 
-	/* Variables de día de último día de entrada */
+	/*----- Variables de día de último día de entrada -------*/
+
+	/* Último día de entrada */
 	static private int lastDay = 1;
-	static private int lastMonth = 1;
 
+	/* Último mes de entrada */
+	static private int lastMonth = 1;
+	/*-------------------------------------------------------*/
+
+	/* Inicialización de datos */
 	public void Init(){
 		if(initialized == false){
 			initialized = true;
 
-			/* MODOS */
+			/*------------------------------- MODOS ------------------------------------*/
 			if(PlayerPrefs.HasKey("speedSelected")){
 				selectionSS = Helper.DecryptInt(PlayerPrefs.GetString("speedSelected"));
 			}else{
@@ -50,8 +83,9 @@ public class DataManager : MonoBehaviour {
 			}else{
 				selectionMS = 1;
 			}
-			
-			/* AJUSTES */
+			/*----------------------------------------------------------------------------*/
+
+			/*------------------------------- AJUSTES ------------------------------------*/
 			if(PlayerPrefs.HasKey("FPSOn")){
 				FPSOn = Helper.DecryptBool(PlayerPrefs.GetString("FPSOn"));
 			}else{
@@ -69,8 +103,9 @@ public class DataManager : MonoBehaviour {
 			}else{
 				soundOn = true;
 			}
+			/*----------------------------------------------------------------------------*/
 
-			/* TIENDA */
+			/*------------------------------- TIENDA ------------------------------------*/
 			if(PlayerPrefs.HasKey("money")){
 				money = System.Convert.ToUInt64(Helper.DecryptFloat(PlayerPrefs.GetString("money")));
 			}else{
@@ -91,8 +126,9 @@ public class DataManager : MonoBehaviour {
 					ownedSkin[i] = false;
 				}
 			}
+			/*----------------------------------------------------------------------------*/
 
-			/* RECORDS */
+			/*------------------------------- RECORDS ------------------------------------*/
 			if(PlayerPrefs.HasKey("NNormalRecord")){
 				records[0] = System.Convert.ToUInt64(Helper.DecryptFloat(PlayerPrefs.GetString("NNormalRecord")));
 			}else{
@@ -128,8 +164,9 @@ public class DataManager : MonoBehaviour {
 			}else{
 				records[5] = 0;
 			}
+			/*----------------------------------------------------------------------------*/
 
-			/* MISIONES */
+			/*------------------------------- MISIONES ------------------------------------*/
 			for(int i=0;i<maxMissionIndex + 1;i++){
 				if(PlayerPrefs.HasKey("Mission" + i)){
 					activeMissionsIndex[i] = Helper.DecryptInt(PlayerPrefs.GetString("Mission" + i));
@@ -145,8 +182,9 @@ public class DataManager : MonoBehaviour {
 					missionsCompleted[i] = false;
 				}
 			}
+			/*----------------------------------------------------------------------------*/
 
-			/* FECHA */
+			/*------------------------------- FECHA ------------------------------------*/
 			if(PlayerPrefs.HasKey("LastDay")){
 				lastDay = Helper.DecryptInt(PlayerPrefs.GetString("LastDay"));
 			}else{
@@ -158,11 +196,12 @@ public class DataManager : MonoBehaviour {
 			}else{
 				lastMonth = 0;
 			}
+			/*----------------------------------------------------------------------------*/
 		}
 
 	}
 
-	/*------------------------------- GETTERS -------------------------------*/
+	/*------------------------------- FUNCIONES INTERFAZ DE CONSULTA -------------------------------*/
 	/* SELECCIÓN */
 	static public int GetSelectionSS(){return selectionSS;}
 	static public int GetSelectionMS(){return selectionMS;}
@@ -214,8 +253,9 @@ public class DataManager : MonoBehaviour {
 	/* FECHA */
 	public static int GetLastDay(){return lastDay;}
 	public static int GetLastMonth(){return lastMonth;}
+	/*----------------------------------------------------------------------------*/
 
-	/*------------------------------- SETTERS -------------------------------*/
+	/*------------------------------- FUNCIONES INTERFAZ DE MODIFICACIÓN -------------------------------*/
 	static public void SetSelectionSS(int selection){
 		if(selection < 1 || selection > 3){
 			selectionSS = 1;
@@ -341,4 +381,5 @@ public class DataManager : MonoBehaviour {
 			PlayerPrefs.SetString("LastMonth", Helper.EncryptInt(lastMonth));
 		}
 	}
+	/*----------------------------------------------------------------------------*/
 }

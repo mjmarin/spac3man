@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Initialize : MonoBehaviour {
 
+	/* Situa la preferencia de ejecución de DataManager frente al resto */
 	void Awake () {
 		Camera.main.GetComponent<DataManager>().Init();
 	}

@@ -6,7 +6,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayUIManagement : MonoBehaviour {
-	/* Objetos de la escena */
+
+	/*--------------------- Objetos de la escena ------------------------*/
 	[SerializeField] private GameObject gameOverText;
 	[SerializeField] private GameObject pauseText;
 	[SerializeField] private GameObject pauseBt;
@@ -16,7 +17,8 @@ public class PlayUIManagement : MonoBehaviour {
 	[SerializeField] private Text counterText;
 	[SerializeField] private Text timerText;
 	[SerializeField] private GameObject score;
-	/* Variables menú pausa */
+
+	/*---------------------- Variables menú pausa ------------------------*/
 	[SerializeField] private Sprite playSprite;
 	[SerializeField] private Sprite pauseSprite;
 	[SerializeField] private Sprite soundOnSprite;
@@ -25,7 +27,8 @@ public class PlayUIManagement : MonoBehaviour {
 	[SerializeField] private Sprite musicOnSprite;
 	[SerializeField] private Sprite musicOffSprite;
 	[SerializeField] private Button musicBt;
-	/* Variables final de partida */
+
+	/*---------------------- Variables final de partida ------------------------*/
 	[SerializeField] private Text scoreMoneyText;
 	[SerializeField] private Text scoreTimerText;
 	[SerializeField] private Text scoreValueText;
@@ -33,29 +36,32 @@ public class PlayUIManagement : MonoBehaviour {
 	[SerializeField] private GameObject newRecordText;
 	[SerializeField] private GameObject questRewardText;
 
-	/* Scripts con los que se comunica */
+	/*-------------------- Scripts con los que se comunica ----------------------*/
 	private PlayerController playerScript;
 	private Timer timerScript;
 	
-	/* Variables de temporizador */
+	/*-------------------- Variables para temporizador ----------------------------*/
 	private int timerMinutes;
 	private int timerSeconds;
 
 	private int NEOtimerMinutes;
 	private int NEOtimerSeconds;
 
-	/* Variables de texto de incremento de tiempo en NEO */
+	/*------------- Variables de efecto gráfico en incremento de tiempo en NEO -------------*/
 	private float addTimeAlpha;
 	[SerializeField] private float alphaProgression;
 
-	/* Variable de  cambio de pantalla*/
+	/* Variable que señala la pantalla actual */
 	private int currentWindow = 0;
 
 
+	/* Inicialización de referencias */
 	private void Awake(){
 		playerScript = player.GetComponent<PlayerController>();
 		timerScript = Camera.main.GetComponent<Timer>();
 	}
+
+	/* Inicialización de variables */
 	private void Start () {
 		currentWindow = 0;
 
@@ -91,6 +97,13 @@ public class PlayUIManagement : MonoBehaviour {
 		}
 	}
 	
+	/* 
+	Listener de botón back nativo de Android.
+	Actualización del temporizador gráfico de partida. 
+	Actualización de marcador de monedas.
+	Control de pantalla de fin de partida.
+	Control del texto de adición de tiempo para modo NEO
+	*/
 	private void Update(){
 
 		BackListener();
@@ -111,6 +124,7 @@ public class PlayUIManagement : MonoBehaviour {
 		}
 	}
 
+	/* Función que controla el uso del botón back nativo de Android */
     private void BackListener(){
         if(Input.GetKeyDown(KeyCode.Escape)){
 			switch(currentWindow){
@@ -127,6 +141,7 @@ public class PlayUIManagement : MonoBehaviour {
 		}
 	}
 
+	/* Función que actualiza el temporizador gráfico */
     private void UpdateTimer(){
 		if(playerScript.GetDeath() == false){
 			timerSeconds = Mathf.FloorToInt(timerScript.GetTime());
@@ -143,6 +158,7 @@ public class PlayUIManagement : MonoBehaviour {
 		}
 	}
 
+	/* Función que inicia la pantalla de fin de partida */
 	private void SetDeathMenu(){
 		currentWindow = 2;
 		pauseBt.SetActive(false);
@@ -154,27 +170,34 @@ public class PlayUIManagement : MonoBehaviour {
 		score.SetActive(true);	
 	}
 
+	/* Modificador de texto de puntuación */
 	private void SetScore(){
 		scoreMoneyText.text = counterText.text;
 		scoreTimerText.text = string.Format("{0:D2}:{1:D2}", timerMinutes, timerSeconds % 60);
 		scoreValueText.text = Mathf.FloorToInt(playerScript.GetCurrentScore()).ToString();
 	}
 
+	/* Función interfaz que activa el aviso de nuevo record */
 	public void UpNewRecordText(){
 		newRecordText.SetActive(true);
 	}
 
+	/* Función interfaz que activa el aviso por recompensa de misones completadas */
 	public void UpQuestRewardText(float reward){
 		questRewardText.GetComponent<Text>().text = "Quest reward:" + reward.ToString("F0");
 		questRewardText.SetActive(true);
 	}
+
+	/* Función interfaz */
 	public void EnlargeNeoTimeText(float seconds){ /* PARA CLASE TIMER */
 		addTimeText.enabled = true;
 		addTimeText.text = "+ " + Mathf.Round(seconds).ToString("") + "s";
 		addTimeAlpha = 1.0f;
 	}
 
-	/* Clicks */
+	/*----------------- Funciones ligadas al evento OnClick() de los botones ------------------*/
+
+	/* Función de apertura y cierre de la pantalla de pausa */
 	public void PauseBt(){
 		if(timerScript.GetPaused()){
 			currentWindow = 1;
@@ -188,20 +211,25 @@ public class PlayUIManagement : MonoBehaviour {
 			pauseBt.GetComponent<Image>().sprite = pauseSprite;
 		}
 	}
+
+	/* Función de reinicio de partida */
 	public void ReloadBt(){
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 
+	/* Función de apertura de la pantalla de menú principal */
 	public void MenuBt(){
 		if(player.GetComponent<PlayerController>().GetDeath() == false)
 			timerScript.ChangeState();
 		SceneManager.LoadScene(0);
 	}
 
+	/* Función de cierre de la aplicación */
 	public void QuitBt(){
 		Application.Quit();
 	}
 
+	/* Función de activación/desactivación de efectos de sonido en la aplicación */
 	public void SoundBt(){
 		if(DataManager.GetSoundOn()){
 			soundBt.GetComponent<Image>().sprite = soundOffSprite;
@@ -210,6 +238,7 @@ public class PlayUIManagement : MonoBehaviour {
 		}
 	}
 
+	/* Función de activación/desactivación de audios de música en la aplicación */
 	public void MusicBt(){
 		if(DataManager.GetMusicOn()){
 			musicBt.GetComponent<Image>().sprite = musicOffSprite;

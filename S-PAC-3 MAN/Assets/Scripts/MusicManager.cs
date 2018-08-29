@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MusicManager : MonoBehaviour {
 
+	/* Obtención de recursos y reproducción si la música esta activada */
 	void Start () {
 		string resource;
 		if(SceneManager.GetActiveScene().buildIndex == 0){
@@ -43,8 +44,8 @@ public class MusicManager : MonoBehaviour {
 		
 	}
 
-	/* BOTONES */
-	/* Para que se ponga/quite cuando se clicken los botones de música ON/OFF */
+	/* Función asociada al evento OnClick de ajuste de música
+	Activa/desactiva al clickar en los botones de ajuste de música */
 	public void TurnOnOffMusic(){
 		if(DataManager.GetMusicOn()){
 			GetComponent<AudioSource>().Stop();

@@ -5,16 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour {
 
+	/* Variables de audo */
 	private static  AudioClip getCoin;
 	private static AudioClip getShield;
 	private static AudioClip shieldDown;
 	private static AudioClip death;
 	private AudioClip click;
+
+	/* Referencia a componente de reproducción de audios */
 	private static AudioSource audioSource;
 
+	/* Inicialización de referencias */
 	void Awake(){
 		audioSource = GetComponent<AudioSource>();
 	}
+
+	/* Obtención de recursos */
 	void Start () {
 
 		click = Resources.Load<AudioClip>("Sounds/click");
@@ -26,6 +32,7 @@ public class SoundManager : MonoBehaviour {
 		}
 	}
 
+	/* Función interfaz para reproducir un sonido */
 	public static void SetSound(string sound){
 		if(DataManager.GetSoundOn()){
 			AudioClip clip;
@@ -54,8 +61,8 @@ public class SoundManager : MonoBehaviour {
 		}	
 	}
 
-	/* BOTONES */
-	/* Para que se ponga/quite cuando se clicken los botones de música ON/OFF */
+	/* Función asociada al evento OnClick de ajuste de sonido.
+	Activa/desactiva al clickar en los botones de ajuste de sonido */
 	public void TurnOnOffSound(){
 		if(DataManager.GetSoundOn()){
 			DataManager.SetSoundOn(false);
@@ -64,6 +71,8 @@ public class SoundManager : MonoBehaviour {
 		}
 	}
 
+	/* Función asociada al evento OnClick de ajuste de sonido.
+	Reproduce el sonido asociado al uso de botones si el sonido está activo */
 	public void Click(){
 		if(DataManager.GetSoundOn()){
 			audioSource.PlayOneShot(click);
