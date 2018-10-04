@@ -1,7 +1,10 @@
+#S-PAC-3 MAN
+An Android arcade game based on Pac-Man.
+
 About S-PAC-3 MAN
 ------------
 
-S-PAC-3 MAN is an Android arcade game developed as a final project on Cordoba's University and it is based on the original Pac-Man.
+S-PAC-3 MAN is an Android arcade game developed as a final project on Cordoba's University.
 
 This repository contains the source code of S-PAC-3 MAN. To download the latest stable public version, download it on GooglePlayStore, just type 'spac3man' to find it.
 
