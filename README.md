@@ -13,9 +13,9 @@ This repository contains the source code of S-PAC-3 MAN. To download the latest 
 
 Author & Directors
 ---
-Author: Víctor Manuel Espejo Pérez.
+Author: Víctor Manuel Espejo Pérez <victormanuesp96@gmail.com>
 
-Directors: Manuel Jesús Marín Jimenez & Enrique Yeguas Bolívar.
+Directors: Manuel Jesús Marín Jimenez & Enrique Yeguas Bolívar
 
 License
 ---
