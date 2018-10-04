@@ -1,4 +1,4 @@
-#S-PAC-3 MAN
+# S-PAC-3 MAN
 
 An Android arcade game based on Pac-Man.
 
