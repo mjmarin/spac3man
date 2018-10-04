@@ -14,8 +14,10 @@ public class SpawnItemManager : SpawnManager {
 			timer -= Time.deltaTime;
 			if(timer < 0){
 				ReloadTimer();
-				distance = transform.position - player.transform.position; // Aumentar la distancia a la que aparecen con la velocidad elegida
-				SpawnIndicator(Instantiate(spawnable, transform.position + distance * speedBuff, Quaternion.identity));	/* A más velocidad spawnean más lejos */
+				// Aumentar la distancia a la que aparecen con la velocidad elegida
+				distance = transform.position - player.transform.position; 
+				/* A más velocidad spawnean más lejos */
+				SpawnIndicator(Instantiate(spawnable, transform.position + distance * speedBuff, Quaternion.identity));	
 				IncreaseObjectCount(true);
 			}
 			

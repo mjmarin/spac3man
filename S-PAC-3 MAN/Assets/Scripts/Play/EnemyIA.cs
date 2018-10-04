@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyIA : MonoBehaviour {
 
-	/* --------------------------- Variables de desplazamiento de enemigo ------------------------------*/
+	/*  Variables de desplazamiento de enemigo */
 
 	/* Velocidad de rotación del enemigo */
 	[SerializeField] private float rotationSpeed;
@@ -18,7 +18,7 @@ public class EnemyIA : MonoBehaviour {
 	/* Modo de velocidad elegido para la partida */
 	private float speedMode;
 
-	/* --------------------------- Variables de eliminación de enemigo ------------------------------*/
+	/* Variables de eliminación de enemigo */
 
 	/* Variable que controla si el enemigo se encuentra en proceso de desaparición */
 	private bool disappearing = false;

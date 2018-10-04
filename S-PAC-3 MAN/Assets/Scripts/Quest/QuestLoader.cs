@@ -59,8 +59,10 @@ public class QuestLoader : MonoBehaviour {
 		float reward = 0;
 		float parameter = 0;
 
-		foreach (Quest quest in activeQuests){ /* Para cada misión */
-			if(DataManager.GetMissionCompleted(i) == false){ /* Si no está completa */
+		/* Para cada misión */
+		foreach (Quest quest in activeQuests){ 
+			/* Si no está completa */
+			if(DataManager.GetMissionCompleted(i) == false){ 
 
 				switch(quest.type){
 					case 1:

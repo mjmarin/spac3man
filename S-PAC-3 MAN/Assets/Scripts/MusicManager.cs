@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MusicManager : MonoBehaviour {
 
-	/* Obtención de recursos y reproducción si la música esta activada */
+	/* Obtención de recursos y reproducción
+	 si la música esta activada */
 	void Start () {
 		string resource;
 		if(SceneManager.GetActiveScene().buildIndex == 0){

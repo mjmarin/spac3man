@@ -4,28 +4,35 @@ using UnityEngine;
 
 public class AnimationController : MonoBehaviour {
 
-	/* Tiempo entre dos instantes consecutivos de una animación */
+	/* Tiempo entre dos instantes consecutivos
+	 de una animación */
 	[SerializeField] private float requiredTime;
 
 	/* Temporizador */
 	private float time;
 
-	/* Control del sprite a utilizar en cada momento */
+	/* Control del sprite a utilizar
+	 en cada momento */
 	private int turn;
 
-	/* Referencia al script que controla el estado del jugador */
+	/* Referencia al script que controla
+	 el estado del jugador */
 	private PlayerController player;
 
-	/* Referencia al componente que renderiza el sprite del objeto jugador */
+	/* Referencia al componente que renderiza
+	 el sprite del objeto jugador */
 	private SpriteRenderer playerSprite;
 
-	/* Conjunto de sprites que conforma una animación de movimiento */
+	/* Conjunto de sprites que conforma 
+	una animación de movimiento */
 	private Sprite[] playSprites = new Sprite[4];
 
-	/* Conjunto de sprites que conforman una animación de muerte */
+	/* Conjunto de sprites que conforman 
+	una animación de muerte */
 	private Sprite[] deathSprites = new Sprite[12];
 
-	/* Variable que confirma si es el primer frame con el objeto jugador eliminado */
+	/* Variable que confirma si es el primer frame
+	 con el objeto jugador eliminado */
 	private bool wasDead;
 	
 
@@ -44,7 +51,8 @@ public class AnimationController : MonoBehaviour {
 		wasDead = false;
 	}
 	
-	/* Animación de movimiento y control de activación de animación de muerte */
+	/* Animación de movimiento y control de activación
+	 de animación de muerte */
 	void Update () {
 		time = time + Time.deltaTime;
 		if(player != null){ /* Se encuentra jugando */

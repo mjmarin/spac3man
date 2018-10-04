@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-/* --------------------------- Variables de características de la partida ------------------------------*/
+/* Variables de características de la partida */
 	/* Velocidad de desplazamiento del personaje */
 	[SerializeField] private float movementSpeed;
 
@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour {
 	/* Tiempo de de efecto visual al perder un escudo */
 	[SerializeField] private float turnOffShieldTime;
 
-/* --------------------------- Referencias ------------------------------*/
+/* Referencias */
 	/* Referencia al objeto spawner de escudos */
 	private GameObject ShieldRespawn;
 	
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
 	/* Referencia al script de control gráfica en partida */
 	private PlayUIManagement PlayUIManagement;
 
-/* --------------------------- Variables de estado de la partida ------------------------------*/	
+/* Variables de estado de la partida */	
 
 	/* Variable que marca si el objeto jugador tiene escudo */
 	private bool shielded;
@@ -52,7 +52,8 @@ public class PlayerController : MonoBehaviour {
 	usado un escudo */
 	private float timeShield;
 
-	/* Varaible que es utilizada para el efecto gráfico de intermitencia al perder el escudo */
+	/* Variable que es utilizada para el efecto gráfico 
+	de intermitencia al perder el escudo */
 	private float offShieldTime;
 
 	/* Variable que controla el ancho de la pantalla */
@@ -62,7 +63,8 @@ public class PlayerController : MonoBehaviour {
 	según la el modo de velocidad elegido */
 	private float speedBuff;
 
-	/* Variable que guarda si se seleccionó el modo notEnoughOxygen para la partida */
+	/* Variable que guarda si se seleccionó 
+	el modo notEnoughOxygen para la partida */
 	private bool NEOActivated;
 
 	/* Variable que guarda el modo de velocdiad seleccionado */
@@ -144,7 +146,9 @@ public class PlayerController : MonoBehaviour {
 	/* Colisiones con elementos. Muerte y recogida de objetos */
 	void OnTriggerEnter2D(Collider2D other){
 		if(GetDeath() == false){
-			if(other.CompareTag("Enemy")) {		/* Al chocarte con un enemigo o mueres o se quita escudo y comienza cuenta atrás de invulnerabilidad */
+			/* Al chocarte con un enemigo o mueres o se quita escudo y
+			 comienza cuenta atrás de invulnerabilidad */
+			if(other.CompareTag("Enemy")) {		
 				if(shielded){
 					SetShield(false);
 				}else{

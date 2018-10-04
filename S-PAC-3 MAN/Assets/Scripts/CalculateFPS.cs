@@ -43,7 +43,8 @@ public class CalculateFPS : MonoBehaviour {
 	private void Calculate(){
 		frameCount++;
      	deltatime += Time.deltaTime;
-     	if (deltatime > 1.0/updateRate){		/* updateRate no es preciso, es más o menos el número de actualizaciones por segundo */
+		/* updateRate no es preciso, es más o menos el número de actualizaciones por segundo */
+     	if (deltatime > 1.0/updateRate){		
         	fps = frameCount / deltatime;
         	frameCount = 0;
         	deltatime = 0;

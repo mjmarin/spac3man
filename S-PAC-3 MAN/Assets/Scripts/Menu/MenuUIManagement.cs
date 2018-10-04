@@ -28,8 +28,10 @@ public class MenuUIManagement : MonoBehaviour {
 	[SerializeField] private GameObject modeSelector;
 	[SerializeField] private float range;
 	[SerializeField] private float speed;
-	private const float constantDistanceSS = 242;		// Píxeles entre las opciones de velocidad en 1920 x 1080
-	private const float constantDistanceMS = 143.9f;	// Píxeles entre las opciones de modo en 1920 x 1080
+	// Píxeles entre las opciones de velocidad en 1920 x 1080
+	private const float constantDistanceSS = 242;
+	// Píxeles entre las opciones de modo en 1920 x 1080		
+	private const float constantDistanceMS = 143.9f;	
 	private float startPositionSS;
 	private float startPositionMS;
 	private int senseSS;
@@ -124,9 +126,12 @@ public class MenuUIManagement : MonoBehaviour {
 	}
 	
 	void Update () {
-		MoveSelectors();	/* Realizar el efecto de las flechas de selección en menú principal */
-		ChangeColor();		/* Cambiar el color de los títulos de menú records */
-		BackListener();		/* Respuesta al back nativo de Android */
+		/* Realizar el efecto de las flechas de selección en menú principal */
+		MoveSelectors();
+		/* Cambiar el color de los títulos de menú records */	
+		ChangeColor();
+		/* Respuesta al back nativo de Android */	
+		BackListener();		
 	}
 
 	/* Respuesta al back nativo de Android.Dependiendo de la pantalla
@@ -210,14 +215,15 @@ public class MenuUIManagement : MonoBehaviour {
 	private void InitShop(){
 		int i = 0;
 		foreach(Transform t in ItemsPanel){
-			int currentIndex = i; 							// Para solucionar un error de OnItemSelect (Siempre seleccionaría el último integer con i)
+		// Para solucionar un error de OnItemSelect (Siempre seleccionaría el último integer con i)
+			int currentIndex = i; 							
 			Button b = t.GetComponent<Button>();
 			b.onClick.AddListener(() => OnItemSelect(currentIndex));
 			i++;
 		}
 	}
 
-	/*------------------ Mover las flechas de selección ----------------------*/
+	/* Mover las flechas de selección */
 
 	/* Situar las flechas en la posición de la última elección
 		option = 1 flecha de Speed Selector
@@ -252,9 +258,8 @@ public class MenuUIManagement : MonoBehaviour {
 			return sense;
 		}
 	}
-	/*----------------------------------------------------------------------*/
 
-	/*---------------------- Funciones de recordsDisplay -------------------*/
+	/* Funciones de recordsDisplay */
 
 	/* Función para escribir las puntuaciones más altas en los textos correspondientes */
 	private void SetRecords(){
@@ -293,9 +298,7 @@ public class MenuUIManagement : MonoBehaviour {
 		color[colorTurn] = color[colorTurn] + speedColor * colorSense[colorTurn];
 	}
 
-	/*----------------------------------------------------------------------*/
-
-	/*---------------------- Funciones aplicadas a botones -----------------*/
+	/* Funciones aplicadas a botones */
 
 	/* Carga la escena de juego */
 	public void StartPlay(){

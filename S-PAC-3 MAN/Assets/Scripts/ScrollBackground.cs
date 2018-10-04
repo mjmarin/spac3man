@@ -22,7 +22,9 @@ public class ScrollBackground : MonoBehaviour {
 		if(speedMode == -1){
 			speedBuff = 1.0f;
 		}else{
-			speedBuff = multSpeed[speedMode - 1]; /* En menú será la última velocidad jugada y en partida la velocidad elegida */
+			/* En menú será la última velocidad jugada 
+			y en partida la velocidad elegida */
+			speedBuff = multSpeed[speedMode - 1]; 
 		}		
 																									
 		mr = GetComponent<MeshRenderer>();

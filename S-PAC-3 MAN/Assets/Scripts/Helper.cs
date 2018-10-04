@@ -11,21 +11,26 @@ public class Helper {
 	
 	/* Encriptación base */
 	public static string EncryptString(string toEncrypt){
-		if(toEncrypt.Length == 0){ // Si no hay algo que encriptar
+		// Si no hay algo que encriptar
+		if(toEncrypt.Length == 0){ 
 			return "-1";
 		}else{
 			byte[] data = UTF8Encoding.UTF8.GetBytes(toEncrypt);
 
+			//Hacer el hash
 			MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-			byte[] key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash)); //Hacer el hash
+			byte[] key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash)); 
 
-			TripleDESCryptoServiceProvider trip = new TripleDESCryptoServiceProvider() //Encriptador ECB
+			//Encriptador ECB
+			TripleDESCryptoServiceProvider trip = new TripleDESCryptoServiceProvider() 
 			{Key = key, Mode = CipherMode.ECB, Padding = PaddingMode.PKCS7};
 
+			//Encriptar en ECB
 			ICryptoTransform tr = trip.CreateEncryptor();
-			byte[] encrypted = tr.TransformFinalBlock(data,0,data.Length); //Encriptar en ECB
+			byte[] encrypted = tr.TransformFinalBlock(data,0,data.Length); 
 
-			return Convert.ToBase64String(encrypted,0,encrypted.Length); //Devolver string encriptada
+			//Devolver string encriptada
+			return Convert.ToBase64String(encrypted,0,encrypted.Length); 
 		}
 	}
 
@@ -51,21 +56,26 @@ public class Helper {
 
 	/* Desencriptación base */
 	public static string DecryptString(string toDecrypt){
-		if(toDecrypt.Length == 0){ // Si no hay algo que encriptar
+		// Si no hay algo que encriptar
+		if(toDecrypt.Length == 0){ 
 			return "-1";
 		}else{
 			byte[] data = Convert.FromBase64String(toDecrypt);
 
+			// Hacer el hash
 			MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-			byte[] key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash)); // Hacer el hash
+			byte[] key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(hash)); 
 
+			//Desencriptador ECB
 			TripleDESCryptoServiceProvider trip = new TripleDESCryptoServiceProvider() 
-			{Key = key, Mode = CipherMode.ECB, Padding = PaddingMode.PKCS7}; //Desencriptador ECB
+			{Key = key, Mode = CipherMode.ECB, Padding = PaddingMode.PKCS7}; 
 
+			// Desencriptado
 			ICryptoTransform tr = trip.CreateDecryptor();
-			byte[] decrypted = tr.TransformFinalBlock(data,0,data.Length); // Desencriptado
+			byte[] decrypted = tr.TransformFinalBlock(data,0,data.Length); 
 
-			return UTF8Encoding.UTF8.GetString(decrypted); // Devolver string desencriptada
+			// Devolver string desencriptada
+			return UTF8Encoding.UTF8.GetString(decrypted); 
 		}
 	}
 
@@ -88,7 +98,8 @@ public class Helper {
 		}
 	}
 
-	/* Devuelve un array de enteros entre minRange(incluido) y maxRange(excluido) sin repetición */
+	/* Devuelve un array de enteros entre minRange(incluido) 
+	y maxRange(excluido) sin repetición */
 	public static int[] RandomIntValues(int count, int minRange, int maxRange){
 		List<int> usedValues = new List<int>();	
 		if(count <= maxRange - minRange ){
