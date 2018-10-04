@@ -1,4 +1,5 @@
 #S-PAC-3 MAN
+
 An Android arcade game based on Pac-Man.
 
 About S-PAC-3 MAN
@@ -12,8 +13,9 @@ This repository contains the source code of S-PAC-3 MAN. To download the latest 
 
 Author & Directors
 ---
-Author: Víctor Manuel Espejo Pérez
-Directors: Manuel Jesús Marín Jimenez & Enrique Yeguas Bolívar
+Author: Víctor Manuel Espejo Pérez.
+
+Directors: Manuel Jesús Marín Jimenez & Enrique Yeguas Bolívar.
 
 License
 ---
